@@ -1,0 +1,151 @@
+category: lights
+blocks:
+- id: light_on
+  name: Turn Light ON
+  inputs:
+  - pin
+  code: digitalWrite({pin}, HIGH);
+  setup: pinMode({pin}, OUTPUT);
+- id: light_off
+  name: Turn Light OFF
+  inputs:
+  - pin
+  code: digitalWrite({pin}, LOW);
+  setup: pinMode({pin}, OUTPUT);
+- id: light_toggle
+  name: Toggle Light
+  inputs:
+  - pin
+  code: digitalWrite({pin}, !digitalRead({pin}));
+  setup: pinMode({pin}, OUTPUT);
+- id: brightness
+  name: Set Brightness
+  description: PWM brightness from 0 (off) to 255 (full)
+  inputs:
+  - pin
+  - value
+  pwm:
+  - pin
+  code: analogWrite({pin}, constrain({value}, 0, {pwm_max}));
+  setup: pinMode({pin}, OUTPUT);
+- id: blink
+  name: Blink Light
+  description: One on/off cycle (blocks while waiting)
+  inputs:
+  - pin
+  - interval
+  defaults:
+    interval: 500
+  code: 'digitalWrite({pin}, HIGH);
+
+    delay({interval});
+
+    digitalWrite({pin}, LOW);
+
+    delay({interval});
+
+    '
+  setup: pinMode({pin}, OUTPUT);
+- id: fade_pulse
+  name: Fade In and Out
+  description: Smoothly brighten then dim a light (blocks while running)
+  inputs:
+  - pin
+  - step_delay
+  defaults:
+    step_delay: 5
+  pwm:
+  - pin
+  code: "for (int cf_b = 0; cf_b <= {pwm_max}; cf_b++) {{\n    analogWrite({pin}, cf_b);\n    delay({step_delay});\n\
+    }}\nfor (int cf_b = {pwm_max}; cf_b >= 0; cf_b--) {{\n    analogWrite({pin}, cf_b);\n    delay({step_delay});\n\
+    }}\n"
+  setup: pinMode({pin}, OUTPUT);
+- id: rgb_color
+  name: Set RGB Color
+  description: Common-cathode RGB LED, each colour 0-255
+  inputs:
+  - red_pin
+  - green_pin
+  - blue_pin
+  - red
+  - green
+  - blue
+  pwm:
+  - red_pin
+  - green_pin
+  - blue_pin
+  code: 'analogWrite({red_pin}, constrain({red}, 0, {pwm_max}));
+
+    analogWrite({green_pin}, constrain({green}, 0, {pwm_max}));
+
+    analogWrite({blue_pin}, constrain({blue}, 0, {pwm_max}));
+
+    '
+  setup: 'pinMode({red_pin}, OUTPUT);
+
+    pinMode({green_pin}, OUTPUT);
+
+    pinMode({blue_pin}, OUTPUT);
+
+    '
+- id: neopixel_begin
+  name: Setup LED Strip
+  description: WS2812 / NeoPixel strip
+  inputs:
+  - pin
+  - count
+  - strip_brightness
+  defaults:
+    strip_brightness: 50
+  includes:
+  - Adafruit_NeoPixel.h
+  libraries:
+  - Adafruit NeoPixel
+  instance:
+    var: strip_name
+    prefix: strip
+    key:
+    - pin
+  declare: Adafruit_NeoPixel {strip_name}({count}, {pin}, NEO_GRB + NEO_KHZ800);
+  setup: '{strip_name}.begin();
+
+    {strip_name}.setBrightness({strip_brightness});
+
+    {strip_name}.show();
+
+    '
+- id: neopixel_set
+  name: Set Strip Pixel
+  description: Needs a Setup LED Strip block on the same pin
+  inputs:
+  - pin
+  - index
+  - red
+  - green
+  - blue
+  instance:
+    var: strip_name
+    prefix: strip
+    key:
+    - pin
+    existing: true
+  code: '{strip_name}.setPixelColor({index}, {strip_name}.Color({red}, {green}, {blue}));
+
+    {strip_name}.show();
+
+    '
+- id: neopixel_clear
+  name: Clear LED Strip
+  inputs:
+  - pin
+  instance:
+    var: strip_name
+    prefix: strip
+    key:
+    - pin
+    existing: true
+  code: '{strip_name}.clear();
+
+    {strip_name}.show();
+
+    '

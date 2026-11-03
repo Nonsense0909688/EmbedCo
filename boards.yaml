@@ -1,0 +1,74 @@
+# Board profiles. Blocks can use {adc_max}, {pwm_max}, {vref}, {default_baud}
+# in their templates, so one block works on every board.
+#
+# Optional keys per board:
+#   fqbn            Arduino CLI board id (string or list) - lets you pass either key or fqbn
+#   pwm_pins        list of PWM-capable pins (omit = any pin, no warnings)
+#   include_map     swap a header on this board  (Servo.h -> ESP32Servo.h)
+#   extra_libraries header -> library to install on this board
+#   init            lines added at the very top of setup()
+
+boards:
+  arduino:
+    name: Generic Arduino
+    adc_max: 1023
+    pwm_max: 255
+    vref: 5.0
+    default_baud: 9600
+
+  uno:
+    name: Arduino Uno
+    fqbn: arduino:avr:uno
+    adc_max: 1023
+    pwm_max: 255
+    vref: 5.0
+    default_baud: 9600
+    pwm_pins: [3, 5, 6, 9, 10, 11]
+
+  nano:
+    name: Arduino Nano
+    fqbn: arduino:avr:nano
+    adc_max: 1023
+    pwm_max: 255
+    vref: 5.0
+    default_baud: 9600
+    pwm_pins: [3, 5, 6, 9, 10, 11]
+
+  mega:
+    name: Arduino Mega 2560
+    fqbn: arduino:avr:mega
+    adc_max: 1023
+    pwm_max: 255
+    vref: 5.0
+    default_baud: 9600
+    pwm_pins: [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 44, 45, 46]
+
+  esp32:
+    name: ESP32
+    fqbn: esp32:esp32:esp32
+    adc_max: 4095
+    pwm_max: 255
+    vref: 3.3
+    default_baud: 115200
+    include_map:
+      Servo.h: ESP32Servo.h
+    extra_libraries:
+      Servo.h: ESP32Servo
+
+  esp8266:
+    name: ESP8266 / NodeMCU
+    fqbn: [esp8266:esp8266:nodemcuv2, esp8266:esp8266:generic]
+    adc_max: 1023
+    pwm_max: 255
+    vref: 3.3
+    default_baud: 115200
+
+  pico:
+    name: Raspberry Pi Pico (RP2040)
+    fqbn: rp2040:rp2040:rpipico
+    adc_max: 4095
+    pwm_max: 255
+    vref: 3.3
+    default_baud: 115200
+    init:
+      - "analogReadResolution(12);"

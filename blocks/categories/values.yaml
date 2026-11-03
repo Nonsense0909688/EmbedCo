@@ -1,0 +1,152 @@
+category: values
+blocks:
+- id: number
+  name: Number
+  inputs:
+  - value
+  output: number
+  code: '{value}'
+- id: text
+  name: Text
+  inputs:
+  - value
+  strings:
+  - value
+  output: text
+  code: '{value}'
+- id: boolean
+  name: True / False
+  inputs:
+  - value
+  output: boolean
+  code: '{value}'
+- id: variable
+  name: Create Variable
+  description: var_type can be int, float, long, bool, String...
+  inputs:
+  - name
+  - initial_value
+  - var_type
+  defaults:
+    initial_value: 0
+    var_type: int
+  variable:
+    declare: name
+  declare: '{var_type} {name} = {initial_value};'
+- id: set_variable
+  name: Set Variable
+  inputs:
+  - name
+  - value
+  variable:
+    use: name
+  code: '{name} = {value};'
+- id: change_variable
+  name: Change Variable By
+  inputs:
+  - name
+  - amount
+  defaults:
+    amount: 1
+  variable:
+    use: name
+  code: '{name} += {amount};'
+- id: get_variable
+  name: Get Variable
+  inputs:
+  - name
+  output: dynamic
+  variable:
+    use: name
+  code: '{name}'
+- id: add
+  name: Add Values
+  inputs:
+  - a
+  - b
+  output: number
+  code: ({a} + {b})
+- id: subtract
+  name: Subtract Values
+  inputs:
+  - a
+  - b
+  output: number
+  code: ({a} - {b})
+- id: multiply
+  name: Multiply Values
+  inputs:
+  - a
+  - b
+  output: number
+  code: ({a} * {b})
+- id: divide
+  name: Divide Values
+  description: Decimal result (no integer rounding)
+  inputs:
+  - a
+  - b
+  output: number
+  code: ((float)({a}) / ({b}))
+- id: modulo
+  name: Remainder
+  inputs:
+  - a
+  - b
+  output: number
+  code: ({a} % {b})
+- id: map_range
+  name: Map Range
+  description: Rescale a value from one range to another
+  inputs:
+  - value
+  - from_low
+  - from_high
+  - to_low
+  - to_high
+  output: number
+  code: map({value}, {from_low}, {from_high}, {to_low}, {to_high})
+- id: constrain_value
+  name: Limit Value
+  inputs:
+  - value
+  - low
+  - high
+  output: number
+  code: constrain({value}, {low}, {high})
+- id: absolute
+  name: Absolute Value
+  inputs:
+  - value
+  output: number
+  code: abs({value})
+- id: min_value
+  name: Smaller Of
+  inputs:
+  - a
+  - b
+  output: number
+  code: min({a}, {b})
+- id: max_value
+  name: Larger Of
+  inputs:
+  - a
+  - b
+  output: number
+  code: max({a}, {b})
+- id: random
+  name: Random Number
+  description: From minimum up to (not including) maximum
+  inputs:
+  - minimum
+  - maximum
+  output: number
+  code: random({minimum}, {maximum})
+- id: random_seed
+  name: Seed Randomness
+  description: Use an unconnected analog pin so results differ every run
+  inputs:
+  - pin
+  defaults:
+    pin: A0
+  code: randomSeed(analogRead({pin}));

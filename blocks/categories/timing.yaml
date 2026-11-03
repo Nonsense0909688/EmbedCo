@@ -1,0 +1,40 @@
+category: timing
+blocks:
+- id: wait
+  name: Wait (ms)
+  inputs:
+  - milliseconds
+  code: delay({milliseconds});
+- id: wait_seconds
+  name: Wait (seconds)
+  inputs:
+  - seconds
+  code: delay((unsigned long)(({seconds}) * 1000));
+- id: wait_until
+  name: Wait Until
+  inputs:
+  - condition
+  code: while (!({condition})) {{ delay(1); }}
+- id: repeat
+  name: Repeat
+  inputs:
+  - count
+  control: loop
+- id: repeat_while
+  name: Repeat While
+  inputs:
+  - condition
+  control: while
+- id: exit_loop
+  name: Exit Loop
+  code: break;
+- id: run_every
+  name: Run Every (ms)
+  description: Non-blocking timer - the rest of the program keeps running
+  inputs:
+  - interval
+  control: timer
+- id: millis_now
+  name: Milliseconds Since Start
+  output: number
+  code: millis()

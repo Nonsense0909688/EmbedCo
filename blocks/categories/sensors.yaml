@@ -1,0 +1,138 @@
+category: sensors
+blocks:
+- id: button
+  name: Button Pressed
+  description: Wire the button between the pin and GND (internal pull-up)
+  inputs:
+  - pin
+  output: boolean
+  code: (digitalRead({pin}) == LOW)
+  setup: pinMode({pin}, INPUT_PULLUP);
+- id: digital_read
+  name: Read Digital Pin
+  inputs:
+  - pin
+  output: boolean
+  code: (digitalRead({pin}) == HIGH)
+  setup: pinMode({pin}, INPUT);
+- id: analog_read
+  name: Read Analog Value
+  description: Raw reading (0-1023 on AVR, 0-4095 on ESP32/Pico)
+  inputs:
+  - pin
+  output: number
+  code: analogRead({pin})
+- id: analog_percent
+  name: Read Analog Percent
+  description: Analog reading scaled to 0-100 on any board
+  inputs:
+  - pin
+  output: number
+  unit: percent
+  code: map(analogRead({pin}), 0, {adc_max}, 0, 100)
+- id: read_voltage
+  name: Read Voltage
+  inputs:
+  - pin
+  output: number
+  unit: volts
+  code: (analogRead({pin}) * ({vref} / {adc_max}))
+- id: light_level
+  hidden: true
+  description: LDR / photoresistor (raw reading)
+  inputs:
+  - pin
+  output: number
+  code: analogRead({pin})
+- id: soil_moisture
+  name: Read Soil Moisture
+  description: Capacitive sensor, 0 (dry) to 100 (wet). Calibrate for your sensor.
+  inputs:
+  - pin
+  output: number
+  unit: percent
+  code: map(analogRead({pin}), {adc_max}, 0, 0, 100)
+- id: read_distance
+  name: Read Distance
+  description: HC-SR04 ultrasonic sensor. Returns 0 when nothing is in range.
+  inputs:
+  - trigger_pin
+  - echo_pin
+  output: number
+  unit: cm
+  includes:
+  - NewPing.h
+  libraries:
+  - NewPing
+  instance:
+    var: sensor_name
+    prefix: sonar
+    key:
+    - trigger_pin
+    - echo_pin
+  declare: NewPing {sensor_name}({trigger_pin}, {echo_pin}, 400);
+  code: '{sensor_name}.ping_cm()'
+- id: temperature
+  name: Read Temperature
+  description: DHT11 / DHT22 (set sensor_type to DHT11 or DHT22)
+  inputs:
+  - pin
+  - sensor_type
+  defaults:
+    sensor_type: DHT11
+  output: number
+  unit: celsius
+  includes:
+  - DHT.h
+  libraries:
+  - DHT sensor library
+  - Adafruit Unified Sensor
+  instance:
+    var: sensor_name
+    prefix: dht
+    key:
+    - pin
+    - sensor_type
+  declare: DHT {sensor_name}({pin}, {sensor_type});
+  setup: '{sensor_name}.begin();'
+  code: '{sensor_name}.readTemperature()'
+- id: humidity
+  name: Read Humidity
+  description: DHT11 / DHT22 (shares the sensor with Read Temperature)
+  inputs:
+  - pin
+  - sensor_type
+  defaults:
+    sensor_type: DHT11
+  output: number
+  unit: percent
+  includes:
+  - DHT.h
+  libraries:
+  - DHT sensor library
+  - Adafruit Unified Sensor
+  instance:
+    var: sensor_name
+    prefix: dht
+    key:
+    - pin
+    - sensor_type
+  declare: DHT {sensor_name}({pin}, {sensor_type});
+  setup: '{sensor_name}.begin();'
+  code: '{sensor_name}.readHumidity()'
+- id: motion_detected
+  hidden: true
+  description: PIR sensor
+  inputs:
+  - pin
+  output: boolean
+  code: (digitalRead({pin}) == HIGH)
+  setup: pinMode({pin}, INPUT);
+- id: obstacle_detected
+  name: Detect Obstacle
+  description: IR obstacle module (output goes LOW when blocked)
+  inputs:
+  - pin
+  output: boolean
+  code: (digitalRead({pin}) == LOW)
+  setup: pinMode({pin}, INPUT);

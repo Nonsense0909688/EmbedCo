@@ -1,0 +1,97 @@
+category: advanced
+blocks:
+- id: pin_mode
+  name: Set Pin Mode
+  description: Raw pinMode — mode is INPUT, OUTPUT or INPUT_PULLUP
+  inputs:
+  - pin
+  - mode
+  defaults:
+    mode: INPUT
+  setup: pinMode({pin}, {mode});
+- id: write_digital_pin_raw
+  name: Write Digital Pin (Raw)
+  description: Raw digitalWrite — state is HIGH, LOW, 1 or 0
+  inputs:
+  - pin
+  - state
+  defaults:
+    state: HIGH
+  code: digitalWrite({pin}, {state});
+  setup: pinMode({pin}, OUTPUT);
+- id: read_digital_pin_raw
+  hidden: true
+  description: Raw digitalRead — returns 0 or 1
+  inputs:
+  - pin
+  output: number
+  code: digitalRead({pin})
+  setup: pinMode({pin}, INPUT);
+- id: write_analog_pin_raw
+  name: Write Analog Pin (Raw)
+  description: Raw analogWrite (PWM) — value 0 to {pwm_max}
+  inputs:
+  - pin
+  - value
+  pwm:
+  - pin
+  code: analogWrite({pin}, {value});
+  setup: pinMode({pin}, OUTPUT);
+- id: read_analog_pin_raw
+  hidden: true
+  description: Raw analogRead — 0 to {adc_max}
+  inputs:
+  - pin
+  output: number
+  code: analogRead({pin})
+- id: pulse_in
+  name: Measure Pulse Width
+  description: pulseIn — microseconds a pin stays HIGH (or LOW)
+  inputs:
+  - pin
+  - level
+  - timeout
+  defaults:
+    level: HIGH
+    timeout: 1000000
+  output: number
+  code: pulseIn({pin}, {level}, {timeout})
+  setup: pinMode({pin}, INPUT);
+- id: toggle_digital_pin
+  hidden: true
+  inputs:
+  - pin
+  code: digitalWrite({pin}, !digitalRead({pin}));
+  setup: pinMode({pin}, OUTPUT);
+- id: shift_out
+  name: Shift Out
+  description: shiftOut for 74HC595 and other shift registers
+  inputs:
+  - data_pin
+  - clock_pin
+  - order
+  - value
+  defaults:
+    order: MSBFIRST
+  code: shiftOut({data_pin}, {clock_pin}, {order}, {value});
+  setup: 'pinMode({data_pin}, OUTPUT);
+
+    pinMode({clock_pin}, OUTPUT);
+
+    '
+- id: shift_in
+  name: Shift In
+  description: shiftIn for 74HC165 and other shift registers
+  inputs:
+  - data_pin
+  - clock_pin
+  - order
+  defaults:
+    order: MSBFIRST
+  output: number
+  code: shiftIn({data_pin}, {clock_pin}, {order})
+  setup: 'pinMode({data_pin}, INPUT);
+
+    pinMode({clock_pin}, OUTPUT);
+
+    '

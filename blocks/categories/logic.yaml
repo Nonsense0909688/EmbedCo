@@ -1,0 +1,82 @@
+category: logic
+blocks:
+- id: if
+  name: If Condition
+  inputs:
+  - condition
+  control: conditional
+- id: otherwise
+  name: Otherwise
+  description: Place directly after an If block, put blocks in body
+  control: else
+- id: greater
+  name: Is Greater Than
+  inputs:
+  - a
+  - b
+  output: boolean
+  code: ({a} > {b})
+- id: less
+  name: Is Less Than
+  inputs:
+  - a
+  - b
+  output: boolean
+  code: ({a} < {b})
+- id: greater_equal
+  name: Is Greater Or Equal
+  inputs:
+  - a
+  - b
+  output: boolean
+  code: ({a} >= {b})
+- id: less_equal
+  name: Is Less Or Equal
+  inputs:
+  - a
+  - b
+  output: boolean
+  code: ({a} <= {b})
+- id: equal
+  name: Is Equal To
+  inputs:
+  - a
+  - b
+  output: boolean
+  code: ({a} == {b})
+- id: not_equal
+  name: Is Not Equal To
+  inputs:
+  - a
+  - b
+  output: boolean
+  code: ({a} != {b})
+- id: between
+  name: Is Between
+  description: True when low <= value <= high. The value is only read once.
+  inputs:
+  - value
+  - low
+  - high
+  output: boolean
+  code: ([&]() {{ auto cf_v = {value}; return (cf_v >= {low}) && (cf_v <= {high}); }})()
+- id: and
+  name: All Conditions True
+  inputs:
+  - a
+  - b
+  output: boolean
+  code: ({a} && {b})
+- id: or
+  name: Any Condition True
+  inputs:
+  - a
+  - b
+  output: boolean
+  code: ({a} || {b})
+- id: not
+  name: Invert Condition
+  inputs:
+  - condition
+  output: boolean
+  code: (!({condition}))

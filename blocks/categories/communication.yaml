@@ -1,0 +1,37 @@
+category: communication
+blocks:
+- id: serial_begin
+  name: Start Serial
+  inputs:
+  - baud_rate
+  defaults:
+    baud_rate: '{default_baud}'
+  setup: Serial.begin({baud_rate});
+  setup_key: serial
+  setup_override: true
+- id: serial_print
+  name: Print Message
+  inputs:
+  - value
+  code: Serial.println({value});
+  setup: Serial.begin({default_baud});
+  setup_key: serial
+- id: serial_print_inline
+  name: Print Without New Line
+  inputs:
+  - value
+  code: Serial.print({value});
+  setup: Serial.begin({default_baud});
+  setup_key: serial
+- id: serial_available
+  name: Serial Data Available
+  output: boolean
+  code: (Serial.available() > 0)
+  setup: Serial.begin({default_baud});
+  setup_key: serial
+- id: serial_read
+  name: Read Serial Data
+  output: number
+  code: Serial.read()
+  setup: Serial.begin({default_baud});
+  setup_key: serial

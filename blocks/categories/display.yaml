@@ -1,0 +1,57 @@
+category: display
+blocks:
+- id: lcd_begin
+  name: Initialize LCD
+  description: I2C character LCD (16x2 / 20x4)
+  inputs:
+  - address
+  - columns
+  - rows
+  defaults:
+    address: '0x27'
+    columns: 16
+    rows: 2
+  includes:
+  - LiquidCrystal_I2C.h
+  libraries:
+  - LiquidCrystal I2C
+  instance:
+    var: lcd_name
+    prefix: lcd
+    key: []
+  declare: LiquidCrystal_I2C {lcd_name}({address}, {columns}, {rows});
+  setup: '{lcd_name}.init();
+
+    {lcd_name}.backlight();
+
+    '
+- id: lcd_print
+  name: Display Text
+  description: Needs an Initialize LCD block. Text can be typed or a connected value.
+  inputs:
+  - text
+  - column
+  - row
+  defaults:
+    column: 0
+    row: 0
+  strings:
+  - text
+  instance:
+    var: lcd_name
+    prefix: lcd
+    key: []
+    existing: true
+  code: '{lcd_name}.setCursor({column}, {row});
+
+    {lcd_name}.print({text});
+
+    '
+- id: lcd_clear
+  name: Clear LCD
+  instance:
+    var: lcd_name
+    prefix: lcd
+    key: []
+    existing: true
+  code: '{lcd_name}.clear();'

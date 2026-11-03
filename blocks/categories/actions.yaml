@@ -1,0 +1,66 @@
+category: actions
+blocks:
+- id: buzzer_on
+  hidden: true
+  inputs:
+  - pin
+  code: digitalWrite({pin}, HIGH);
+  setup: pinMode({pin}, OUTPUT);
+- id: buzzer_off
+  hidden: true
+  inputs:
+  - pin
+  code: digitalWrite({pin}, LOW);
+  setup: pinMode({pin}, OUTPUT);
+- id: buzzer_tone
+  name: Play Tone
+  inputs:
+  - pin
+  - frequency
+  - duration
+  defaults:
+    frequency: 1000
+    duration: 200
+  code: tone({pin}, {frequency}, {duration});
+  setup: pinMode({pin}, OUTPUT);
+- id: beep
+  name: Beep and Wait
+  description: Play a tone and wait until it has finished
+  inputs:
+  - pin
+  - frequency
+  - duration
+  defaults:
+    frequency: 1000
+    duration: 200
+  code: 'tone({pin}, {frequency}, {duration});
+
+    delay({duration});
+
+    '
+  setup: pinMode({pin}, OUTPUT);
+- id: buzzer_stop
+  name: Stop Tone
+  inputs:
+  - pin
+  code: noTone({pin});
+- id: relay_on
+  hidden: true
+  description: Active-high relay module
+  inputs:
+  - pin
+  code: digitalWrite({pin}, HIGH);
+  setup: pinMode({pin}, OUTPUT);
+- id: relay_off
+  hidden: true
+  inputs:
+  - pin
+  code: digitalWrite({pin}, LOW);
+  setup: pinMode({pin}, OUTPUT);
+- id: digital_write
+  name: Write Digital Pin
+  inputs:
+  - pin
+  - state
+  code: 'digitalWrite({pin}, {state} ? HIGH : LOW);'
+  setup: pinMode({pin}, OUTPUT);

@@ -1,0 +1,159 @@
+category: motors
+blocks:
+- id: servo_move
+  name: Move Servo
+  inputs:
+  - pin
+  - angle
+  includes:
+  - Servo.h
+  instance:
+    var: servo_name
+    prefix: servo
+    key:
+    - pin
+  declare: Servo {servo_name};
+  setup: '{servo_name}.attach({pin});'
+  code: '{servo_name}.write(constrain({angle}, 0, 180));'
+- id: servo_sweep
+  name: Sweep Servo
+  description: Move slowly from one angle to another (blocks while moving)
+  inputs:
+  - pin
+  - start_angle
+  - end_angle
+  - speed
+  defaults:
+    start_angle: 0
+    end_angle: 180
+    speed: 15
+  includes:
+  - Servo.h
+  instance:
+    var: servo_name
+    prefix: servo
+    key:
+    - pin
+  declare: Servo {servo_name};
+  setup: '{servo_name}.attach({pin});'
+  code: "for (int cf_angle = {start_angle}; cf_angle <= {end_angle}; cf_angle++) {{\n    {servo_name}.write(cf_angle);\n\
+    \    delay({speed});\n}}\n"
+- id: motor_on
+  name: Turn Motor ON
+  description: Single-pin motor driver (transistor / MOSFET), speed 0-255
+  inputs:
+  - enable_pin
+  - speed
+  defaults:
+    speed: 255
+  pwm:
+  - enable_pin
+  code: analogWrite({enable_pin}, constrain({speed}, 0, {pwm_max}));
+  setup: pinMode({enable_pin}, OUTPUT);
+- id: motor_off
+  name: Turn Motor OFF
+  inputs:
+  - enable_pin
+  code: analogWrite({enable_pin}, 0);
+  setup: pinMode({enable_pin}, OUTPUT);
+- id: motor_forward
+  name: Motor Forward
+  description: H-bridge driver (L298N / L293D / TB6612)
+  inputs:
+  - pin_a
+  - pin_b
+  - enable_pin
+  - speed
+  defaults:
+    speed: 255
+  pwm:
+  - enable_pin
+  code: 'digitalWrite({pin_a}, HIGH);
+
+    digitalWrite({pin_b}, LOW);
+
+    analogWrite({enable_pin}, constrain({speed}, 0, {pwm_max}));
+
+    '
+  setup: 'pinMode({pin_a}, OUTPUT);
+
+    pinMode({pin_b}, OUTPUT);
+
+    pinMode({enable_pin}, OUTPUT);
+
+    '
+- id: motor_backward
+  name: Motor Backward
+  inputs:
+  - pin_a
+  - pin_b
+  - enable_pin
+  - speed
+  defaults:
+    speed: 255
+  pwm:
+  - enable_pin
+  code: 'digitalWrite({pin_a}, LOW);
+
+    digitalWrite({pin_b}, HIGH);
+
+    analogWrite({enable_pin}, constrain({speed}, 0, {pwm_max}));
+
+    '
+  setup: 'pinMode({pin_a}, OUTPUT);
+
+    pinMode({pin_b}, OUTPUT);
+
+    pinMode({enable_pin}, OUTPUT);
+
+    '
+- id: motor_stop
+  name: Motor Stop
+  inputs:
+  - pin_a
+  - pin_b
+  - enable_pin
+  code: 'digitalWrite({pin_a}, LOW);
+
+    digitalWrite({pin_b}, LOW);
+
+    analogWrite({enable_pin}, 0);
+
+    '
+  setup: 'pinMode({pin_a}, OUTPUT);
+
+    pinMode({pin_b}, OUTPUT);
+
+    pinMode({enable_pin}, OUTPUT);
+
+    '
+- id: stepper_move
+  name: Move Stepper
+  description: Positive = clockwise. For 28BYJ-48 + ULN2003 wire pins in the order IN1, IN3, IN2, IN4.
+  inputs:
+  - pin1
+  - pin2
+  - pin3
+  - pin4
+  - steps
+  - rpm
+  - steps_per_rev
+  defaults:
+    rpm: 10
+    steps_per_rev: 2048
+  includes:
+  - Stepper.h
+  instance:
+    var: stepper_name
+    prefix: stepper
+    key:
+    - pin1
+    - pin2
+    - pin3
+    - pin4
+  declare: Stepper {stepper_name}({steps_per_rev}, {pin1}, {pin2}, {pin3}, {pin4});
+  code: '{stepper_name}.setSpeed({rpm});
+
+    {stepper_name}.step({steps});
+
+    '
