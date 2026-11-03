@@ -1,0 +1,9 @@
+__pycache__/
+*.pyc
+logs/*
+!logs/.gitkeep
+projects/*
+!projects/.gitkeep
+plugins/_disabled.json
+output/
+.venv/
