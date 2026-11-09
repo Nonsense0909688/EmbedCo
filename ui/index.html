@@ -1,0 +1,1437 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>EmbedCo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+<script>document.documentElement.dataset.theme='dark';try{localStorage.setItem('ec-theme','dark')}catch(e){}</script>
+<style>
+/* EmbedCo IDE — single consolidated stylesheet */
+:root{
+  --c0:#171717;--c1:#1e1e1e;--c2:#252526;--c3:#2d2d30;--c4:#37373d;
+  --line:#333336;--line2:#46464b;
+  --tx:#d9d9d9;--mu:#a0a0a5;--mu2:#707076;
+  --ac:#4aa3ff;--ac-solid:#0e639c;--ac-solid-h:#1177bb;--ac-soft:rgba(74,163,255,.16);
+  --ok:#7fd08a;--er:#f48771;--status:#0a5a96;
+  --mono:"JetBrains Mono",ui-monospace,Consolas,Menlo,monospace;
+  --shadow-lg:0 10px 30px rgba(0,0,0,.5);
+  /* legacy aliases used by inline styles in the script */
+  --bg:var(--c1);--canvas:var(--c1);--p:var(--c2);--p2:var(--c3);--p3:var(--c4);--bd:var(--line);--bd2:var(--line2);
+  --code-bg:var(--c1);--code-bd:var(--line);--input-bg:var(--c1);--gr:var(--ok);--dot:#3a3a3e;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+::selection{background:var(--ac-soft)}
+::-webkit-scrollbar{width:10px;height:10px}
+::-webkit-scrollbar-thumb{background:rgba(130,130,135,.35);border:2px solid transparent;background-clip:padding-box;border-radius:999px}
+::-webkit-scrollbar-thumb:hover{background:rgba(150,150,155,.55);background-clip:padding-box}
+::-webkit-scrollbar-track,::-webkit-scrollbar-corner{background:transparent}
+html,body{background:var(--c1)}
+body{margin:0;height:100vh;display:grid;grid-template-rows:30px 24px minmax(0,1fr) 24px;overflow:hidden;
+  color:var(--tx);font:13px/1.45 Inter,"Segoe UI",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+.sp{flex:1}.mu{color:var(--mu)}
+.bi{line-height:1;vertical-align:-.1em}
+button,input,select{font:inherit;color:inherit}
+button{cursor:pointer;white-space:nowrap;background:var(--c3);border:1px solid var(--line2);border-radius:4px;padding:5px 10px;font-size:12.5px;transition:background .12s,border-color .12s}
+button:hover{background:var(--c4)}
+button:disabled{opacity:.4;cursor:not-allowed}
+button.pri{background:var(--ac-solid);border-color:var(--ac-solid);color:#fff;font-weight:600}
+button.pri:hover{background:var(--ac-solid-h);border-color:var(--ac-solid-h)}
+input,select{background:var(--c1);border:1px solid var(--line2);border-radius:4px;padding:5px 8px;transition:border-color .12s,box-shadow .12s}
+input:hover,select:hover{border-color:#5a5a60}
+input:focus,select:focus{outline:none;border-color:var(--ac);box-shadow:0 0 0 3px var(--ac-soft)}
+input::placeholder{color:var(--mu2)}
+input[type=checkbox],input[type=range]{padding:0;border:0;background:none;box-shadow:none;accent-color:var(--ac-solid)}
+select{appearance:none;padding-right:22px;cursor:pointer;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 16 16' fill='none' stroke='%23a0a0a5' stroke-width='2'><path d='m3 6 5 5 5-5'/></svg>");
+  background-repeat:no-repeat;background-position:right 7px center}
+:focus-visible{outline:1.5px solid var(--ac);outline-offset:1px}
+kbd{font:11px var(--mono);color:var(--mu);background:var(--c4);border-radius:3px;padding:1px 6px}
+
+/* ---- menu bar ---- */
+.ide-menubar{height:30px;display:flex;align-items:center;padding:0 8px;background:var(--c0);border-bottom:1px solid var(--line);font-size:12px;position:relative;z-index:30;user-select:none}
+.menu-brand{width:22px;height:22px;display:block;margin-right:8px;border-radius:5px}
+.menu-spacer{flex:1}.menu-workspace{color:var(--mu2);font-size:11.5px;padding-right:6px}
+.menu-group{position:relative;height:100%;display:flex;align-items:center}
+.menu-trigger{height:24px;padding:0 9px;border:0;background:transparent;font-size:12px}
+.menu-trigger:hover,.menu-group.open>.menu-trigger{background:var(--c4)}
+.menu-dropdown{display:none;position:absolute;top:29px;left:0;min-width:244px;padding:4px;background:var(--c2);border:1px solid var(--line2);border-radius:6px;box-shadow:var(--shadow-lg);z-index:100}
+.menu-group.open .menu-dropdown{display:block}
+.menu-dropdown button{width:100%;display:flex;align-items:center;gap:10px;text-align:left;padding:6px 9px;border:0;background:transparent;border-radius:4px;font-size:12.5px}
+.menu-dropdown button:hover{background:#0a4a78;color:#fff}
+.menu-dropdown button .bi{width:15px;color:var(--mu);font-size:13px}
+.menu-dropdown button:hover .bi,.menu-dropdown button:hover kbd{color:#fff}
+.menu-dropdown button kbd{margin-left:auto;background:none;padding:0;color:var(--mu2)}
+.menu-dropdown hr{border:0;border-top:1px solid var(--line);margin:4px 2px}
+
+/* ---- toolbar + breadcrumb ---- */
+header{display:flex;align-items:center;gap:8px;padding:0 12px;background:var(--c2);border-bottom:1px solid var(--line);min-width:0}
+#name{width:230px;max-width:40vw;padding:5px 8px;font-size:13.5px;font-weight:600;background:transparent;border-color:transparent}
+#name:hover{border-color:var(--line2)}#name:focus{background:var(--c1)}
+.tb-btn{display:inline-flex;align-items:center;gap:6px;height:28px;padding:0 11px}
+#saveBtn .bi-circle-fill{font-size:7px;color:var(--er)}
+.crumbs{display:flex;align-items:center;gap:8px;padding:0 14px;background:var(--c1);border-bottom:1px solid var(--line);font-size:11.5px;color:var(--mu);white-space:nowrap;overflow:hidden}
+.crumb-file{font-weight:600;color:var(--tx)}.crumb-sep{color:var(--mu2)}
+.crumb-dirty{color:var(--er)}.crumb-clean{color:var(--ok)}
+
+/* ---- layout ---- */
+.app{display:grid;grid-template-columns:44px 264px minmax(0,1fr) 312px;grid-template-rows:minmax(0,1fr) var(--dock-height,34px);min-height:0;min-width:0}
+.activity{grid-column:1;grid-row:1/3;background:var(--c0);display:flex;flex-direction:column;align-items:center;padding:6px 0}
+.act-sp{flex:1}
+.act-btn{width:44px;height:44px;border:0;border-radius:0;background:transparent;color:var(--mu2);font-size:18px;display:grid;place-items:center;position:relative;padding:0}
+.act-btn:hover{color:var(--tx);background:transparent}
+.act-btn.on{color:#fff}
+.act-btn.on::before{content:"";position:absolute;left:0;top:8px;bottom:8px;width:2px;background:var(--ac)}
+.act-btn .badge{position:absolute;top:5px;right:4px;min-width:15px;height:15px;padding:0 4px;border-radius:999px;background:var(--ac-solid);color:#fff;font-size:9.5px;font-weight:700;display:grid;place-items:center}
+.left{grid-column:2;grid-row:1/3;background:var(--c2);border-right:1px solid var(--line);overflow-y:auto;min-width:0}
+.left-head{position:sticky;top:0;z-index:2;background:var(--c2);padding:12px 12px 10px;border-bottom:1px solid var(--line)}
+.panel-title{display:flex;align-items:baseline;gap:8px;margin:0 0 9px;font-size:12px;font-weight:600;color:var(--tx)}
+.panel-title span{margin-left:auto;font-weight:400;color:var(--mu2);font-size:11px}
+#q,.left-head input{width:100%;padding:6px 9px 6px 30px;font-size:12.5px;background-color:var(--c1);background-repeat:no-repeat;background-position:10px center;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23707076' stroke-width='2'><circle cx='11' cy='11' r='7'/><path d='m21 21-4.3-4.3'/></svg>")}
+#pal{padding:6px 8px 16px}
+.empty-hint{color:var(--mu2);font-size:12.5px;padding:18px 10px;text-align:center}
+
+/* ---- node library ---- */
+.cat{width:100%;display:flex;align-items:center;gap:8px;padding:7px 8px;border:0;background:transparent;border-radius:4px;font-size:12px;font-weight:600;text-align:left}
+.cat:hover{background:var(--c3)}
+.cat .cdot{width:8px;height:8px;border-radius:50%;flex:none}
+.cat .cnt{margin-left:auto;font-weight:500;font-size:11px;color:var(--mu2)}
+.cat .chev{font-size:10px;color:var(--mu2)}
+.pi{display:flex;align-items:center;gap:9px;padding:4px 8px;margin:1px 0 1px 12px;border-radius:5px;cursor:grab;user-select:none}
+.pi:hover{background:var(--c3)}.pi:active{cursor:grabbing}
+.pi-icon,.h-ic,.blk-icon{display:grid;place-items:center;flex:none;border-radius:5px;
+  background:color-mix(in srgb,var(--cc) 16%,var(--c2));border:1px solid color-mix(in srgb,var(--cc) 34%,var(--line))}
+.pi-icon{width:26px;height:26px;font-size:13px}
+.pi-txt{min-width:0;flex:1}
+.pi-name{display:block;font-size:12.5px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pi-desc{display:block;font-size:11px;color:var(--mu2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pi small{flex:none;font-size:10.5px;color:var(--mu);background:var(--c4);padding:1px 6px;border-radius:3px}
+
+/* ---- canvas ---- */
+.canvas-wrap{grid-column:3;grid-row:1;position:relative;min-width:0;min-height:0;display:flex;background:var(--c1)}
+.canvas{flex:1;min-height:0;overflow:auto;padding:28px 30px 90px;position:relative;outline:none;background-color:var(--c1);
+  background-image:radial-gradient(var(--dot) 1px,transparent 1px);background-size:20px 20px}
+.canvas.panning{cursor:grabbing!important}
+body.no-grid .canvas{background-image:none}
+.nodes{width:720px;margin:0 auto}
+.node{background:var(--c2);border:1px solid var(--line2);border-radius:6px;overflow:hidden}
+.nh{display:flex;align-items:center;gap:9px;padding:8px 12px;background:var(--c3);border-bottom:1px solid var(--line2);font-size:12.5px;font-weight:600}
+.nh-dot{width:8px;height:8px;border-radius:50%;background:var(--nc);flex:none}
+.nh small{font-weight:400;font-size:11.5px;color:var(--mu)}
+.nh .nh-icon{margin-left:auto;font:11px var(--mono);color:var(--mu2)}
+.wire{position:relative;width:2px;height:22px;margin:0 auto;background:var(--line2)}
+.wire::after{content:"";position:absolute;left:50%;bottom:-1px;transform:translateX(-50%);border:4px solid transparent;border-top-color:var(--line2);border-bottom:0}
+.list{display:flex;flex-direction:column;gap:8px;padding:10px;min-height:52px}
+.list:empty{margin:10px;padding:0;border:1px dashed var(--line2);border-radius:5px;background:rgba(0,0,0,.12)}
+.list:empty::before{content:attr(data-h);display:block;text-align:center;padding:14px 0;font-size:12px;color:var(--mu2)}
+.list.over,.slot.over{background:var(--ac-soft);outline:1.5px dashed var(--ac);outline-offset:-2px;border-radius:5px}
+.zoombar,.minimap{position:absolute;bottom:12px;z-index:6;background:rgba(37,37,38,.92);backdrop-filter:blur(6px);border:1px solid var(--line2);border-radius:6px;box-shadow:0 4px 14px rgba(0,0,0,.35)}
+.zoombar{left:12px;display:flex;align-items:center;gap:2px;padding:3px}
+.zoombar button{width:28px;height:28px;padding:0;display:grid;place-items:center;border:0;background:transparent;font-size:14px}
+.zoombar button:hover{background:var(--c4)}
+.zoombar .zpct{width:auto;min-width:50px;font-size:11.5px;font-weight:600;color:var(--mu)}
+.zsep{width:1px;height:16px;background:var(--line2);margin:0 3px}
+.minimap{right:12px;width:150px;height:100px;padding:5px;cursor:pointer;opacity:.9}
+.minimap:hover{opacity:1}
+.minimap canvas{width:100%;height:100%;display:block;border-radius:3px}
+
+/* ---- blocks ---- */
+.blk{position:relative;background:var(--c2);border:1px solid var(--line2);border-radius:6px;overflow:hidden;transition:border-color .12s,box-shadow .12s}
+.blk::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--cc)}
+.blk:hover{border-color:#5a5a60}
+.blk.sel{border-color:var(--ac);box-shadow:0 0 0 3px var(--ac-soft)}
+.h{display:flex;align-items:center;gap:9px;padding:8px 8px 6px 13px;cursor:grab;user-select:none}
+.h:active{cursor:grabbing}
+.blk-icon{width:26px;height:26px;font-size:13px}
+.h-title{display:flex;flex-direction:column;min-width:0;font-size:12.5px;font-weight:600;line-height:1.2}
+.h-cat{font-size:11px;font-weight:400;color:var(--mu2);margin-top:1px}
+.h>button{margin-left:auto;padding:2px 7px;border:0;background:transparent;color:var(--mu2);font-size:13px;opacity:0}
+.blk:hover>.h>button,.blk.sel>.h>button,.h>button:focus-visible{opacity:1}
+.h>button:hover{color:var(--er);background:color-mix(in srgb,var(--er) 12%,transparent)}
+.slots{display:flex;flex-wrap:wrap;gap:6px;padding:2px 10px 10px 13px}
+.slot{display:inline-flex;align-items:center;gap:6px;padding:2px 3px 2px 9px;background:var(--c1);border:1px solid var(--line);border-radius:5px}
+.slot:focus-within{border-color:var(--ac)}
+.slot>span:first-child{font-size:11.5px;color:var(--mu)}
+.slot input{width:64px;padding:3px 5px;font-size:12.5px;background:transparent;border-color:transparent}
+.slot input:hover{border-color:var(--line2)}
+.slot select{width:40px;padding:3px 14px 3px 5px;background-color:var(--c3);border-color:var(--line);color:var(--ac);font-weight:700;font-size:12.5px;background-position:right 4px center}
+.chip{display:inline-flex;align-items:center;flex-wrap:wrap;gap:6px;padding:3px 4px 3px 9px;border:1px solid color-mix(in srgb,var(--cc) 45%,var(--line));border-radius:5px;background:color-mix(in srgb,var(--cc) 10%,var(--c2))}
+.chip>b{font-size:12px;font-weight:600}
+.chip .slots{padding:0;gap:5px}
+.chip button{padding:1px 6px;border:0;background:transparent;color:var(--mu2)}
+.chip button:hover{color:var(--er);background:transparent}
+.kid{margin:0 10px 10px 13px;--rail:color-mix(in srgb,var(--cc) 55%,var(--line2))}
+.kid>small{display:block;margin:2px 0 5px;font-size:11.5px;font-weight:600;color:var(--mu)}
+.kid .list{padding:8px;min-height:44px;border-left:2px solid var(--rail);border-radius:0 5px 5px 0;background:rgba(0,0,0,.15)}
+.kid .list:empty{margin:0;border:1px dashed var(--line2);border-left:2px solid var(--rail)}
+
+/* ---- inspector ---- */
+.right{grid-column:4;grid-row:1/3;display:flex;flex-direction:column;min-width:0;overflow:hidden;background:var(--c2);border-left:1px solid var(--line)}
+.props{flex:1;display:flex;flex-direction:column;min-height:0}
+.props-head{display:flex;align-items:center;gap:8px;height:34px;flex:none;padding:0 8px 0 14px;border-bottom:1px solid var(--line);font-size:12px;font-weight:600}
+#propsBody{flex:1;min-height:0;overflow-y:auto;overflow-x:hidden;padding:14px}
+.inspector-empty{display:flex;flex-direction:column;align-items:center;gap:8px;margin:36px 8px;text-align:center;font-size:12.5px;color:var(--mu2)}
+.inspector-empty .bi{font-size:22px}.inspector-empty p{margin:0}
+.insp-head{display:flex;align-items:center;gap:10px}
+.h-ic{width:32px;height:32px;font-size:16px;border-radius:6px}
+.insp-name{font-size:14px;font-weight:600;line-height:1.25}.insp-cat{font-size:11.5px;color:var(--mu)}
+.insp-desc{margin:10px 0 0;font-size:12px;line-height:1.5;color:var(--mu)}
+.insp-sep{height:1px;background:var(--line);margin:14px 0}
+.props .slots{flex-direction:column;flex-wrap:nowrap;gap:12px;padding:0}
+.props .slot{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:5px 6px;padding:0;background:none;border:0;border-radius:0}
+.props .slot>span:first-child{grid-column:1/-1;font-size:11.5px}
+.props .slot>span:first-child::first-letter{text-transform:uppercase}
+.props .slot input{width:100%;padding:6px 8px;background:var(--c1);border-color:var(--line2)}
+.props .slot select{width:46px}
+.props .slot>.chip{grid-column:1/-1;display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:0 4px;padding:2px 0 2px 10px;border:0;border-left:2px solid var(--cc);border-radius:0;background:transparent}
+.props .chip>b{grid-column:1;grid-row:1}
+.props .chip>button{grid-column:2;grid-row:1}
+.props .chip>.slots{grid-column:1/-1;grid-row:2;margin-top:8px}
+
+/* ---- bottom dock ---- */
+.bottom-dock{grid-column:3;grid-row:2;position:relative;display:flex;flex-direction:column;min-width:0;min-height:0;overflow:hidden;background:var(--c1);border-top:1px solid var(--line2)}
+.dock-resize{position:absolute;left:0;right:0;top:-2px;height:4px;cursor:ns-resize;z-index:5}
+.dock-resize:hover{background:var(--ac)}
+body.resizing,body.resizing *{cursor:ns-resize!important;user-select:none}
+.dock-head{display:flex;align-items:center;gap:8px;flex:none;height:34px;padding:0 6px 0 4px;background:var(--c2);border-bottom:1px solid var(--line)}
+.dock-tabs{display:flex;align-items:stretch;height:100%;min-width:0;overflow:auto}
+.dock-tab{display:inline-flex;align-items:center;gap:7px;padding:0 12px;border:0;border-bottom:2px solid transparent;border-radius:0;background:transparent;color:var(--mu);font-size:12px}
+.dock-tab:hover{color:var(--tx);background:var(--c3)}
+.dock-tab.on{color:#fff;border-bottom-color:var(--ac);background:var(--c1)}
+.dock-actions{display:flex;align-items:center;gap:2px;margin-left:auto}
+.dock-actions button{border:0;background:transparent;padding:4px 8px}
+.dock-actions button:hover{background:var(--c4)}
+.lang{font-size:11.5px;color:var(--mu2);margin-right:6px}
+.dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--mu2)}
+.dot.on{background:var(--ok);box-shadow:0 0 6px rgba(127,208,138,.6)}.dot.err{background:var(--er)}
+.bottom-dock:not(.expanded) .dock-content{display:none}
+.dock-content{display:flex;flex:1;min-height:0;padding:0 10px 8px}
+.dock-pane{display:flex;flex-direction:column;flex:1;min-width:0;min-height:0;overflow:hidden}
+.dock-pane[hidden]{display:none!important}
+.code{flex:1;min-height:0;overflow:auto;padding:8px 0;background:var(--c1);font:var(--code-fs,12.5px)/1.65 var(--mono);color:var(--tx)}
+.ln{display:flex;min-width:max-content}.ln:hover{background:rgba(255,255,255,.04)}
+.ln i{width:44px;padding-right:14px;flex:none;text-align:right;font-style:normal;color:var(--mu2);user-select:none}
+.ln span{white-space:pre;padding-right:18px}
+.code.noln .ln i{display:none}
+.code.wrap .ln{min-width:0}.code.wrap .ln span{white-space:pre-wrap;word-break:break-word;flex:1;min-width:0}
+.k{color:#569cd6}.c{color:#6a9955;font-style:italic}.s{color:#ce9178}.n{color:#b5cea8}.p{color:#9cdcfe}.fn{color:#dcdcaa}.ty{color:#4ec9b0}.pre{color:#c586c0}
+#pane-serial{gap:8px;padding-top:8px}
+.serial-bar,.subtabs,.serial-send,.plot-controls{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.serial-auto{display:flex;align-items:center;gap:6px;margin-left:auto;font-size:11.5px;color:var(--mu)}
+.subtab{padding:3px 10px;font-size:11.5px;background:transparent;border-color:transparent;color:var(--mu)}
+.subtab.on{background:var(--c4);color:#fff}
+.serial-log{flex:1;min-height:0;overflow:auto;padding:8px 10px;background:var(--c0);border:1px solid var(--line);border-radius:4px;font:12px/1.6 var(--mono);white-space:pre-wrap;word-break:break-word}
+.serial-log .sys{color:var(--mu)}.serial-log .err{color:var(--er)}.serial-log .tx{color:var(--ac)}
+.serial-send input{flex:1;min-width:0}
+.serial-hint{margin:0;font-size:11.5px;color:var(--mu2)}
+#plotWrap{display:flex;flex-direction:column;gap:6px;flex:1;min-height:0}
+#serialPlot{width:100%;height:100%;min-height:120px;background:var(--c0);border:1px solid var(--line);border-radius:4px}
+.plot-legend{display:flex;flex-wrap:wrap;gap:8px;font-size:11px;color:var(--mu)}
+.utility-pane{padding:10px 2px;overflow:auto}
+.utility-log{margin:0;min-height:100%;padding:10px;background:var(--c0);border:1px solid var(--line);border-radius:4px;font:12px/1.55 var(--mono);white-space:pre-wrap}
+.terminal-note{padding:8px;font-size:12.5px;line-height:1.6;color:var(--mu)}
+.terminal-note code{padding:1px 5px;background:var(--c3);border-radius:3px;color:var(--tx)}
+
+/* ---- explorer / plugins / settings ---- */
+.proj-item{display:flex;align-items:center;gap:9px;padding:7px 8px;border:1px solid transparent;border-radius:5px;cursor:pointer}
+.proj-item:hover{background:var(--c3)}
+.proj-item.cur{background:var(--c3);box-shadow:inset 2px 0 0 var(--ac)}
+.proj-item .pi-icon{--cc:var(--mu);width:28px;height:28px}
+.proj-name{font-size:12.5px;font-weight:600;line-height:1.25}
+.proj-meta{display:block;font-size:11px;color:var(--mu2)}
+.proj-actions{display:flex;gap:2px;margin-left:auto;opacity:0}
+.proj-item:hover .proj-actions,.proj-item:focus-within .proj-actions{opacity:1}
+.proj-actions button{padding:3px 6px;border:0;background:transparent;font-size:12px}
+.proj-actions button:hover{background:var(--c4)}
+.proj-new{display:flex;gap:6px;padding:12px;border-top:1px solid var(--line)}
+.proj-new input{flex:1;min-width:0}
+.proj-foot-hint{margin:0;padding:0 14px 14px;font-size:11.5px;line-height:1.5;color:var(--mu2)}
+.plug-item{display:flex;gap:10px;align-items:flex-start;margin:6px 0;padding:9px;background:var(--c3);border:1px solid var(--line);border-radius:6px}
+.plug-item .pi-icon{--cc:var(--ac)}
+.plug-name{display:block;font-size:12.5px;font-weight:600}
+.plug-meta,.plug-desc{display:block;font-size:11.5px;color:var(--mu)}
+.plug-toggle{margin-left:auto;display:inline-flex;align-items:center;gap:6px;font-size:11.5px;color:var(--mu)}
+.set-sec{padding:12px 14px;border-top:1px solid var(--line)}
+.set-sec:first-of-type{border-top:0}
+.set-h{margin:0 0 8px;font-size:12px;font-weight:600}
+.set-row{display:flex;align-items:center;gap:10px;padding:5px 0;font-size:12.5px}
+.set-row label{flex:1}
+.set-row select,.set-row input[type=range]{width:128px}
+.key-row{display:flex;justify-content:space-between;gap:12px;padding:6px 0;border-bottom:1px solid var(--line);font-size:12.5px}
+
+/* ---- dialogs ---- */
+#uploadModal,#quickModal,#keysModal{position:fixed;inset:0;z-index:50;display:grid;place-items:center}
+#quickModal{place-items:start center;padding-top:12vh}
+#uploadModal[hidden],#quickModal[hidden],#keysModal[hidden]{display:none}
+.um-back{position:absolute;inset:0;background:rgba(0,0,0,.5);backdrop-filter:blur(2px)}
+.um-card{position:relative;width:min(560px,92vw);max-height:84vh;overflow:auto;padding:18px 20px;background:var(--c2);border:1px solid var(--line2);border-radius:8px;box-shadow:var(--shadow-lg)}
+.um-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.um-head h3{margin:0;font-size:14px;font-weight:600;display:flex;align-items:center;gap:8px}
+.um-head button{border:0;background:transparent;padding:4px 8px}
+.um-sub{margin:0 0 14px;font-size:12.5px;color:var(--mu)}
+.um-row{display:flex;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:10px}
+.um-row label{width:48px;flex:none;font-size:12px;color:var(--mu)}
+.um-board{font-weight:600}
+#uploadPort{flex:1;min-width:180px}
+#uploadStatus{margin-left:auto;font-size:12px}
+#uploadLog{margin:8px 0 0;max-height:300px;overflow:auto;padding:10px 12px;background:var(--c0);border:1px solid var(--line);border-radius:4px;font:12px/1.55 var(--mono);white-space:pre-wrap;word-break:break-word}
+#quickList .proj-item:first-child{background:var(--c4)}
+
+/* ---- status bar ---- */
+footer{display:flex;align-items:center;gap:10px;padding:0 10px;background:var(--status);color:#fff;font-size:11.5px}
+#st{display:flex;align-items:center;gap:7px}
+#st::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--ok)}
+#st.bad::before{background:#ffb4a6}#st.bad{color:#ffd9d2}
+footer label{display:flex;align-items:center;gap:6px;color:rgba(255,255,255,.8)}
+footer select{height:20px;padding:0 20px 0 6px;border-color:transparent;background-color:transparent;color:#fff;font-size:11.5px;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 16 16' fill='none' stroke='white' stroke-width='2'><path d='m3 6 5 5 5-5'/></svg>")}
+footer select:hover{background-color:rgba(255,255,255,.14);border-color:transparent}
+footer select option{background:var(--c2);color:var(--tx)}
+
+/* ---- responsive ---- */
+@media(max-width:1100px){.app{grid-template-columns:44px 232px minmax(0,1fr) 280px}}
+@media(max-width:860px){
+  body{height:auto;min-height:100vh;overflow:auto;grid-template-rows:30px 24px auto 24px}
+  .menu-workspace,.titlebar-board{display:none}
+  .app{grid-template-columns:minmax(0,1fr);grid-template-rows:auto auto minmax(60vh,auto) auto var(--dock-height,34px)}
+  .activity{grid-column:1;grid-row:1;flex-direction:row;height:44px;padding:0 6px}
+  .left{grid-column:1;grid-row:2;max-height:42vh;border-right:0;border-bottom:1px solid var(--line)}
+  .canvas-wrap{grid-column:1;grid-row:3;min-height:60vh}
+  .right{grid-column:1;grid-row:4;border-left:0;border-top:1px solid var(--line)}
+  .bottom-dock{grid-column:1;grid-row:5}
+  .nodes{width:100%}
+}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+
+/* ---- menu bar now carries the project controls ---- */
+.ide-menubar #name{width:190px;max-width:26vw;height:22px;padding:0 8px;font-size:12.5px;margin-left:8px}
+.ide-menubar .tb-btn{height:22px;padding:0 9px;font-size:12px;margin-left:4px}
+.ide-menubar .menu-spacer{min-width:8px}
+/* ---- side bar collapse ---- */
+body.side-collapsed .app{grid-template-columns:44px 0 minmax(0,1fr) 312px}
+body.side-collapsed .left{display:none}
+/* ---- settings modal ---- */
+#setModal{position:fixed;inset:0;z-index:50;display:grid;place-items:center}
+#setModal[hidden]{display:none}
+#setModal .set-sec{padding:12px 20px}
+#setModal .set-row select,#setModal .set-row input[type=range]{width:160px}
+/* ---- terminal ---- */
+#pane-terminal{padding-top:8px;gap:8px}
+.term-out{flex:1;min-height:0;overflow:auto;padding:8px 10px;background:var(--c0);border:1px solid var(--line);border-radius:4px;font:12px/1.55 var(--mono);white-space:pre-wrap;word-break:break-word}
+.term-out:empty::before{content:"Commands run on the computer that started server.py, one at a time.";color:var(--mu2)}
+.term-cmd{color:var(--ac)}.tx-err{color:var(--er)}
+.term-in{display:flex;align-items:center;gap:8px}
+.term-cwd{max-width:40%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;direction:rtl;font:11.5px var(--mono);color:var(--mu)}
+.term-in input{flex:1;min-width:0;font-family:var(--mono);font-size:12px}
+@media(max-width:860px){body.side-collapsed .app{grid-template-columns:minmax(0,1fr)}.ide-menubar #name{width:120px}.ide-menubar .tb-btn span{display:none}}
+
+#exampleModal{position:fixed;inset:0;z-index:50;display:grid;place-items:center}
+#exampleModal[hidden]{display:none}
+.ex-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.ex-card{display:flex;flex-direction:column;align-items:flex-start;gap:6px;padding:12px;text-align:left;white-space:normal;background:var(--c3);border-radius:6px}
+.ex-card:hover{border-color:var(--ac);background:var(--c4)}
+.ex-card b{font-size:13px}.ex-card .mu{font-size:12px;line-height:1.4}
+.ex-chips{display:flex;flex-wrap:wrap;gap:4px;margin-top:2px}
+.ex-chip{font-size:11px;padding:1px 7px;border-radius:4px;border:1px solid color-mix(in srgb,var(--cc) 40%,var(--line));background:color-mix(in srgb,var(--cc) 14%,var(--c2))}
+@media(max-width:560px){.ex-grid{grid-template-columns:1fr}}
+
+/* value-plug selector stays quiet until the field is hovered */
+.blk .slot select{opacity:.45;transition:opacity .12s}
+.blk .slot:hover select,.blk .slot:focus-within select{opacity:1}
+
+/* explicit stacking: menus always sit above the breadcrumb and workspace */
+.ide-menubar{z-index:1000}
+.crumbs{position:relative;z-index:1}
+.app{position:relative;z-index:0}
+.menu-dropdown::before{content:"";position:absolute;left:-4px;right:-4px;top:-10px;height:10px}
+</style>
+</head>
+<body>
+<div class="ide-menubar" role="menubar" aria-label="Application menu">
+  <img src="/logo.svg" alt="EmbedCo" class="menu-brand">
+  <div class="menu-group"><button type="button" class="menu-trigger" aria-haspopup="true" aria-expanded="false">File</button>
+    <div class="menu-dropdown">
+      <button data-a="new"><i class="bi bi-file-earmark-plus"></i> New Project <kbd>Ctrl+N</kbd></button>
+      <button data-a="example"><i class="bi bi-journal-code"></i> Open Example</button>
+      <hr><button id="menuSave"><i class="bi bi-floppy"></i> Save <kbd>Ctrl+S</kbd></button>
+      <hr><button data-a="imp"><i class="bi bi-file-earmark-arrow-up"></i> Import Project…</button>
+      <button data-a="exp"><i class="bi bi-file-earmark-arrow-down"></i> Export Project…</button>
+      <button data-a="dl"><i class="bi bi-download"></i> Download Arduino .ino</button>
+    </div>
+  </div>
+  <div class="menu-group"><button type="button" class="menu-trigger" aria-haspopup="true" aria-expanded="false">Edit</button>
+    <div class="menu-dropdown">
+      <button data-a="undo"><i class="bi bi-arrow-counterclockwise"></i> Undo <kbd>Ctrl+Z</kbd></button>
+      <button data-a="redo"><i class="bi bi-arrow-clockwise"></i> Redo <kbd>Ctrl+Y</kbd></button>
+    </div>
+  </div>
+  <div class="menu-group"><button type="button" class="menu-trigger" aria-haspopup="true" aria-expanded="false">View</button>
+    <div class="menu-dropdown"><button data-open-dock="code"><i class="bi bi-code-slash"></i> Code Preview</button>
+      <button data-open-dock="serial"><i class="bi bi-terminal"></i> Serial Monitor</button>
+      <button data-open-dock="terminal"><i class="bi bi-window-terminal"></i> Terminal</button>
+      <button id="menuSide"><i class="bi bi-layout-sidebar"></i> Toggle Side Bar <kbd>Ctrl+B</kbd></button>
+      <button id="menuToggleDock"><i class="bi bi-layout-bottom"></i> Toggle Bottom Panel <kbd>Ctrl+Space</kbd></button>
+    </div>
+  </div>
+  <div class="menu-group"><button type="button" class="menu-trigger" aria-haspopup="true" aria-expanded="false">Build</button>
+    <div class="menu-dropdown">
+      <button id="menuCompile"><i class="bi bi-check2-circle"></i> Verify / Compile</button>
+      <button data-a="upload"><i class="bi bi-upload"></i> Compile &amp; Upload</button>
+    </div>
+  </div>
+  <div class="menu-group"><button type="button" class="menu-trigger" aria-haspopup="true" aria-expanded="false">Help</button>
+    <div class="menu-dropdown">
+      <button id="menuShortcuts"><i class="bi bi-keyboard"></i> Keyboard Shortcuts</button>
+      <button id="menuAbout"><i class="bi bi-info-circle"></i> About EmbedCo</button>
+    </div>
+  </div>
+  <span class="menu-spacer"></span>
+  <input id="name" data-f="name" aria-label="Project name" value="My Project">
+  <button type="button" id="saveBtn" class="tb-btn" title="Save (Ctrl+S)"><i class="bi bi-floppy"></i> Save</button>
+  <button type="button" id="tbVerify" class="tb-btn" title="Compile without uploading (Ctrl+Shift+C)"><i class="bi bi-check2-circle"></i> Verify</button>
+  <button type="button" id="tbUpload" class="tb-btn pri" data-a="upload" title="Compile and upload (Ctrl+Enter)"><i class="bi bi-upload"></i> Upload</button>
+  <input type="file" id="file" accept=".json" hidden>
+</div>
+<nav class="crumbs" aria-label="Breadcrumb">
+  <span><i class="bi bi-folder2"></i> projects</span><span class="crumb-sep">›</span>
+  <span class="crumb-file" id="crumbFile">untitled.json</span>
+  <span id="crumbDirty"></span>
+  <span class="sp"></span><span id="crumbMeta">unsaved</span>
+</nav>
+<div class="app">
+  <div class="activity" aria-label="Activity bar">
+    <button type="button" class="act-btn on" id="actNodes" title="Node library (Ctrl+1)"><i class="bi bi-puzzle"></i></button>
+    <button type="button" class="act-btn" id="actProj" title="Project explorer (Ctrl+2)"><i class="bi bi-folder2"></i><span class="badge" id="projCount" hidden></span></button>
+    <button type="button" class="act-btn" id="actPlug" title="Plugins (Ctrl+3)"><i class="bi bi-usb-plug"></i><span class="badge" id="plugCount" hidden></span></button>
+    <span class="act-sp"></span>
+    <button type="button" class="act-btn" id="actSet" title="Settings & keyboard shortcuts (Ctrl+,)"><i class="bi bi-gear"></i></button>
+  </div>
+  <aside class="left">
+    <div id="viewNodes">
+      <div class="left-head">
+        <div class="panel-title">Node library <span>drag onto canvas</span></div>
+        <input id="q" type="search" placeholder="Search nodes…" aria-label="Search nodes">
+      </div>
+      <div id="pal"></div>
+    </div>
+    <div id="viewProj" hidden>
+      <div class="left-head">
+        <div class="panel-title">Explorer <span>projects/</span></div>
+        <input id="projQ" type="search" placeholder="Search projects…" aria-label="Search projects">
+      </div>
+      <div id="projList" style="padding:6px 10px"></div>
+      <div class="proj-new">
+        <input id="newProjName" placeholder="New project name…" aria-label="New project name">
+        <button type="button" id="newProjBtn">+ New</button>
+      </div>
+      <p class="proj-foot-hint">Projects are saved as <b>.json</b> in <b>projects/</b> next to server.py. Click one to open; use <i class="bi bi-download"></i> <i class="bi bi-pencil"></i> <i class="bi bi-file-earmark"></i> <i class="bi bi-trash3"></i> on hover.</p>
+    </div>
+    <div id="viewPlug" hidden>
+      <div class="left-head">
+        <div class="panel-title">Plugins <span>plugins/</span></div>
+      </div>
+      <div id="plugList" style="padding:6px 10px"></div>
+      <div class="proj-new">
+        <button type="button" id="plugInstallBtn" style="flex:1"><i class="bi bi-upload"></i> Install plugin .json…</button>
+        <input type="file" id="plugFile" accept=".json" hidden>
+      </div>
+      <p class="proj-foot-hint">A plugin adds blocks in the same category schema as <b>blocks/categories/*.yaml</b>. Drop files into <b>plugins/</b> and restart the server, or install one here. Disable one to hide its blocks from the palette.</p>
+    </div>
+  </aside>
+  <div class="canvas-wrap">
+    <main class="canvas" id="canvas" tabindex="0" aria-label="Node canvas. Ctrl+scroll to zoom, drag empty space to pan.">
+      <div class="nodes" id="ed"></div>
+    </main>
+    <div class="zoombar" aria-label="Canvas view controls">
+      <button type="button" id="zoomOut" title="Zoom out (−)">−</button>
+      <button type="button" id="zoomReset" class="zpct" title="Zoom to 100% (0)"><span id="zoomPct">100%</span></button>
+      <button type="button" id="zoomIn" title="Zoom in (+)">+</button>
+      <span class="zsep"></span>
+      <button type="button" id="zoomFit" title="Fit canvas">⤢</button>
+      <button type="button" id="gridToggle" title="Toggle grid"><i class="bi bi-grid-3x3"></i></button>
+    </div>
+    <div class="minimap" id="miniWrap" title="Overview — click to jump"><canvas id="mini"></canvas></div>
+  </div>
+  <aside class="right" aria-label="Node inspector">
+    <div class="card props" id="props">
+      <div class="props-head"><span class="ph-t"><i class="bi bi-sliders"></i> Node Properties</span>
+      </div>
+      <div id="propsBody"><div class="inspector-empty"><i class="bi bi-cursor"></i><p>Select a node on the canvas to edit its parameters.</p></div></div>
+    </div>
+  </aside>
+  <section class="bottom-dock" id="bottomDock" aria-label="Bottom panel">
+    <div class="dock-resize" id="dockResize" title="Drag to resize bottom panel"></div>
+    <div class="dock-head">
+      <div class="dock-tabs" role="tablist" aria-label="Bottom panel tabs">
+        <button class="dock-tab on" data-t="code" role="tab"><i class="bi bi-code-slash"></i> Code Preview</button>
+        <button class="dock-tab" data-t="serial" role="tab"><i class="bi bi-terminal"></i> Serial Monitor <span class="dot" id="serialDot"></span></button>
+        <button class="dock-tab" data-t="terminal" role="tab"><i class="bi bi-window-terminal"></i> Terminal</button>
+        <button class="dock-tab" data-t="output" role="tab"><i class="bi bi-card-text"></i> Output</button>
+      </div>
+      <div class="dock-actions">
+        <span class="lang" id="cardLang">Arduino .ino</span>
+        <button type="button" id="cardAction" title="Copy generated code"><i class="bi bi-clipboard"></i></button>
+        <button type="button" id="dockMax" title="Maximize panel"><i class="bi bi-arrows-angle-expand"></i></button>
+        <button type="button" id="dockCollapse" title="Collapse bottom panel" aria-expanded="false"><i class="bi bi-chevron-up"></i></button>
+      </div>
+    </div>
+    <div class="dock-content">
+      <div id="pane-code" class="dock-pane"><div class="code" id="code" tabindex="0" aria-label="Generated Arduino code"></div></div>
+      <div id="pane-serial" class="dock-pane" hidden>
+        <div class="serial-bar">
+          <label class="lang" for="serialBaud">Baud rate</label>
+          <select id="serialBaud" aria-label="Baud rate"><option>9600</option><option>19200</option><option>38400</option><option>57600</option><option selected>115200</option><option>230400</option><option>460800</option><option>921600</option></select>
+          <button type="button" id="serialConnect"><i class="bi bi-usb-plug"></i> Connect</button>
+          <button type="button" id="serialClear"><i class="bi bi-trash3"></i> Clear</button>
+          <label class="serial-auto"><input type="checkbox" id="serialAutoScroll" checked> Auto-scroll</label>
+        </div>
+        <div class="subtabs" role="tablist" aria-label="Serial view"><button type="button" class="subtab on" data-st="log">Log</button><button type="button" class="subtab" data-st="plot">Plot</button><span class="sp"></span><span class="lang">Numeric lines can be plotted</span></div>
+        <div class="serial-log" id="serialLog" tabindex="0" aria-label="Serial monitor output"></div>
+        <div id="plotWrap" hidden><div class="plot-controls"><button type="button" id="plotPause">Pause</button><button type="button" id="plotClear">Clear</button></div><canvas id="serialPlot" aria-label="Serial graph"></canvas><div class="plot-legend" id="plotLegend">Send numeric lines (e.g. 512 or A0: 512) to plot.</div></div>
+        <div class="serial-send"><input id="serialSend" placeholder="Send text to board…" aria-label="Send to board" autocomplete="off"><button type="button" id="serialSendBtn"><i class="bi bi-send"></i> Send</button></div>
+        <p class="serial-hint" id="serialHint">No board connected. Connect via USB in Chrome or Edge using Web Serial.</p>
+      </div>
+      <div id="pane-terminal" class="dock-pane" hidden>
+        <div class="term-out" id="termOut" tabindex="0" aria-label="Terminal output"></div>
+        <div class="term-in"><span class="term-cwd" id="termCwd">$</span><input id="termIn" placeholder="Run a command, e.g. arduino-cli board list" autocomplete="off" spellcheck="false" aria-label="Terminal command"></div>
+      </div>
+      <div id="pane-output" class="dock-pane utility-pane" hidden><pre id="outputLog" class="utility-log">EmbedCo output will appear here.</pre></div>
+    </div>
+  </section>
+</div>
+<footer><span id="st">Loading…</span><span class="sp"></span><label>Board <select id="board" data-f="board" aria-label="Board"></select></label></footer>
+
+<!-- Settings -->
+<div id="setModal" hidden>
+  <div class="um-back" data-close></div>
+  <div class="um-card" role="dialog" aria-label="Settings" style="width:min(520px,92vw);padding:0">
+    <div class="um-head" style="padding:16px 20px 10px;margin:0"><h3><i class="bi bi-gear"></i> Settings</h3><button type="button" id="setClose" aria-label="Close"><i class="bi bi-x-lg"></i></button></div>
+      <div class="set-sec">
+        <h4 class="set-h">Appearance</h4>
+        <div class="set-row"><label for="setGrid">Canvas grid</label><input type="checkbox" id="setGrid" checked></div>
+        <div class="set-row"><label for="setMini">Minimap</label><input type="checkbox" id="setMini" checked></div>
+      </div>
+      <div class="set-sec">
+        <h4 class="set-h">Code preview</h4>
+        <div class="set-row"><label for="setHL">Syntax highlighting</label><input type="checkbox" id="setHL" checked></div>
+        <div class="set-row"><label for="setLN">Line numbers</label><input type="checkbox" id="setLN" checked></div>
+        <div class="set-row"><label for="setWrap">Word wrap</label><input type="checkbox" id="setWrap"></div>
+        <div class="set-row"><label for="setCodeSize">Font size</label><input type="range" id="setCodeSize" min="11" max="17" value="13"><span id="setCodeSizeVal">13px</span></div>
+      </div>
+      <div class="set-sec">
+        <h4 class="set-h">Editor</h4>
+        <div class="set-row"><label for="setAuto">Autosave</label><input type="checkbox" id="setAuto"></div>
+        <div class="set-row"><label for="setAutoEvery">Autosave every</label>
+          <select id="setAutoEvery"><option value="5">5s</option><option value="10" selected>10s</option><option value="30">30s</option></select></div>
+        <div class="set-row"><button type="button" id="setReset" style="flex:1"><i class="bi bi-arrow-counterclockwise"></i> Reset settings</button></div>
+      </div>
+  </div>
+</div>
+
+<!-- Examples -->
+<div id="exampleModal" hidden>
+  <div class="um-back" data-close></div>
+  <div class="um-card" role="dialog" aria-label="Open example" style="width:min(640px,94vw)">
+    <div class="um-head"><h3><i class="bi bi-journal-code"></i> Open an example</h3><button type="button" id="exampleClose" aria-label="Close"><i class="bi bi-x-lg"></i></button></div>
+    <p class="um-sub">Loads the example into the editor. Your current canvas is replaced, and you can undo with Ctrl+Z.</p>
+    <div class="ex-grid" id="exampleGrid"></div>
+  </div>
+</div>
+
+<!-- Upload modal: compile + flash via arduino-cli -->
+<div id="uploadModal" hidden>
+  <div class="um-back" data-close></div>
+  <div class="um-card" role="dialog" aria-label="Compile and upload to board">
+    <div class="um-head"><h3><i class="bi bi-upload"></i> Upload to board</h3><button type="button" id="uploadClose" aria-label="Close"><i class="bi bi-x-lg"></i></button></div>
+    <p class="um-sub">Compiles the <b>current sketch</b> with arduino-cli and flashes it to the selected board.</p>
+    <div class="um-row">
+      <label>Board</label><span id="uploadBoard" class="um-board">—</span>
+    </div>
+    <div class="um-row">
+      <label for="uploadPort">Port</label>
+      <select id="uploadPort" aria-label="Serial port"></select>
+      <button type="button" id="uploadRefresh"><i class="bi bi-arrow-clockwise"></i> Refresh</button>
+    </div>
+    <div class="um-row">
+      <button type="button" class="pri" id="doUpload"><i class="bi bi-play-fill"></i> Compile &amp; Upload</button>
+      <button type="button" id="doCompile">Verify (compile only)</button>
+      <span id="uploadStatus" class="mu"></span>
+    </div>
+    <pre id="uploadLog" aria-label="Compile and upload log"></pre>
+  </div>
+</div>
+
+<!-- Quick Open (Ctrl+P) -->
+<div id="quickModal" hidden>
+  <div class="um-back" data-close></div>
+  <div class="um-card" role="dialog" aria-label="Quick open" style="width:min(480px,92vw)">
+    <div class="um-head"><h3>Quick Open</h3><button type="button" id="quickClose" aria-label="Close"><i class="bi bi-x-lg"></i></button></div>
+    <input id="quickQ" placeholder="Type a project name or command…" aria-label="Quick open search" style="width:100%;margin-bottom:10px">
+    <div id="quickList" style="max-height:320px;overflow:auto"></div>
+  </div>
+</div>
+
+<!-- Keyboard shortcuts ( ? ) -->
+<div id="keysModal" hidden>
+  <div class="um-back" data-close></div>
+  <div class="um-card" role="dialog" aria-label="Keyboard shortcuts" style="width:min(520px,92vw)">
+    <div class="um-head"><h3><i class="bi bi-keyboard"></i> Keyboard shortcuts</h3><button type="button" id="keysClose" aria-label="Close"><i class="bi bi-x-lg"></i></button></div>
+    <div id="keysTable" style="font-size:13px"></div>
+  </div>
+</div>
+<script>
+const $=s=>document.querySelector(s);
+/* category colors + icons (n8n-style node identity) */
+const CC={lights:'#f5a524',sensors:'#3fb97a',motors:'#8c7cff',actions:'#f0605a',logic:'#d28bd0',timing:'#f07ab0',values:'#8b949e',communication:'#a6d44f',display:'#2fc4b2',advanced:'#5b8def'};
+const CI={lights:'<i class="bi bi-lightbulb"></i>',sensors:'<i class="bi bi-activity"></i>',motors:'<i class="bi bi-gear"></i>',actions:'<i class="bi bi-lightning-charge"></i>',logic:'<i class="bi bi-cpu"></i>',timing:'<i class="bi bi-stopwatch"></i>',values:'<i class="bi bi-123"></i>',communication:'<i class="bi bi-broadcast"></i>',display:'<i class="bi bi-display"></i>',advanced:'<i class="bi bi-wrench-adjustable"></i>'};
+const ic=c=>CI[c]||'<i class="bi bi-usb-plug"></i>';
+const D={},nb=(t,i={})=>({type:t,inputs:i}),cap=s=>s[0].toUpperCase()+s.slice(1);
+const esc=s=>String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;');
+const pj=P=>esc(JSON.stringify(P));
+const down='Can’t reach the EmbedCo server. Is server.py still running?';
+const EXAMPLE=()=>({name:'Automatic Door',board:'uno',setup:[],loop:[{type:'if',inputs:{condition:nb('between',{value:nb('read_distance',{trigger_pin:9,echo_pin:10}),low:1,high:20})},then:[nb('servo_move',{pin:6,angle:90})],else:[nb('servo_move',{pin:6,angle:0})]}]});
+let st=EXAMPLE(),sel=null,hist=[],redo=[],sketch='',seq=0,term='',drag=null;
+const open=new Set(['lights','sensors','motors','advanced']);
+const get=P=>P.reduce((o,k)=>o[k],st);
+const mk=t=>{const b=nb(t),d=D[t];if(d.t=='if'){b.then=[];b.else=[]}else if(d.t)b.body=[];return b};
+const snap=()=>JSON.stringify(st);
+function commit(f){hist.push(snap());if(hist.length>100)hist.shift();redo=[];f();draw()}
+/* ---------- theme ---------- */
+
+/* ---------- zoom / pan / minimap (visual-editor canvas) ---------- */
+let zoomC=(()=>{try{return parseFloat(localStorage.getItem('ec-zoom'))||1}catch(_){return 1}})();
+const clampZoom=z=>Math.min(2.5,Math.max(0.3,z));
+function setZoom(z,anchor){
+  const cv=$('#canvas'),ed=$('#ed');
+  const before=anchor&&anchor.clientX!==undefined?{
+    x:cv.scrollLeft+anchor.clientX-cv.getBoundingClientRect().left,
+    y:cv.scrollTop+anchor.clientY-cv.getBoundingClientRect().top,
+    rx:(cv.scrollLeft+anchor.clientX-cv.getBoundingClientRect().left)/cv.scrollWidth,
+    ry:(cv.scrollTop+anchor.clientY-cv.getBoundingClientRect().top)/cv.scrollHeight}:null;
+  zoomC=clampZoom(z);
+  ed.style.zoom=zoomC;
+  cv.style.backgroundSize=(20*zoomC)+'px '+(20*zoomC)+'px';
+  $('#zoomPct').textContent=Math.round(zoomC*100)+'%';
+  try{localStorage.setItem('ec-zoom',String(zoomC))}catch(_){}
+  if(before){cv.scrollLeft=before.rx*cv.scrollWidth-(anchor.clientX-cv.getBoundingClientRect().left);cv.scrollTop=before.ry*cv.scrollHeight-(anchor.clientY-cv.getBoundingClientRect().top)}
+  updateMinimap();
+}
+$('#zoomIn').addEventListener('click',()=>setZoom(zoomC*1.2));
+$('#zoomOut').addEventListener('click',()=>setZoom(zoomC/1.2));
+$('#zoomReset').addEventListener('click',()=>setZoom(1));
+$('#zoomFit').addEventListener('click',()=>{const w=$('#canvas').clientWidth;setZoom(Math.min(1,(w-48)/700));$('#canvas').scrollTop=0;$('#canvas').scrollLeft=0});
+$('#gridToggle').addEventListener('click',()=>{ST.grid=!ST.grid;saveSettings();applySettings()});
+$('#canvas').addEventListener('wheel',e=>{if(e.ctrlKey||e.metaKey){e.preventDefault();setZoom(zoomC*(e.deltaY<0?1.12:1/1.12),e)}},{passive:false});
+$('#canvas').addEventListener('keydown',e=>{
+  if(/INPUT|SELECT|TEXTAREA/.test(e.target.tagName))return;
+  if(e.key==='+'||e.key==='='){e.preventDefault();setZoom(zoomC*1.2)}
+  else if(e.key==='-'){e.preventDefault();setZoom(zoomC/1.2)}
+  else if(e.key==='0'){e.preventDefault();setZoom(1)}
+});
+/* pan: drag empty canvas (or hold Space / middle button) */
+let pan=null,spaceDown=false;
+document.addEventListener('keydown',e=>{if(e.code==='Space'&&!/INPUT|SELECT|TEXTAREA/.test(e.target.tagName))spaceDown=true});
+document.addEventListener('keyup',e=>{if(e.code==='Space')spaceDown=false});
+$('#canvas').addEventListener('pointerdown',e=>{
+  const onChip=e.target.closest('.blk,.slot,input,select,button,.zoombar,.minimap');
+  if(!onChip||e.button===1||spaceDown){pan={x:e.clientX,y:e.clientY,l:$('#canvas').scrollLeft,t:$('#canvas').scrollTop};$('#canvas').classList.add('panning');$('#canvas').setPointerCapture(e.pointerId)}
+});
+$('#canvas').addEventListener('pointermove',e=>{if(!pan)return;$('#canvas').scrollLeft=pan.l-(e.clientX-pan.x);$('#canvas').scrollTop=pan.t-(e.clientY-pan.y);updateMinimap()});
+const endPan=()=>{pan=null;$('#canvas').classList.remove('panning')};
+$('#canvas').addEventListener('pointerup',endPan);$('#canvas').addEventListener('pointercancel',endPan);
+$('#canvas').addEventListener('scroll',()=>updateMinimap());
+function updateMinimap(){
+  const mini=$('#mini');if(!mini)return;
+  const dpr=window.devicePixelRatio||1,W=mini.clientWidth,H=mini.clientHeight;
+  if(!W||!H)return;
+  if(mini.width!==W*dpr){mini.width=W*dpr;mini.height=H*dpr}
+  const ctx=mini.getContext('2d');ctx.setTransform(dpr,0,0,dpr,0,0);
+  ctx.clearRect(0,0,W,H);
+  ctx.fillStyle=getComputedStyle(document.documentElement).getPropertyValue('--c1').trim()||'#1e1e1e';ctx.fillRect(0,0,W,H);
+  const cv=$('#canvas'),ch=cv.scrollHeight||1,cw=cv.scrollWidth||1;
+  const sx=W/cw,sy=H/ch,s=Math.min(sx,sy)||1;
+  const ox=(W-cw*s)/2,oy=2;
+  for(const el of document.querySelectorAll('.node')){
+    const r=el.getBoundingClientRect(),cr=cv.getBoundingClientRect();
+    ctx.fillStyle=getComputedStyle(document.documentElement).getPropertyValue('--line2').trim()||'#46464b';
+    ctx.fillRect(ox+(r.left-cr.left+cv.scrollLeft)*s,oy+(r.top-cr.top+cv.scrollTop)*s,Math.max(4,r.width*s),Math.max(4,r.height*s));
+  }
+  ctx.strokeStyle='#4aa3ff';ctx.lineWidth=1.4;
+  ctx.strokeRect(ox+cv.scrollLeft*s,oy+cv.scrollTop*s,Math.max(8,cv.clientWidth*s),Math.max(8,cv.clientHeight*s));
+}
+$('#miniWrap').addEventListener('click',e=>{
+  const r=$('#mini').getBoundingClientRect(),cv=$('#canvas');
+  const ch=cv.scrollHeight||1,cw=cv.scrollWidth||1;
+  const sx=$('#mini').clientWidth/cw,sy=$('#mini').clientHeight/ch,s=Math.min(sx,sy)||1;
+  const ox=($('#mini').clientWidth-cw*s)/2;
+  cv.scrollLeft=Math.max(0,((e.clientX-r.left)-ox)/s-cv.clientWidth/2);
+  cv.scrollTop=Math.max(0,((e.clientY-r.top)-2)/s-cv.clientHeight/2);
+  updateMinimap();
+});
+
+/* ---------- plugins ---------- */
+async function refreshPlugins(){
+  let list=[];
+  try{const r=await (await fetch('/api/plugins')).json();list=r.plugins||[]}catch(_){}
+  const b=$('#plugCount');b.hidden=!list.length;b.textContent=list.length;
+  $('#plugList').innerHTML=list.length?list.map(p=>`
+    <div class="plug-item"><span class="pi-icon"><i class="bi bi-usb-plug"></i></span>
+      <span class="pi-txt"><span class="plug-name">${esc(p.name)}</span>
+      <span class="plug-meta">${esc(p.id)} · v${esc(p.version)} · ${p.blocks.length} blocks</span>
+      <span class="plug-desc">${esc(p.description||'')}</span></span>
+      <label class="plug-toggle"><input type="checkbox" data-plug="${esc(p.id)}" ${p.enabled?'checked':''}> Enabled</label>
+    </div>`).join(''):'<p class="empty-hint">No plugins installed. Drop a .json file into <b>plugins/</b> (restart server) or install one below.</p>';
+}
+$('#plugList').addEventListener('change',async e=>{
+  const cb=e.target.closest('[data-plug]');if(!cb)return;
+  try{
+    await fetch(`/api/plugins/${encodeURIComponent(cb.dataset.plug)}/toggle`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({enabled:cb.checked})});
+    await loadPalette();status(cb.checked?'Plugin enabled — blocks added to the palette':'Plugin disabled — its blocks hidden');
+  }catch(_){status('Plugin toggle failed',true)}
+});
+$('#plugInstallBtn').addEventListener('click',()=>$('#plugFile').click());
+$('#plugFile').addEventListener('change',async e=>{
+  const f=e.target.files[0];if(!f)return;
+  try{
+    const content=await f.text();JSON.parse(content);
+    const r=await fetch('/api/plugins/install',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({filename:f.name,content})});
+    const j=await r.json();
+    if(j.error)throw new Error(j.error);
+    await refreshPlugins();await loadPalette();status('Plugin "'+(j.plugin?.name||f.name)+'" installed — its blocks are in the palette');
+  }catch(err){status('Plugin install failed: '+err.message,true)}
+  e.target.value='';
+});
+async function loadPalette(){
+  const j=await (await fetch('/api/palette')).json();
+  const T={conditional:'if',loop:'rep',while:'while',timer:'every'};
+  for(const [c,list] of Object.entries(j.palette))for(const b of list){
+    if(b.control=='else')continue;
+    D[b.id]={c,n:b.name,i:b.inputs||[],d:b.defaults||{},o:b.output?1:0,t:T[b.control],desc:b.description};
+  }
+  const g={};for(const id in D)if(D[id].o)(g[D[id].c]=g[D[id].c]||[]).push(id);
+  OE='<option value="">ƒ</option>'+Object.entries(g).map(([c,ids])=>`<optgroup label="${cap(c)}">${ids.map(id=>`<option value="${id}">${esc(D[id].n)}</option>`).join('')}</optgroup>`).join('');
+  if(!$('#board').options.length){
+    boardBaud={};for(const b of j.boards)boardBaud[b.id]=b.default_baud||9600;
+    $('#board').innerHTML=j.boards.map(b=>`<option value="${b.id}">${esc(b.name)}</option>`).join('');
+    if(boardBaud[st.board]&&[...$('#serialBaud').options].some(o=>+o.value===boardBaud[st.board]))$('#serialBaud').value=String(boardBaud[st.board]);
+  }
+  drawPal();
+}
+
+/* ---------- VS Code-style project manager ---------- */
+let currentId=(()=>{try{return localStorage.getItem('ec-current-id')||null}catch(_){return null}})();
+let dirty=false,loading=true,projTerm='';
+function remember(){try{currentId?localStorage.setItem('ec-current-id',currentId):localStorage.removeItem('ec-current-id')}catch(_){}}
+function crumbs(){
+  const board=$('#board')?.selectedOptions[0]?.textContent||st.board||'—';
+  $('#crumbFile').textContent=(currentId?currentId:(st.name||'untitled')).replace(/\s+/g,'_')+'.json';
+  const d=$('#crumbDirty'),m=$('#crumbMeta');
+  if(!currentId){d.innerHTML='<span class="crumb-dirty">●</span> untitled';m.textContent='Not saved yet'}
+  else if(dirty){d.innerHTML='<span class="crumb-dirty">●</span> modified';m.textContent='Ctrl+S to save'}
+  else{d.innerHTML='<span class="crumb-clean">✓</span> saved';m.textContent=''}
+  $('#saveBtn').innerHTML=dirty?'<i class="bi bi-circle-fill"></i> Save':'<i class="bi bi-floppy"></i> Save';
+}
+function markDirty(){if(loading)return;dirty=true;crumbs()}
+function clearDirty(){dirty=false;crumbs()}
+let curView='nodes';
+function switchView(v){
+  if(v==='set'){$('#setModal').hidden=false;return}
+  document.body.classList.remove('side-collapsed');curView=v;
+  const proj=v==='proj',plug=v==='plug',set=false;
+  $('#viewProj').hidden=!proj;$('#viewPlug').hidden=!plug;$('#viewNodes').hidden=proj||plug||set;
+  $('#actProj').classList.toggle('on',proj);$('#actPlug').classList.toggle('on',plug);$('#actSet').classList.toggle('on',set);$('#actNodes').classList.toggle('on',!proj&&!plug&&!set);
+  if(proj)refreshProjects();if(plug)refreshPlugins();
+}
+const actToggle=v=>{const c=document.body.classList;if(curView===v&&!c.contains('side-collapsed'))c.add('side-collapsed');else switchView(v)};
+$('#actProj').addEventListener('click',()=>actToggle('proj'));
+$('#actNodes').addEventListener('click',()=>actToggle('nodes'));
+$('#actPlug').addEventListener('click',()=>actToggle('plug'));
+$('#actSet').addEventListener('click',()=>switchView('set'));
+$('#setClose').addEventListener('click',()=>$('#setModal').hidden=true);
+$('#setModal .um-back').addEventListener('click',()=>$('#setModal').hidden=true);
+document.addEventListener('keydown',e=>{if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='b'){e.preventDefault();document.body.classList.toggle('side-collapsed')}});
+$('#projQ').addEventListener('input',e=>{projTerm=e.target.value.trim().toLowerCase();
+  document.querySelectorAll('#projList .proj-item').forEach(el=>el.style.display=el.dataset.search.includes(projTerm)?'':'none')});
+function fmtDate(ts){try{return new Date(ts*1000).toLocaleString(undefined,{month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'})}catch(_){return ''}}
+async function refreshProjects(){
+  let list=[];
+  try{const r=await (await fetch('/api/projects')).json();list=r.projects||[]}catch(_){}
+  const badge=$('#projCount');badge.hidden=!list.length;badge.textContent=list.length;
+  $('#projList').innerHTML=list.length?list.map(p=>`
+    <div class="proj-item${p.id===currentId?' cur':''}" data-id="${esc(p.id)}" data-search="${esc((p.name+' '+p.id).toLowerCase())}" title="${esc(p.id)}.json">
+      <span class="pi-icon"><i class="bi bi-file-earmark"></i></span>
+      <span class="pi-txt"><span class="proj-name">${esc(p.name)}</span>
+      <span class="proj-meta">${esc(p.board)} · ${fmtDate(p.updated)} · ${p.nodes||0} nodes</span></span>
+      <span class="proj-actions">
+        <button type="button" data-proj="dup" data-id="${esc(p.id)}" title="Duplicate"><i class="bi bi-file-earmark"></i></button>
+        <button type="button" data-proj="rename" data-id="${esc(p.id)}" title="Rename"><i class="bi bi-pencil"></i></button>
+        <button type="button" data-proj="del" data-id="${esc(p.id)}" title="Delete"><i class="bi bi-trash3"></i></button>
+      </span>
+    </div>`).join(''):'<p class="empty-hint">No projects yet — name one below and press + New.</p>';
+}
+async function saveProject(){
+  const payload={name:st.name||'Project',board:st.board,setup:st.setup,loop:st.loop};
+  try{
+    const r=await fetch(currentId?`/api/projects/${encodeURIComponent(currentId)}`:'/api/projects',
+      {method:currentId?'PUT':'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({project:payload})});
+    const j=await r.json();
+    if(j.error)throw new Error(j.error);
+    currentId=j.meta.id;remember();clearDirty();refreshProjects();
+    status('Saved — projects/'+currentId+'.json');
+  }catch(e){status('Save failed: '+e.message,true)}
+}
+async function openProject(id){
+  if(id===currentId){switchView('nodes');return}
+  if(dirty&&currentId){if(confirm('Save changes to the current project before switching?'))await saveProject()}
+  try{
+    const r=await (await fetch(`/api/projects/${encodeURIComponent(id)}`)).json();
+    if(r.error)throw new Error(r.error);
+    loading=true;st=r.project;currentId=id;hist=[];redo=[];sel=null;draw();loading=false;clearDirty();remember();
+    status('Opened — projects/'+id+'.json');switchView('nodes');
+  }catch(e){status('Open failed: '+e.message,true)}
+}
+$('#saveBtn').addEventListener('click',saveProject);
+$('#projList').addEventListener('click',e=>{
+  const b=e.target.closest('[data-proj]');
+  const item=e.target.closest('.proj-item');
+  if(b){e.stopPropagation();const id=b.dataset.id;
+    if(b.dataset.proj==='del'){if(confirm('Delete this project?'))fetch(`/api/projects/${encodeURIComponent(id)}`,{method:'DELETE'}).then(async()=>{if(id===currentId){st={name:'My Project',board:st.board,setup:[],loop:[]};currentId=null;remember()}refreshProjects()})}
+    else if(b.dataset.proj==='rename'){const cur=item.querySelector('.proj-name').textContent;const n=prompt('New name:',cur);if(n)fetch(`/api/projects/${encodeURIComponent(id)}/rename`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name:n})}).then(r=>r.json()).then(j=>{if(j.meta){if(id===currentId){st.name=j.project.name;draw()}refreshProjects()}})}
+    else if(b.dataset.proj==='dup'){fetch(`/api/projects/${encodeURIComponent(id)}/duplicate`,{method:'POST',headers:{'Content-Type':'application/json'},body:'{}'}).then(r=>r.json()).then(()=>refreshProjects())}
+    return}
+  if(item)openProject(item.dataset.id);
+});
+async function newProject(){
+  const name=($('#newProjName').value.trim())||'My Project';
+  if(dirty&&currentId&&confirm('Save changes to the current project before creating a new one?'))await saveProject();
+  const payload={name,board:st.board,setup:[],loop:[]};
+  try{
+    const r=await (await fetch('/api/projects',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({project:payload})})).json();
+    if(r.error)throw new Error(r.error);
+    $('#newProjName').value='';loading=true;st=r.project;currentId=r.meta.id;hist=[];redo=[];sel=null;draw();loading=false;clearDirty();remember();refreshProjects();
+    status('Created — projects/'+currentId+'.json');switchView('nodes');
+  }catch(e){status('New failed: '+e.message,true)}
+}
+$('#newProjBtn').addEventListener('click',newProject);
+$('#newProjName').addEventListener('keydown',e=>{if(e.key==='Enter')newProject()});
+
+/* ---------- canvas nodes ---------- */
+function slots(b,BP){
+  const d=D[b.type];if(!d.i.length)return'';
+  return`<div class="slots">`+d.i.map(k=>{
+    const v=(b.inputs||{})[k],lab=k.replace(/_/g,' '),sp=[...BP,'inputs',k];
+    if(v&&typeof v=='object'){const vd=D[v.type];
+      return`<span class="slot" data-p="${pj(BP)}" data-k="${k}"><span>${lab}</span><span class="chip" style="--cc:${CC[vd.c]}"><b>${ic(vd.c)} ${esc(vd.n)}</b>${slots(v,sp)}<button type="button" data-a="unplug" data-p="${pj(BP)}" data-k="${k}" title="Unplug" aria-label="Unplug ${lab}"><i class="bi bi-x-lg"></i></button></span></span>`}
+    const ph=d.d[k]!==undefined?d.d[k]:'';
+    return`<span class="slot" data-p="${pj(BP)}" data-k="${k}"><span>${lab}</span><input inputmode="decimal" value="${v===undefined?'':esc(v)}" placeholder="${esc(ph)}" aria-label="${lab}" data-f="set" data-p="${pj(BP)}" data-k="${k}"><select data-f="plug" data-p="${pj(BP)}" data-k="${k}" title="Plug a value node" aria-label="Plug a value into ${lab}">${OE}</select></span>`;
+  }).join('')+`</div>`;
+}
+const listH=(P,h)=>`<div class="list" data-p="${pj(P)}" data-h="${h||'Drop nodes here'}">${get(P).map((b,i)=>blockH(b,P,i)).join('')}</div>`;
+function kid(l,b,BP,key){b[key]=b[key]||[];return`<div class="kid"><small>${l}</small>${listH([...BP,key])}</div>`}
+function blockH(b,P,i){
+  const d=D[b.type];if(!d)throw new Error('Unknown block '+b.type);
+  const BP=[...P,i];
+  let h=`<div class="blk${JSON.stringify(BP)==sel?' sel':''}" style="--cc:${CC[d.c]}" data-p="${pj(P)}" data-i="${i}" data-bp="${pj(BP)}"><div class="h" draggable="true"><span class="blk-icon">${ic(d.c)}</span><span class="h-title">${esc(d.n)}<span class="h-cat">${cap(d.c)}</span></span><button type="button" data-a="del" data-p="${pj(P)}" data-i="${i}" title="Delete node" aria-label="Delete node"><i class="bi bi-x-lg"></i></button></div>${slots(b,BP)}`;
+  if(d.t=='if')h+=kid('then',b,BP,'then')+kid('otherwise',b,BP,'else');
+  else if(d.t)h+=kid('do',b,BP,'body');
+  return h+'</div>';
+}
+function drawEd(){
+  $('#ed').innerHTML=`<div class="node" style="--nc:#12b76a"><div class="nh"><span class="nh-dot"></span>Setup<small>runs once</small><span class="nh-icon">setup()</span></div>${listH(['setup'],'Drop setup nodes here')}</div><div class="wire"></div><div class="node" style="--nc:#4aa3ff"><div class="nh"><span class="nh-dot"></span>Loop<small>repeats forever</small><span class="nh-icon">loop()</span></div>${listH(['loop'],'Drop nodes here')}</div>`;
+  requestAnimationFrame(updateMinimap);
+}
+function drawProps(){
+  let b=null,BP=null;
+  try{if(sel){BP=JSON.parse(sel);b=get(BP)}}catch(e){}
+  if(!b||!D[b.type]){$('#propsBody').innerHTML='<div class="inspector-empty"><i class="bi bi-cursor"></i><p>Select a node on the canvas to edit its parameters.</p></div>';return}
+  const d=D[b.type];
+  $('#propsBody').innerHTML=`<div class="insp-head"><span class="h-ic" style="--cc:${CC[d.c]}">${ic(d.c)}</span><div><div class="insp-name">${esc(d.n)}</div><div class="insp-cat">${cap(d.c)}</div></div></div>${d.desc?`<p class="insp-desc">${esc(d.desc)}</p>`:''}<div class="insp-sep"></div>${slots(b,BP)||'<p class="inspector-empty">This node has no parameters.</p>'}`;
+}
+function select(bp){sel=bp;document.querySelectorAll('.blk').forEach(x=>x.classList.toggle('sel',x.dataset.bp==sel));drawProps()}
+
+/* ---------- node library ---------- */
+let OE='';
+function drawPal(){
+  const g={};
+  for(const id in D){const d=D[id];if(term&&!(d.n+' '+id).toLowerCase().includes(term))continue;(g[d.c]=g[d.c]||[]).push(id)}
+  $('#pal').innerHTML=Object.entries(g).map(([c,ids])=>{const o=term||open.has(c);
+    return`<button type="button" class="cat" data-a="cat" data-c="${c}" aria-expanded="${!!o}"><span class="cdot" style="background:${CC[c]}"></span>${cap(c)}<span class="cnt">${ids.length}</span><span class="chev">${o?'▾':'▸'}</span></button>`+
+    (o?ids.map(id=>`<div class="pi" draggable="true" data-a="pi" data-id="${id}" style="--cc:${CC[c]}" title="${esc(D[id].desc||'')}"><span class="pi-icon">${ic(c)}</span><span class="pi-txt"><span class="pi-name">${esc(D[id].n)}</span><span class="pi-desc">${esc(D[id].desc||cap(c))}</span></span>${D[id].o?'<small>value</small>':''}</div>`).join(''):'')}).join('')||'<p class="empty-hint">No nodes match your search.</p>';
+}
+
+/* ---------- code panel ---------- */
+const ST={theme:'light',grid:true,minimap:true,hl:true,ln:true,wrap:false,codeSize:13,autosave:false,autoEvery:10};
+function loadSettings(){
+  try{Object.assign(ST,JSON.parse(localStorage.getItem('ec-settings')||'{}'))}catch(_){}
+  ST.theme=document.documentElement.dataset.theme||ST.theme||'light';
+}
+function saveSettings(){try{localStorage.setItem('ec-settings',JSON.stringify(ST))}catch(_){}}
+function applySettings(){
+  document.documentElement.style.setProperty('--code-fs',ST.codeSize+'px');
+  document.body.classList.toggle('no-grid',!ST.grid);
+  $('#miniWrap').style.display=ST.minimap?'':'none';
+  const code=$('#code');code.classList.toggle('noln',!ST.ln);code.classList.toggle('wrap',ST.wrap);
+  $('#setGrid').checked=ST.grid;$('#setMini').checked=ST.minimap;
+  $('#setHL').checked=ST.hl;$('#setLN').checked=ST.ln;$('#setWrap').checked=ST.wrap;
+  $('#setCodeSize').value=ST.codeSize;$('#setCodeSizeVal').textContent=ST.codeSize+'px';
+  $('#setAuto').checked=ST.autosave;$('#setAutoEvery').value=String(ST.autoEvery);
+  showCode();
+}
+loadSettings();
+$('#setGrid').addEventListener('change',e=>{ST.grid=e.target.checked;saveSettings();applySettings()});
+$('#setMini').addEventListener('change',e=>{ST.minimap=e.target.checked;saveSettings();applySettings()});
+$('#setHL').addEventListener('change',e=>{ST.hl=e.target.checked;saveSettings();applySettings()});
+$('#setLN').addEventListener('change',e=>{ST.ln=e.target.checked;saveSettings();applySettings()});
+$('#setWrap').addEventListener('change',e=>{ST.wrap=e.target.checked;saveSettings();applySettings()});
+$('#setCodeSize').addEventListener('input',e=>{ST.codeSize=+e.target.value;saveSettings();applySettings()});
+$('#setAuto').addEventListener('change',e=>{ST.autosave=e.target.checked;saveSettings();updateAutosave()});
+$('#setAutoEvery').addEventListener('change',e=>{ST.autoEvery=+e.target.value;saveSettings();updateAutosave()});
+$('#setReset').addEventListener('click',()=>{Object.assign(ST,{theme:'light',grid:true,minimap:true,hl:true,ln:true,wrap:false,codeSize:13,autosave:false,autoEvery:10});saveSettings();applySettings();updateAutosave();status('Settings reset')});
+let autoTimer=null;
+function updateAutosave(){clearInterval(autoTimer);if(ST.autosave)autoTimer=setInterval(()=>{if(dirty)saveProject()},ST.autoEvery*1000)}
+updateAutosave();
+
+const HLRX=/(\/\/.*$)|(\/\*[\s\S]*?(?:\*\/|$))|("(?:[^"\\]|\\.)*")|('(?:[^'\\]|\\.)*')|(^#[ \t]*\w+)|\b(0[xX][0-9a-fA-F]+|0[bB][01]+|\d+\.?\d*(?:[eE][+-]?\d+)?[uUlLfF]*)\b|\b(void|int|float|double|char|bool|long|short|unsigned|signed|uint8_t|uint16_t|uint32_t|int8_t|int16_t|int32_t|size_t|String|byte|word|const|static|volatile|auto|struct|enum|class|typedef|using|template|typename)\b|\b(if|else|for|while|do|switch|case|default|break|continue|return|goto|new|delete|sizeof|true|false|HIGH|LOW|OUTPUT|INPUT|INPUT_PULLUP|MSBFIRST|LSBFIRST|DHT11|DHT22|NEO_GRB|NEO_KHZ800)\b|\b([A-Za-z_]\w*)(?=\s*\()/g;
+function hl(s){
+  if(!ST.hl)return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  return _hl(s);
+}
+function _hl(s){
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(HLRX,(m,cm,bc,str2,chr,pre,num,kwg,tff,fn)=>{
+    if(cm||bc)return `<span class="c">${m}</span>`;
+    if(str2)return `<span class="s">${m}</span>`;
+    if(chr)return `<span class="s">${m}</span>`;
+    if(pre)return `<span class="pre">${m}</span>`;
+    if(num)return `<span class="n">${m}</span>`;
+    if(kwg)return `<span class="k">${m}</span>`;
+    if(tff)return `<span class="ty">${m}</span>`;
+    if(fn)return `<span class="fn">${m}</span>`;
+    return m;
+  });
+}
+function showCode(){$('#code').innerHTML=sketch.replace(/\n$/,'').split('\n').map((l,i)=>`<div class="ln"><i>${i+1}</i><span>${hl(l)}</span></div>`).join('')}
+function appendOut(t){const o=$('#outputLog');if(!o)return;o.textContent=(o.textContent==='EmbedCo output will appear here.'?'':o.textContent+'\n')+t+'\n';o.scrollTop=o.scrollHeight}
+function status(m,bad){const s=$('#st');s.textContent=m;s.className=bad?'bad':'';const out=$('#outputLog');if(out){const line='['+new Date().toLocaleTimeString()+'] '+m+'\n';out.textContent=(out.textContent==='EmbedCo output will appear here.'?'':out.textContent)+line;out.scrollTop=out.scrollHeight}}
+async function generate(){
+  const n=++seq;
+  try{
+    const r=await fetch('/api/generate',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({board:st.board,setup:st.setup,loop:st.loop})});
+    const j=await r.json();if(n!=seq)return;
+    if(j.error){status(j.error,true);if(!sketch){sketch='// Fix the error below to see your sketch.';showCode()}}
+    else{sketch=j.code;showCode();status(j.warnings.length?'Ready · '+j.warnings[0]:'Ready')}
+  }catch(e){status(down,true)}
+}
+function draw(){
+  $('#name').value=st.name||'';$('#board').value=st.board;
+  const boardLabel=$('#board')?.selectedOptions[0]?.textContent||st.board||'Arduino';
+  const u=document.querySelector('[data-a="undo"]'),r=document.querySelector('[data-a="redo"]');
+  if(u)u.disabled=!hist.length; if(r)r.disabled=!redo.length;
+  drawEd();drawProps();generate();
+  if(loading)crumbs();else markDirty();
+}
+
+/* ---------- events ---------- */
+const save=(n,t,ty)=>{const u=URL.createObjectURL(new Blob([t],{type:ty})),l=document.createElement('a');l.href=u;l.download=n;l.click();setTimeout(()=>URL.revokeObjectURL(u),500)};
+const fname=()=>(st.name||'sketch').replace(/[^\w-]+/g,'_');
+document.addEventListener('change',e=>{
+  const t=e.target,f=t.dataset.f;if(!f)return;
+  if(f=='name'){st.name=t.value;if(!loading)markDirty();else crumbs();return}
+  if(f=='board'){commit(()=>st.board=t.value);const b=boardBaud[t.value];if(b&&[...$('#serialBaud').options].some(o=>+o.value===b))$('#serialBaud').value=String(b);return}
+  const b=get(JSON.parse(t.dataset.p)),k=t.dataset.k;
+  if(f=='set')commit(()=>{b.inputs=b.inputs||{};const v=t.value.trim();if(v==='')delete b.inputs[k];else b.inputs[k]=/^-?\d+(\.\d+)?$/.test(v)?+v:v});
+  else if(f=='plug'&&t.value)commit(()=>{b.inputs=b.inputs||{};b.inputs[k]=mk(t.value)});
+});
+$('#q').addEventListener('input',e=>{term=e.target.value.trim().toLowerCase();drawPal()});
+document.addEventListener('click',e=>{
+  const t=e.target.closest('button,.pi'),a=t&&t.dataset.a;
+  if(a=='cat'){open.has(t.dataset.c)?open.delete(t.dataset.c):open.add(t.dataset.c);drawPal();return}
+  if(a=='pi'){const isVal=!!D[t.dataset.id].o;commit(()=>st.loop.push(mk(t.dataset.id)));if(isVal)status('Value node added to Loop — now drag it into a ƒ input slot to use it');return}
+  if(a=='del'){commit(()=>get(JSON.parse(t.dataset.p)).splice(+t.dataset.i,1));return}
+  if(a=='unplug'){commit(()=>delete get(JSON.parse(t.dataset.p)).inputs[t.dataset.k]);return}
+  if(a=='undo'){doUndo();return}
+  if(a=='redo'){doRedo();return}
+  if(a=='new'){currentId=null;remember();commit(()=>st={name:'My Project',board:st.board,setup:[],loop:[]});return}
+  if(a=='example'){openExamples();return}
+  if(a=='exp'){save(fname()+'.json',JSON.stringify(st,null,2),'application/json');return}
+  if(a=='imp'){$('#file').click();return}
+  if(a=='upload'){openUpload();return}
+  if(a=='dl'){save(fname()+'.ino',sketch,'text/plain');return}
+  if(a=='copy'){navigator.clipboard.writeText(sketch).then(()=>status('Copied to clipboard'),()=>status('Copy blocked here. Select the code and copy it manually.',true));return}
+  const b=e.target.closest('.blk');if(b)select(b.dataset.bp);
+});
+
+/* ---------- application menus ---------- */
+(function(){
+  const closeMenus=()=>document.querySelectorAll('.menu-group.open').forEach(g=>{
+    g.classList.remove('open');g.querySelector('.menu-trigger')?.setAttribute('aria-expanded','false');
+  });
+  let menuT;const openG=g=>{clearTimeout(menuT);closeMenus();g.classList.add('open');g.querySelector('.menu-trigger').setAttribute('aria-expanded','true')};
+  document.querySelectorAll('.menu-group').forEach(g=>{g.addEventListener('mouseenter',()=>openG(g));g.addEventListener('mouseleave',()=>{menuT=setTimeout(closeMenus,200)})});
+  document.querySelectorAll('.menu-trigger').forEach(btn=>btn.addEventListener('click',e=>{e.stopPropagation();openG(btn.closest('.menu-group'))}));
+  document.addEventListener('click',e=>{if(!e.target.closest('.menu-group'))closeMenus();});
+  document.addEventListener('keydown',e=>{if(e.key==='Escape')closeMenus();});
+  document.querySelectorAll('.menu-dropdown button').forEach(btn=>btn.addEventListener('click',()=>{
+    closeMenus();
+    const dockTab=btn.dataset.openDock;
+    if(dockTab){setTab(dockTab);$('#bottomDock').classList.add('expanded');$('#dockCollapse').setAttribute('aria-expanded','true');return;}
+  }));
+  $('#menuSave').addEventListener('click',()=>$('#saveBtn').click());
+  $('#menuSide').addEventListener('click',()=>document.body.classList.toggle('side-collapsed'));
+  $('#menuToggleDock').addEventListener('click',()=>$('#dockCollapse').click());
+  $('#tbVerify').addEventListener('click',()=>{openUpload();setTimeout(()=>$('#doCompile')?.click(),120);});
+  $('#menuCompile').addEventListener('click',()=>{openUpload();setTimeout(()=>$('#doCompile')?.click(),120);});
+  $('#menuShortcuts').addEventListener('click',()=>{$('#keysModal').hidden=false;});
+  $('#menuAbout').addEventListener('click',()=>status('EmbedCo · Arduino Visual IDE'));
+})();
+
+$('#file').addEventListener('change',e=>{
+  const f=e.target.files[0];if(!f)return;const r=new FileReader();
+  r.onload=()=>{try{const j=JSON.parse(r.result);
+    currentId=null;remember();
+    commit(()=>st={name:j.name||f.name.replace(/\.json$/,''),board:$('#board').querySelector(`[value="${j.board}"]`)?j.board:st.board,setup:j.setup||(j.blocks||[]).filter(b=>b.section=='setup'),loop:j.loop||(j.blocks||[]).filter(b=>b.section!='setup')});
+    status('Imported — press Save to keep it in projects/')}
+    catch(x){status('That file isn’t a EmbedCo project.',true)}};
+  r.readAsText(f);e.target.value='';
+});
+
+/* drag and drop */
+const clearOver=()=>document.querySelectorAll('.over').forEach(x=>x.classList.remove('over'));
+document.addEventListener('dragstart',e=>{
+  const pi=e.target.closest&&e.target.closest('.pi'),h=e.target.closest&&e.target.closest('.h');
+  if(pi)drag={kind:'new',id:pi.dataset.id,o:!!D[pi.dataset.id].o};
+  else if(h){const b=h.closest('.blk');try{const src=get([...JSON.parse(b.dataset.p),+b.dataset.i]);drag={kind:'move',p:JSON.parse(b.dataset.p),i:+b.dataset.i,bt:src.type,o:!!D[src.type].o}}catch(_){drag={kind:'move',p:JSON.parse(b.dataset.p),i:+b.dataset.i,o:false}}}
+  else return;
+  try{e.dataTransfer.setData('text/plain','ec');e.dataTransfer.effectAllowed='copyMove'}catch(_){}
+});
+document.addEventListener('dragover',e=>{
+  if(!drag)return;clearOver();
+  const s=e.target.closest('.slot'),l=e.target.closest('.list');
+  /* Value nodes (every sensor/logic node) must be droppable anywhere:
+     prefer an input slot, but accept the canvas list too so they can
+     at least land on the stage and then be dragged into a ƒ slot. */
+  const t=drag.o?(s||l):(l||s);
+  if(t){e.preventDefault();try{e.dataTransfer.dropEffect=drag.o?'copy':'move'}catch(_){};t.classList.add('over');
+    /* Also highlight the fallback list so the whole stage lights up for value nodes */
+    if(drag.o&&!s&&l&&l!==t)l.classList.add('over')}
+});
+document.addEventListener('dragend',()=>{if(drag&&drag.kind==='new'&&drag.o&&!drag.dropped)status('Tip: value nodes belong in a ƒ slot — drop onto a block input, or add them to Loop then drag them in.');drag=null;clearOver()});
+document.addEventListener('drop',e=>{
+  if(!drag)return;e.preventDefault();clearOver();
+  const d=drag;drag=null;
+  /* Value node -> ƒ slot (new palette drop OR dragging an existing canvas node into a slot) */
+  if(d.o){
+    const s=e.target.closest('.slot');
+    if(s){
+      d.dropped=true;
+      try{const sp=JSON.parse(s.dataset.p),sk=s.dataset.k;
+        if(d.kind==='move'){
+          const bp=[...d.p,d.i];
+          if(sp.every((v,k)=>bp[k]===v))return; /* can't plug a node into itself */
+          const target=get(sp);
+          commit(()=>{const moved=get(d.p).splice(d.i,1)[0];target.inputs=target.inputs||{};target.inputs[sk]=moved});
+        }else{
+          const b=get(sp);commit(()=>{b.inputs=b.inputs||{};b.inputs[sk]=mk(d.id)});
+        }
+        status('Plugged in');return}
+      catch(x){status('Could not plug that node in.','bad');return}
+    }
+    if(d.kind==='new'){
+      const l=e.target.closest('.list');
+      if(l){d.dropped=true;const P=JSON.parse(l.dataset.p),L=get(P);
+        let idx=[...l.children].filter(c=>c.classList.contains('blk')&&e.clientY>c.getBoundingClientRect().top+c.getBoundingClientRect().height/2).length;
+        commit(()=>L.splice(idx,0,mk(d.id)));
+        status('Value node on canvas — drag it into a ƒ slot to use it');return}
+    }
+    /* moving a value node canvas -> canvas falls through to list-move below */
+  }
+  const l=e.target.closest('.list');if(!l)return;
+  const P=JSON.parse(l.dataset.p),L=get(P);
+  let idx=[...l.children].filter(c=>c.classList.contains('blk')&&e.clientY>c.getBoundingClientRect().top+c.getBoundingClientRect().height/2).length;
+  if(d.kind==='new'){commit(()=>L.splice(idx,0,mk(d.id)));return}
+  const bp=[...d.p,d.i];if(bp.every((v,k)=>P[k]===v))return;
+  const SL=get(d.p),blk=SL[d.i];
+  commit(()=>{SL.splice(d.i,1);if(SL===L&&d.i<idx)idx--;L.splice(idx,0,blk)});
+});
+
+/* ---------- resizable VS Code-style bottom dock ---------- */
+(function(){
+  const dock=$('#bottomDock');
+  const setOpen=(open)=>{dock.classList.toggle('expanded',open);if(!dock.classList.contains('maximized')){const cur=parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--dock-height'))||34;if(open&&cur<=34)document.documentElement.style.setProperty('--dock-height','260px');if(!open)document.documentElement.style.setProperty('--dock-height','34px')}$('#dockCollapse').setAttribute('aria-expanded',String(open));$('#dockCollapse').innerHTML=open?'<i class="bi bi-chevron-down"></i>':'<i class="bi bi-chevron-up"></i>';localStorage.setItem('ec-dock-open',open?'1':'0');};
+  const saved=localStorage.getItem('ec-dock-open');setOpen(saved==='1');
+  $('#dockCollapse').addEventListener('click',()=>setOpen(!dock.classList.contains('expanded')));
+  $('#dockMax').addEventListener('click',()=>{const max=!dock.classList.contains('maximized');dock.classList.toggle('maximized',max);document.documentElement.style.setProperty('--dock-height',max?'calc(100vh - 129px)':'260px');$('#dockMax').innerHTML=max?'<i class="bi bi-arrows-angle-contract"></i>':'<i class="bi bi-arrows-angle-expand"></i>';setOpen(true)});
+  const handle=$('#dockResize');let dragY=0,startH=260;
+  handle.addEventListener('pointerdown',e=>{dragY=e.clientY;startH=dock.getBoundingClientRect().height;handle.setPointerCapture(e.pointerId);document.body.classList.add('resizing')});
+  handle.addEventListener('pointermove',e=>{if(!handle.hasPointerCapture(e.pointerId))return;const h=Math.max(150,Math.min(window.innerHeight*.75,startH+dragY-e.clientY));document.documentElement.style.setProperty('--dock-height',h+'px');setOpen(true)});
+  handle.addEventListener('pointerup',e=>{if(handle.hasPointerCapture(e.pointerId))handle.releasePointerCapture(e.pointerId);document.body.classList.remove('resizing')});
+  document.querySelectorAll('.dock-tab').forEach(b=>b.addEventListener('click',()=>{setTab(b.dataset.t);setOpen(true)}));
+})();
+
+/* ---------- keyboard shortcuts ---------- */
+function doUndo(){if(hist.length){redo.push(snap());st=JSON.parse(hist.pop());draw()}}
+function doRedo(){if(redo.length){hist.push(snap());st=JSON.parse(redo.pop());draw()}}
+function deleteSel(){
+  if(!sel)return;try{const bp=JSON.parse(sel),p=bp.slice(0,-1),i=bp[bp.length-1];commit(()=>get(p).splice(i,1));sel=null;drawProps()}catch(_){}
+}
+function dupSel(){
+  if(!sel)return;try{const bp=JSON.parse(sel),p=bp.slice(0,-1),i=bp[bp.length-1];const copy=JSON.parse(JSON.stringify(get(bp)));commit(()=>get(p).splice(i+1,0,copy));sel=null;status('Node duplicated')}catch(_){}
+}
+const SHORTCUTS=[
+  ['Ctrl+S','save project'],['Ctrl+B','show / hide the side bar'],['Ctrl+N','new (untitled) project'],['Ctrl+O','open project explorer'],
+  ['Ctrl+P / Ctrl+Shift+P','quick open (projects + commands)'],['Ctrl+,','settings'],
+  ['Ctrl+1 … 4','nodes / projects / plugins / settings views'],['Ctrl+Z','undo'],['Ctrl+Shift+Z / Ctrl+Y','redo'],
+  ['Delete','delete selected node'],['Ctrl+D','duplicate selected node'],
+  ['Ctrl+E','export project JSON'],['Ctrl+Enter','upload to board'],['Ctrl+Shift+C','compile (verify only)'],
+  ['Ctrl+ + / − / 0','zoom in / out / 100%'],['Ctrl+Space','toggle code panel'],['?','this shortcut reference'],['Esc','close dialog / deselect'],
+];
+function renderKeys(){
+  const rows=SHORTCUTS.map(([k,a])=>`<div class="key-row"><span>${a}</span><kbd>${k}</kbd></div>`).join('');
+  $('#keysTable').innerHTML=rows;
+}
+renderKeys();
+
+/* quick open */
+let quickProjects=[];
+const QUICK_CMDS=[
+  {id:'q-nodes',label:'<i class="bi bi-puzzle"></i> Go to Node library',run:()=>switchView('nodes')},
+  {id:'q-proj',label:'<i class="bi bi-folder2"></i> Go to Project explorer',run:()=>switchView('proj')},
+  {id:'q-plug',label:'<i class="bi bi-usb-plug"></i> Go to Plugins',run:()=>switchView('plug')},
+  {id:'q-set',label:'<i class="bi bi-gear"></i> Open Settings',run:()=>switchView('set')},
+  {id:'q-save',label:'<i class="bi bi-floppy"></i> Save project',run:saveProject},
+  {id:'q-new',label:'New project',run:()=>{currentId=null;remember();commit(()=>st={name:'My Project',board:st.board,setup:[],loop:[]})}},
+  {id:'q-upload',label:'<i class="bi bi-upload"></i> Upload to board',run:openUpload},
+  {id:'q-dl',label:'<i class="bi bi-download"></i> Download .ino',run:()=>save(fname()+'.ino',sketch,'text/plain')},
+  {id:'q-exp',label:'<i class="bi bi-floppy"></i> Export project JSON',run:()=>save(fname()+'.json',JSON.stringify(st,null,2),'application/json')},
+  {id:'q-zoom-in',label:'<i class="bi bi-search"></i> Zoom in',run:()=>setZoom(zoomC*1.2)},
+  {id:'q-zoom-out',label:'<i class="bi bi-search"></i> Zoom out',run:()=>setZoom(zoomC/1.2)},
+  {id:'q-zoom-fit',label:'⤢ Zoom to fit',run:()=>$('#zoomFit').click()},
+  {id:'q-grid',label:'Toggle canvas grid',run:()=>{ST.grid=!ST.grid;saveSettings();applySettings()}},
+  {id:'q-keys',label:'Keyboard shortcuts',run:()=>{ $('#keysModal').hidden=false}},
+];
+async function ensureQuickProjects(){
+  try{const r=await (await fetch('/api/projects')).json();quickProjects=r.projects||[]}catch(_){}
+}
+function renderQuick(q=''){
+  q=q.trim().toLowerCase();
+  const plain=h=>h.replace(/<[^>]*>/g,'').toLowerCase();
+  const cmds=QUICK_CMDS.filter(c=>plain(c.label).includes(q));
+  const projs=quickProjects.filter(p=>(p.name+' '+p.id).toLowerCase().includes(q))
+    .map(p=>({id:'qp-'+p.id,label:`<i class="bi bi-file-earmark"></i> ${esc(p.name)} — ${esc(p.board)} · ${fmtDate(p.updated)}`,run:()=>openProject(p.id)}));
+  const items=[...projs,...cmds];
+  $('#quickList').innerHTML=items.length?items.slice(0,16).map((it,i)=>
+    `<div class="proj-item" data-q="${i}" ><span class="proj-name">${it.label}</span></div>`).join('')
+    :'<p class="empty-hint">No matches.</p>';
+  $('#quickList')._items=items;
+}
+function openQuick(){$('#quickModal').hidden=false;$('#quickQ').value='';ensureQuickProjects().then(()=>renderQuick());setTimeout(()=>$('#quickQ').focus(),0)}
+function closeQuick(){$('#quickModal').hidden=true}
+$('#quickClose').addEventListener('click',closeQuick);
+$('#quickModal').querySelector('.um-back').addEventListener('click',closeQuick);
+$('#quickQ').addEventListener('input',e=>renderQuick(e.target.value));
+$('#quickQ').addEventListener('keydown',e=>{
+  if(e.key==='Enter'){const it=$('#quickList')._items&&$('#quickList')._items[0];if(it){closeQuick();it.run&&it.run()}}
+  if(e.key==='Escape')closeQuick();
+});
+$('#quickList').addEventListener('click',e=>{const it=e.target.closest('[data-q]');if(it){const f=$('#quickList')._items[+it.dataset.q];closeQuick();f&&f.run&&f.run()}});
+$('#keysClose').addEventListener('click',()=>$('#keysModal').hidden=true);
+$('#keysModal').querySelector('.um-back').addEventListener('click',()=>$('#keysModal').hidden=true);
+$('#keysModal').addEventListener('click',e=>{if(e.target.closest('#keysClose'))$('#keysModal').hidden=true});
+
+/* global shortcut handler */
+document.addEventListener('keydown',e=>{
+  const inField=/INPUT|SELECT|TEXTAREA/.test(e.target.tagName)||e.target.isContentEditable;
+  const mod=e.ctrlKey||e.metaKey;
+  if(mod&&e.key==='Escape'){return}
+  if(e.key==='Escape'){
+    if(!$('#exampleModal').hidden){$('#exampleModal').hidden=true;return}
+    if(!$('#setModal').hidden){$('#setModal').hidden=true;return}
+    if(!$('#quickModal').hidden){closeQuick();return}
+    if(!$('#keysModal').hidden){$('#keysModal').hidden=true;return}
+    if(!$('#uploadModal').hidden)return;
+    if(sel){sel=null;document.querySelectorAll('.blk').forEach(x=>x.classList.remove('sel'));drawProps()}
+    return;
+  }
+  if(mod){
+    const k=e.key.toLowerCase();
+    if(k==='s'){e.preventDefault();saveProject();return}
+    if(k==='n'){e.preventDefault();currentId=null;remember();commit(()=>st={name:'My Project',board:st.board,setup:[],loop:[]});return}
+    if(k==='o'){e.preventDefault();switchView('proj');return}
+    if(k==='p'||(e.shiftKey&&k==='p')){e.preventDefault();openQuick();return}
+    if(k===','){e.preventDefault();switchView('set');return}
+    if(k==='e'){e.preventDefault();save(fname()+'.json',JSON.stringify(st,null,2),'application/json');return}
+    if(k==='z'){e.preventDefault();e.shiftKey?doRedo():doUndo();return}
+    if(k==='y'){e.preventDefault();doRedo();return}
+    if(k==='d'){e.preventDefault();dupSel();return}
+    if(k==='Enter'){e.preventDefault();openUpload();return}
+    if(e.shiftKey&&k==='c'){/* Ctrl+Shift+C = compile only */e.preventDefault();openUpload();setTimeout(()=>$('#doCompile').click(),50);return}
+    if(k==='1'||k==='2'||k==='3'||k==='4'){e.preventDefault();switchView(['nodes','proj','plug','set'][+k-1]);return}
+    if(k===' '){e.preventDefault();$('#dockCollapse').click();return}
+    return;
+  }
+  if(inField)return;
+  if(e.key==='?'){e.preventDefault();$('#keysModal').hidden=false;return}
+  if(e.key==='Delete'||e.key==='Backspace'){if(sel){e.preventDefault();deleteSel()}return}
+});
+let cardTab=localStorage.getItem('ec-dock-tab')||'code';if(!['code','serial','terminal','output'].includes(cardTab))cardTab='code';let  boardBaud={};
+function setTab(t){
+  cardTab=t;try{localStorage.setItem('ec-dock-tab',t)}catch(_){}
+  document.querySelectorAll('.dock-tab').forEach(b=>b.classList.toggle('on',b.dataset.t===t));
+  ['code','serial','terminal','output'].forEach(k=>$('#pane-'+k).hidden=k!==t);
+  $('#cardLang').textContent=t==='serial'?'Web Serial':t==='code'?'Arduino .ino':t==='terminal'?'Local shell':'Status and build output';
+  $('#cardAction').hidden=!['code','serial','output'].includes(t);
+  $('#cardAction').innerHTML=t==='serial'?'<i class="bi bi-trash3"></i>':t==='code'?'<i class="bi bi-clipboard"></i>':'<i class="bi bi-trash3"></i>';
+  $('#cardAction').title=t==='code'?'Copy generated code':'Clear panel';
+  if(t==='code')showCode();
+}
+setTab(cardTab);
+$('#cardAction').addEventListener('click',()=>{
+  if(cardTab==='code'){navigator.clipboard&&navigator.clipboard.writeText(sketch).then(()=>status('Copied to clipboard'),()=>status('Copy blocked here. Select the code and copy it manually.',true))}
+  else if(cardTab==='serial'){$('#serialLog').textContent='';sSys('Log cleared.')}
+  else if(cardTab==='output')$('#outputLog').textContent='Output cleared.';
+});
+
+let serialPort=null,serialReader=null,serialWriter=null;
+function sSys(t){const el=$('#serialLog');const d=document.createElement('div');d.className='sys';d.textContent=`[${new Date().toLocaleTimeString()}] ${t}`;el.appendChild(d);if($('#serialAutoScroll')?.checked!==false)el.scrollTop=el.scrollHeight}
+function sErr(t){const el=$('#serialLog');const d=document.createElement('div');d.className='err';d.textContent=`[${new Date().toLocaleTimeString()}] ERROR: ${t}`;el.appendChild(d);if($('#serialAutoScroll')?.checked!==false)el.scrollTop=el.scrollHeight}
+function sTx(t){const el=$('#serialLog');const d=document.createElement('div');d.className='tx';d.textContent=`[${new Date().toLocaleTimeString()}] TX: ${t}`;el.appendChild(d);if($('#serialAutoScroll')?.checked!==false)el.scrollTop=el.scrollHeight}
+let serialLineBuffer='';
+function sAppend(txt){
+  if(!txt)return;const el=$('#serialLog');serialLineBuffer+=txt;
+  const lines=serialLineBuffer.split(/\r?\n/);serialLineBuffer=lines.pop()||'';
+  for(const line of lines){const row=document.createElement('div');row.textContent=`[${new Date().toLocaleTimeString()}] RX: ${line}`;el.appendChild(row)}
+  if(serialLineBuffer.length>0&&serialLineBuffer.length>4000){const row=document.createElement('div');row.textContent=`[${new Date().toLocaleTimeString()}] RX: ${serialLineBuffer}`;el.appendChild(row);serialLineBuffer=''}
+  while(el.textContent.length>90000&&el.firstChild)el.removeChild(el.firstChild);
+  if($('#serialAutoScroll')?.checked!==false)el.scrollTop=el.scrollHeight;
+  plotFeed(txt);
+}
+
+/* ---------- serial plotter (Arduino-style graph) ---------- */
+const PLOT_COLORS=['#7ec8ff','#ff9d5c','#8affb5','#c4a0ff','#ff7eb0','#ffd166','#4dd0e1','#f97066'];
+const PLOT_MAX=300;
+let plotSeries=[],plotPaused=false,plotDirty=false,plotView='log',plotBuf='',plotLabels=[];
+function plotFeed(chunk){
+  plotBuf+=chunk;
+  let nl;
+  while((nl=plotBuf.indexOf('\n'))>=0){
+    const line=plotBuf.slice(0,nl).trim();plotBuf=plotBuf.slice(nl+1);
+    if(!line)continue;
+    /* "label: 12.5" or "A0: 512 A1: 300" → one named series per label */
+    const named=[...line.matchAll(/([A-Za-z_][\w ]{0,14})\s*[:=]\s*(-?\d+\.?\d*(?:[eE][+-]?\d+)?)/g)];
+    if(named.length){named.forEach(m=>plotPush(plotLabel(m[1]),parseFloat(m[2])));continue}
+    const nums=(line.match(/-?\d+\.?\d*(?:[eE][+-]?\d+)?/g)||[]).map(Number);
+    nums.forEach((v,i)=>{if(isFinite(v))plotPush('S'+(i+1),v)});
+  }
+}
+function plotLabel(name){const n=String(name).trim().slice(0,20)||'S';if(!plotLabels.includes(n))plotLabels.push(n);return n}
+function plotPush(name,v){
+  let i=plotLabels.indexOf(name);
+  if(i<0){plotLabels.push(name);plotSeries.push([]);i=plotLabels.length-1}
+  plotSeries[i].push(v);
+  if(plotSeries[i].length>PLOT_MAX)plotSeries[i].shift();
+  plotDirty=true;
+}
+function drawPlot(){
+  const cv=$('#serialPlot');if(!cv||plotView!=='plot')return;
+  const dpr=window.devicePixelRatio||1,W=cv.clientWidth,H=cv.clientHeight;
+  if(!W||!H)return;
+  if(cv.width!==W*dpr||cv.height!==H*dpr){cv.width=W*dpr;cv.height=H*dpr}
+  const ctx=cv.getContext('2d');ctx.setTransform(dpr,0,0,dpr,0,0);ctx.clearRect(0,0,W,H);
+  const pad={l:48,r:8,t:10,b:20},iw=W-pad.l-pad.r,ih=H-pad.t-pad.b;
+  if(!plotSeries.length||!plotSeries.some(s=>s.length)){
+    ctx.fillStyle='#667085';ctx.font='12px ui-monospace,Menlo,Consolas,monospace';ctx.textAlign='center';
+    ctx.fillText('No numeric data yet — print numbers from your sketch (Serial.println(analogRead(A0))).',pad.l+iw/2,pad.t+ih/2);return}
+  let lo=Infinity,hi=-Infinity;
+  for(const s of plotSeries)for(const v of s){lo=Math.min(lo,v);hi=Math.max(hi,v)}
+  if(lo===hi){lo-=1;hi+=1}
+  const spread=hi-lo;lo-=spread*0.08;hi+=spread*0.08;
+  const X=i=>pad.l+(i/(PLOT_MAX-1))*iw, Y=v=>pad.t+ih-((v-lo)/(hi-lo))*ih;
+  ctx.strokeStyle='rgba(255,255,255,.08)';ctx.lineWidth=1;ctx.fillStyle='#7d8791';ctx.font='10px ui-monospace,Menlo,Consolas,monospace';
+  for(let g=0;g<=4;g++){const v=lo+(hi-lo)*g/4,y=Y(v);ctx.beginPath();ctx.moveTo(pad.l,y);ctx.lineTo(pad.l+iw,y);ctx.stroke();
+    ctx.textAlign='right';ctx.fillText(v.toFixed(v<10?1:0),pad.l-5,y+3)}
+  ctx.strokeStyle='rgba(255,255,255,.25)';ctx.strokeRect(pad.l,pad.t,iw,ih);
+  plotSeries.forEach((s,si)=>{
+    if(s.length<2)return;
+    ctx.strokeStyle=PLOT_COLORS[si%PLOT_COLORS.length];ctx.lineWidth=1.6;ctx.beginPath();
+    const off=PLOT_MAX-s.length;
+    s.forEach((v,i)=>{const x=X(off+i),y=Y(v);i===0?ctx.moveTo(x,y):ctx.lineTo(x,y)});
+    ctx.stroke();
+  });
+  $('#plotLegend').innerHTML=plotSeries.map((s,si)=>{const last=s.length?s[s.length-1]:'—';
+    return`<span><span style="color:${PLOT_COLORS[si%PLOT_COLORS.length]}">●</span> ${esc(plotLabels[si]||('S'+(si+1)))} <b>${last}</b></span>`}).join('');
+}
+(function plotLoop(){requestAnimationFrame(plotLoop);if(plotView==='plot'&&!plotPaused&&plotDirty){plotDirty=false;drawPlot()}})();
+document.querySelectorAll('.subtab').forEach(b=>b.addEventListener('click',()=>{
+  plotView=b.dataset.st;
+  document.querySelectorAll('.subtab').forEach(x=>x.classList.toggle('on',x===b));
+  $('#serialLog').style.display=plotView==='log'?'':'none';
+  $('#plotWrap').hidden=plotView!=='plot';
+  if(plotView==='plot'){plotDirty=true;requestAnimationFrame(drawPlot)}
+}));
+$('#plotPause').addEventListener('click',()=>{plotPaused=!plotPaused;$('#plotPause').innerHTML=plotPaused?'<i class="bi bi-play-fill"></i> Resume':'<i class="bi bi-pause"></i> Pause';if(!plotPaused)plotDirty=true});
+$('#plotClear').addEventListener('click',()=>{plotSeries=[];plotLabels=[];plotBuf='';plotDirty=true;drawPlot()});
+async function serialDisconnect(silent){
+  try{if(serialReader){await serialReader.cancel().catch(()=>{});try{serialReader.releaseLock()}catch(_){}}}catch(_){}
+  try{if(serialWriter){try{serialWriter.releaseLock()}catch(_){}}}catch(_){}
+  try{if(serialPort){await serialPort.close().catch(()=>{})}}catch(_){}
+  serialPort=serialReader=serialWriter=null;
+  $('#serialDot').className='dot';$('#serialConnect').innerHTML='<i class="bi bi-usb-plug"></i> Connect';
+  $('#serialHint').textContent='No board connected. Connect via USB in Chrome/Edge, pick a port, then watch Serial.println output here.';
+  if(!silent)sSys('Disconnected.');
+}
+async function serialConnect(){
+  if(serialPort){serialDisconnect();return}
+  if(!('serial'in navigator)){sErr('Web Serial is not available here — use Chrome/Edge on http://127.0.0.1 (localhost).');return}
+  const baud=+$('#serialBaud').value||9600;
+  try{
+    sSys(`Requesting port at ${baud} baud…`);
+    serialPort=await navigator.serial.requestPort();
+    await serialPort.open({baudRate:baud,dataBits:8,stopBits:1,parity:'none',flowControl:'none'});
+    serialWriter=serialPort.writable.getWriter();
+    serialReader=serialPort.readable.getReader();
+    $('#serialDot').className='dot on';$('#serialConnect').innerHTML='<i class="bi bi-usb-plug-fill"></i> Disconnect';
+    $('#serialHint').textContent='Connected — board output will appear here.';
+    sSys(`Connected at ${baud} baud — listening for Serial output…`);
+    const dec=new TextDecoder();
+    try{
+      while(true){const {value,done}=await serialReader.read();if(done)break;if(value&&value.length)sAppend(dec.decode(value,{stream:true}))}
+    }catch(e){if(serialPort)sErr(e.message||'Read error')}
+    if(serialPort)serialDisconnect();
+  }catch(e){sErr(e.message||'Connection failed');serialDisconnect(true)}
+}
+$('#serialConnect').addEventListener('click',serialConnect);
+$('#serialClear').addEventListener('click',()=>{$('#serialLog').textContent='';sSys('Log cleared.')});
+async function serialSend(){
+  const inp=$('#serialSend'),txt=inp.value;if(!txt)return;inp.value='';
+  if(!serialWriter){sErr('Not connected — press Connect Board first.');return}
+  try{await serialWriter.write(new TextEncoder().encode(txt+'\n'));sTx(txt)}catch(e){sErr(e.message||'Send failed')}
+}
+$('#serialSendBtn').addEventListener('click',serialSend);
+$('#serialSend').addEventListener('keydown',e=>{if(e.key==='Enter')serialSend()});
+sSys('Serial Monitor ready. Add “Print Message” (Communication) blocks, flash the board, then Connect Board to see live output.');
+
+/* ---------- upload: compile + flash via arduino-cli ---------- */
+function openUpload(){
+  $('#uploadBoard').textContent=($('#board').selectedOptions[0]?.textContent||st.board)+'  ·  '+(st.name||'sketch')+'.ino';
+  $('#uploadLog').textContent='';
+  $('#uploadStatus').textContent='';
+  $('#uploadModal').hidden=false;
+  refreshPorts();
+}
+function closeUpload(){$('#uploadModal').hidden=true}
+async function refreshPorts(){
+  const sel=$('#uploadPort');
+  sel.innerHTML='<option value="">Scanning…</option>';
+  try{
+    const r=await (await fetch('/api/ports')).json();
+    if(!r.ports||!r.ports.length){sel.innerHTML='<option value="">No ports — plug in the board & press Refresh</option>';return}
+    sel.innerHTML=r.ports.map(p=>`<option value="${esc(p.device)}">${esc(p.device)} — ${esc(p.description||'USB Serial')}</option>`).join('');
+  }catch(e){sel.innerHTML='<option value="">Could not list ports (server down?)</option>'}
+}
+async function runUpload(withPort){
+  const port=$('#uploadPort').value;
+  const log=$('#uploadLog'),stt=$('#uploadStatus'),btn=$('#doUpload'),cbtn=$('#doCompile');
+  if(withPort&&!port){stt.textContent='Pick a port first.';return}
+  /* Arduino can't flash while the Serial Monitor holds the port — free it first */
+  if(serialPort){sSys('Disconnecting Serial Monitor for compile/upload…');await serialDisconnect(true);sSys('Serial Monitor disconnected.')}
+  btn.disabled=cbtn.disabled=true;
+  stt.textContent=withPort?'Compiling & uploading…':'Compiling…';
+  log.textContent=(withPort?'$ compile + upload to ':'$ compile only')+st.board+(withPort?' on '+port:'')+'\n';
+  try{
+    const r=await fetch(withPort?'/api/upload':'/api/compile',{method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({board:st.board,name:st.name,setup:st.setup,loop:st.loop,port:port||''})});
+    const j=await r.json();
+    log.textContent=j.log||j.error||((j.ok?'OK':'Failed'));appendOut(log.textContent);
+    if(j.error&&!j.log)log.textContent=j.error;
+    if(j.ok){
+      stt.textContent=withPort?('Uploaded to '+port):'Compiled OK';
+      status(withPort?'Uploaded to '+port:'Compiled OK');
+      if(j.code){sketch=j.code;showCode()}
+    }else{
+      stt.textContent='Failed ('+(j.stage||'error')+') — see log';
+      status('Upload failed — see Upload log',true);
+    }
+  }catch(e){log.textContent+='\n'+down;appendOut(down);stt.textContent='Server unreachable'}
+  btn.disabled=cbtn.disabled=false;
+}
+$('#uploadClose').addEventListener('click',closeUpload);
+$('#uploadModal').querySelector('.um-back').addEventListener('click',closeUpload);
+$('#uploadRefresh').addEventListener('click',refreshPorts);
+$('#doUpload').addEventListener('click',()=>runUpload(true));
+$('#doCompile').addEventListener('click',()=>runUpload(false));
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!$('#uploadModal').hidden)closeUpload()});
+
+/* ---------- start ---------- */
+async function init(){
+  await loadPalette();
+  setZoom(zoomC);
+  draw();
+  /* restore last-open project like VS Code reopens your workspace */
+  if(currentId){
+    try{
+      const r=await (await fetch(`/api/projects/${encodeURIComponent(currentId)}`)).json();
+      if(r.project){st=r.project;hist=[];redo=[];sel=null;draw()}
+      else currentId=null;
+    }catch(_){currentId=null}
+  }
+  loading=false;clearDirty();remember();refreshProjects();refreshPlugins();applySettings();crumbs();
+}
+init().catch(()=>status(down,true));
+
+/* ---------- terminal (runs commands on the local server) ---------- */
+(function(){
+  const out=$('#termOut'),inp=$('#termIn'),cwdEl=$('#termCwd'),hist=[];let hi=0;
+  const add=(t,c)=>{const d=document.createElement('div');if(c)d.className=c;d.textContent=t;out.appendChild(d);out.scrollTop=out.scrollHeight};
+  async function run(cmd){
+    try{
+      const r=await fetch('/api/terminal',{method:'POST',headers:{'Content-Type':'application/json','X-EmbedCo-Terminal':'1'},body:JSON.stringify({cmd})});
+      const j=await r.json();
+      if(j.error){add(j.error,'sys');return}
+      if(j.out)add(j.out.replace(/\n$/,''),j.code?'tx-err':'');
+      cwdEl.textContent=j.cwd;cwdEl.title=j.cwd;
+    }catch(_){add(down,'tx-err')}
+  }
+  inp.addEventListener('keydown',e=>{
+    if(e.key==='ArrowUp'&&hist.length){e.preventDefault();hi=Math.max(0,hi-1);inp.value=hist[hi]}
+    else if(e.key==='ArrowDown'){e.preventDefault();hi=Math.min(hist.length,hi+1);inp.value=hist[hi]||''}
+    else if(e.key==='Enter'){
+      const cmd=inp.value.trim();inp.value='';if(!cmd)return;
+      hist.push(cmd);hi=hist.length;
+      if(cmd==='clear'||cmd==='cls'){out.textContent='';return}
+      add('> '+cmd,'term-cmd');run(cmd);
+    }
+  });
+  $('#pane-terminal').addEventListener('click',e=>{if(!getSelection().toString())inp.focus()});
+  run('');
+})();
+
+/* ---------- examples gallery ---------- */
+const EXAMPLES=[
+  {name:'Automatic door',desc:'Opens a servo when something is closer than 20 cm.',build:()=>EXAMPLE()},
+  {name:'Blink a light',desc:'Turns a light on and off every half second.',build:b=>({name:'Blink a Light',board:b,setup:[],loop:[nb('light_on',{pin:13}),nb('wait',{milliseconds:500}),nb('light_off',{pin:13}),nb('wait',{milliseconds:500})]})},
+  {name:'Button light',desc:'Light is on only while the button is pressed.',build:b=>({name:'Button Light',board:b,setup:[],loop:[{type:'if',inputs:{condition:nb('button',{pin:2})},then:[nb('light_on',{pin:13})],else:[nb('light_off',{pin:13})]}]})},
+  {name:'Distance to serial',desc:'Prints the distance reading to the Serial Monitor.',build:b=>({name:'Distance Monitor',board:b,setup:[nb('serial_begin',{baud_rate:9600})],loop:[nb('serial_print',{value:nb('read_distance',{trigger_pin:9,echo_pin:10})}),nb('wait',{milliseconds:200})]})},
+  {name:'Breathing light',desc:'Fades a light in and out on a PWM pin.',build:b=>({name:'Breathing Light',board:b,setup:[],loop:[nb('fade_pulse',{pin:9,step_delay:10})]})},
+  {name:'Repeat beeps',desc:'Beeps three times, then waits two seconds.',build:b=>({name:'Repeat Beeps',board:b,setup:[],loop:[{type:'repeat',inputs:{count:3},body:[nb('beep',{pin:8,frequency:1000,duration:150})]},nb('wait_seconds',{seconds:2})]})},
+];
+function exTypes(list,out=[]){for(const b of list||[]){if(!out.includes(b.type))out.push(b.type);for(const v of Object.values(b.inputs||{}))if(v&&typeof v==='object')exTypes([v],out);['then','else','body'].forEach(k=>exTypes(b[k],out))}return out}
+function openExamples(){
+  $('#exampleGrid').innerHTML=EXAMPLES.map((ex,i)=>{
+    const p=ex.build(st.board),types=exTypes([...p.setup,...p.loop]).filter(t=>D[t]);
+    return `<button type="button" class="ex-card" data-ex="${i}"><b>${esc(ex.name)}</b><span class="mu">${esc(ex.desc)}</span><span class="ex-chips">${types.slice(0,5).map(t=>`<span class="ex-chip" style="--cc:${CC[D[t].c]}">${esc(D[t].n)}</span>`).join('')}</span></button>`}).join('');
+  $('#exampleModal').hidden=false;
+}
+$('#exampleGrid').addEventListener('click',e=>{
+  const c=e.target.closest('[data-ex]');if(!c)return;
+  const p=EXAMPLES[+c.dataset.ex].build(st.board);
+  currentId=null;remember();commit(()=>st=p);sel=null;$('#exampleModal').hidden=true;
+  status('Loaded example: '+p.name);
+});
+$('#exampleClose').addEventListener('click',()=>$('#exampleModal').hidden=true);
+$('#exampleModal .um-back').addEventListener('click',()=>$('#exampleModal').hidden=true);
+</script>
+</body>
+</html>
