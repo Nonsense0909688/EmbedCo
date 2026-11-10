@@ -4,6 +4,29 @@
 
 Visual block programming for Arduino and other microcontrollers.
 
+## Installation
+
+Use the installer scripts to install **arduino-cli** (for compile/upload) and EmbedCo’s Python dependencies.
+
+**Linux / macOS (bash):**
+
+```bash
+chmod +x installer/install.sh
+./installer/install.sh
+```
+
+Options: `--prefix DIR` (arduino-cli install location, default `~/.local/bin`), `--project-dir DIR`, `--skip-arduino-cli`, `--skip-python-deps`.
+
+**Windows (PowerShell):**
+
+```powershell
+.\installer\install.ps1
+```
+
+Options: `-Prefix <DIR>` (default `$env:LOCALAPPDATA\EmbedCo\bin`), `-ProjectDir <DIR>`, `-SkipArduinoCli`, `-SkipPythonDeps`.
+
+> After installing arduino-cli, ensure its install directory is on your `PATH` (the Windows installer adds it to the user PATH; restart your terminal if needed). You may also need to install board cores, e.g. `arduino-cli core install arduino:avr`.
+
 ## Run the editor
 
     pip install -r requirements.txt
@@ -154,9 +177,9 @@ single-file generator; the suite fails if the refactored generator output ever d
 
 The frontend now uses a VS Code-style bottom dock. The right sidebar is reserved for
 selected-node properties; Code Preview and Serial Monitor live in the bottom dock.
-The dock starts collapsed, expands when a tab is selected, can be resized by dragging
-its top edge, and can be maximized. The active dock tab and open/collapsed state are
-remembered in local storage.
+The dock starts collapsed, expands when a tab is selected, and can be resized by
+dragging its top edge. The active dock tab and open/collapsed state are remembered
+in local storage.
 
 Bootstrap Icons are loaded from jsDelivr, so the icon font requires an internet
 connection. The Serial Monitor uses the browser Web Serial API (Chrome/Edge on
