@@ -23,7 +23,9 @@ Options: `--prefix DIR` (arduino-cli install location, default `~/.local/bin`), 
 .\installer\install.ps1
 ```
 
-Options: `-Prefix <DIR>` (default `$env:LOCALAPPDATA\EmbedCo\bin`), `-ProjectDir <DIR>`, `-SkipArduinoCli`, `-SkipPythonDeps`.
+Runs an interactive checkbox menu to select components (arduino-cli, Python dependencies, Arduino core index update, Arduino AVR core `arduino:avr`). Use Up/Down to move, Space to toggle, Enter to continue.
+
+Options: `-Prefix <DIR>` (default `$env:LOCALAPPDATA\EmbedCo\bin`), `-ProjectDir <DIR>`, `-SkipArduinoCli`, `-SkipPythonDeps`, `-NonInteractive` (use defaults/parameters without the menu).
 
 > After installing arduino-cli, ensure its install directory is on your `PATH` (the Windows installer adds it to the user PATH; restart your terminal if needed). You may also need to install board cores, e.g. `arduino-cli core install arduino:avr`.
 
@@ -38,7 +40,7 @@ project; Import JSON loads it again.
 
 ## Upload to a board
 
-Click **⬆ Upload** in the editor: it compiles the current sketch with
+Click **Upload** in the editor: it compiles the current sketch with
 [arduino-cli](https://arduino.github.io/arduino-cli/) and flashes it to the
 selected board + serial port (detected automatically, e.g. COM5). Requires
 arduino-cli on PATH plus the board core installed for the chosen board.
@@ -46,35 +48,35 @@ arduino-cli on PATH plus the board core installed for the chosen board.
 
 ## Projects (VS Code-style Explorer)
 
-- **📁 Projects** (activity bar) opens the Explorer: every project is a
+- **Projects** (activity bar) opens the Explorer: every project is a
   `<name>.json` file in `projects/`, with board / last-edited / node count
-- **+ New** creates one, click to open, **✏️ rename**, **📄 duplicate**, **🗑 delete**
-- **💾 Save** (or **Ctrl+S**) writes the current canvas; the breadcrumb bar shows
-  `projects/<name>.json` and whether it is `● modified` or `✓ saved`
+- **+ New** creates one, click to open, **rename**, **duplicate**, **delete**
+- **Save** (or **Ctrl+S**) writes the current canvas; the breadcrumb bar shows
+  `projects/<name>.json` and whether it is `modified` or `saved`
 - The last-open project restores on reload, like a VS Code workspace.
 
 ## Canvas zoom & pan
 
 - **Ctrl+scroll** zooms at the cursor (30–250%, persisted), **+ / − / 0** keys,
-  zoom buttons + % readout, **⤢ fit**, **▦ grid toggle**
+  zoom buttons + % readout, **fit**, **grid toggle**
 - Drag empty canvas (or hold **Space**) to pan; the **minimap** bottom-right
   shows the viewport and jumps the canvas when clicked
 
 ## Keyboard shortcuts & Settings
 
-- Press **?** (or 🔌→Settings) for the full reference. Highlights:
+- Press **?** (or Plugins > Settings) for the full reference. Highlights:
   `Ctrl+S` save, `Ctrl+N` new, `Ctrl+O` Explorer, `Ctrl+P` Quick Open,
   `Ctrl+,` Settings, `Ctrl+Z` / `Ctrl+Shift+Z` undo/redo, `Delete` remove node,
   `Ctrl+D` duplicate node, `Ctrl+E` export, `Ctrl+Enter` upload,
   `Ctrl+1…4` switch views, `Esc` close/deselect
-- **⚙️ Settings** (bottom of the activity bar, or `Ctrl+,`): theme, grid,
+- **Settings** (bottom of the activity bar, or `Ctrl+,`): theme, grid,
   minimap, zoom, code-preview highlighting / line numbers / word wrap /
   font size, and autosave (every 5–30s) — all persisted in your browser
 
 ## Plugins
 
 - Drop a plugin `.json` into **`plugins/`** (a JSON object with a `categories` map, same block schema as the YAML category files)
-  and restart `server.py` — or install one from the **🔌 Plugins** panel
+  and restart `server.py` — or install one from the **Plugins** panel
 - Each plugin can be **enabled/disabled** there; disabled blocks vanish from
   the palette but old projects that use them still build
 
@@ -186,3 +188,8 @@ connection. The Serial Monitor uses the browser Web Serial API (Chrome/Edge on
 localhost). The Terminal tab explains the browser security boundary: an in-browser
 web app cannot expose an arbitrary operating-system shell; use the terminal running
 `server.py`. Build Logs and Problems are populated from actual compile/upload results.
+
+
+## Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=Nonsense0909688/EmbedCo&type=Date)](https://star-history.com/#Nonsense0909688/EmbedCo&Date)
