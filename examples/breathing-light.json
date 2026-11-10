@@ -1,0 +1,15 @@
+{
+  "name": "Breathing Light",
+  "description": "Fades a light in and out on a PWM pin.",
+  "board": "uno",
+  "setup": [],
+  "loop": [
+    {
+      "type": "fade_pulse",
+      "inputs": {
+        "pin": 9,
+        "step_delay": 10
+      }
+    }
+  ]
+}

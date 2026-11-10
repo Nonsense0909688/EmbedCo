@@ -1,0 +1,65 @@
+{
+  "name": "Analog Sensors",
+  "description": "Reads analog values, voltage, and light/soil levels to serial.",
+  "board": "uno",
+  "setup": [
+    {
+      "type": "serial_begin",
+      "inputs": {
+        "baud_rate": 9600
+      }
+    }
+  ],
+  "loop": [
+    {
+      "type": "serial_print",
+      "inputs": {
+        "value": {
+          "type": "analog_read",
+          "inputs": {
+            "pin": "A0"
+          }
+        }
+      }
+    },
+    {
+      "type": "serial_print",
+      "inputs": {
+        "value": {
+          "type": "read_voltage",
+          "inputs": {
+            "pin": "A1"
+          }
+        }
+      }
+    },
+    {
+      "type": "serial_print",
+      "inputs": {
+        "value": {
+          "type": "light_level",
+          "inputs": {
+            "pin": "A2"
+          }
+        }
+      }
+    },
+    {
+      "type": "serial_print",
+      "inputs": {
+        "value": {
+          "type": "soil_moisture",
+          "inputs": {
+            "pin": "A3"
+          }
+        }
+      }
+    },
+    {
+      "type": "wait_seconds",
+      "inputs": {
+        "seconds": 1
+      }
+    }
+  ]
+}

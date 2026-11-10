@@ -1,0 +1,35 @@
+{
+  "name": "Button Light",
+  "description": "Turns a light on while the button is pressed.",
+  "board": "uno",
+  "setup": [],
+  "loop": [
+    {
+      "type": "if",
+      "inputs": {
+        "condition": {
+          "type": "button",
+          "inputs": {
+            "pin": 2
+          }
+        }
+      },
+      "then": [
+        {
+          "type": "light_on",
+          "inputs": {
+            "pin": 13
+          }
+        }
+      ],
+      "else": [
+        {
+          "type": "light_off",
+          "inputs": {
+            "pin": 13
+          }
+        }
+      ]
+    }
+  ]
+}

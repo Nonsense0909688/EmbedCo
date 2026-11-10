@@ -1,0 +1,50 @@
+{
+  "name": "RGB NeoPixel",
+  "description": "Sets NeoPixel colors in a loop with clear and show.",
+  "board": "uno",
+  "setup": [
+    {
+      "type": "neopixel_begin",
+      "inputs": {
+        "pin": 6,
+        "count": 8
+      }
+    }
+  ],
+  "loop": [
+    {
+      "type": "neopixel_set",
+      "inputs": {
+        "index": 0,
+        "r": 255,
+        "g": 0,
+        "b": 0
+      }
+    },
+    {
+      "type": "neopixel_set",
+      "inputs": {
+        "index": 1,
+        "r": 0,
+        "g": 255,
+        "b": 0
+      }
+    },
+    {
+      "type": "wait",
+      "inputs": {
+        "milliseconds": 500
+      }
+    },
+    {
+      "type": "neopixel_clear",
+      "inputs": {}
+    },
+    {
+      "type": "wait",
+      "inputs": {
+        "milliseconds": 500
+      }
+    }
+  ]
+}

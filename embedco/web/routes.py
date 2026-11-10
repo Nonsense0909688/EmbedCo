@@ -68,6 +68,54 @@ def build_router(svc):
     def ports(req):
         return 200, {"ports": svc.arduino.list_ports()}
 
+    # ---- examples ----
+
+    @router.route("GET", "/api/examples")
+    def examples_list(req):
+        import json
+        out = []
+        exdir = svc.settings.examples_dir
+        if exdir.is_dir():
+            for path in sorted(exdir.glob("*.json")):
+                try:
+                    data = json.loads(path.read_text(encoding="utf-8"))
+                except Exception:
+                    logger.warning("Skipping invalid example: %s", path)
+                    continue
+                if not isinstance(data, dict):
+                    continue
+                out.append({
+                    "id": path.stem,
+                    "name": str(data.get("name") or path.stem),
+                    "description": str(data.get("description") or ""),
+                    "board": str(data.get("board") or "uno"),
+                })
+        return 200, {"examples": out}
+
+    @router.route("GET", "/api/examples/<example_id>")
+    def examples_get(req):
+        import json, re
+        example_id = unquote(req.params["example_id"])
+        if not re.fullmatch(r"[A-Za-z0-9._-]+", example_id):
+            raise ValidationError("Invalid example id")
+        path = svc.settings.examples_dir / f"{example_id}.json"
+        try:
+            resolved = path.resolve()
+            resolved.relative_to(svc.settings.examples_dir.resolve())
+        except Exception:
+            raise NotFoundError("Example not found") from None
+        if not resolved.is_file():
+            raise NotFoundError("Example not found")
+        try:
+            data = json.loads(resolved.read_text(encoding="utf-8"))
+        except Exception:
+            raise ValidationError("Example file is not valid JSON") from None
+        if not isinstance(data, dict):
+            raise ValidationError("Example file is not valid")
+        data.setdefault("name", example_id)
+        data.setdefault("board", "uno")
+        return 200, {"id": example_id, "project": data}
+
     # ---- plugins ----
 
     @router.route("GET", "/api/plugins")

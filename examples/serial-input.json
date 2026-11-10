@@ -1,0 +1,42 @@
+{
+  "name": "Serial Input",
+  "description": "Reads serial input when available and prints it back.",
+  "board": "uno",
+  "setup": [
+    {
+      "type": "serial_begin",
+      "inputs": {
+        "baud_rate": 9600
+      }
+    }
+  ],
+  "loop": [
+    {
+      "type": "if",
+      "inputs": {
+        "condition": {
+          "type": "serial_available",
+          "inputs": {}
+        }
+      },
+      "then": [
+        {
+          "type": "serial_print",
+          "inputs": {
+            "value": {
+              "type": "serial_read",
+              "inputs": {}
+            }
+          }
+        }
+      ],
+      "else": []
+    },
+    {
+      "type": "wait",
+      "inputs": {
+        "milliseconds": 50
+      }
+    }
+  ]
+}

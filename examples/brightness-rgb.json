@@ -1,0 +1,58 @@
+{
+  "name": "Brightness and RGB",
+  "description": "Controls LED brightness and RGB strip color.",
+  "board": "uno",
+  "setup": [
+    {
+      "type": "neopixel_begin",
+      "inputs": {
+        "pin": 6,
+        "count": 8
+      }
+    }
+  ],
+  "loop": [
+    {
+      "type": "brightness",
+      "inputs": {
+        "pin": 9,
+        "level": 128
+      }
+    },
+    {
+      "type": "rgb_color",
+      "inputs": {
+        "r_pin": 3,
+        "g_pin": 5,
+        "b_pin": 6,
+        "red": 255,
+        "green": 64,
+        "blue": 128
+      }
+    },
+    {
+      "type": "light_toggle",
+      "inputs": {
+        "pin": 13
+      }
+    },
+    {
+      "type": "digital_write",
+      "inputs": {
+        "pin": 7,
+        "value": {
+          "type": "boolean",
+          "inputs": {
+            "value": true
+          }
+        }
+      }
+    },
+    {
+      "type": "wait",
+      "inputs": {
+        "milliseconds": 300
+      }
+    }
+  ]
+}

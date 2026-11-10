@@ -1,0 +1,43 @@
+{
+  "name": "Obstacle Alert",
+  "description": "Beeps when an obstacle is detected by a sensor.",
+  "board": "uno",
+  "setup": [],
+  "loop": [
+    {
+      "type": "if",
+      "inputs": {
+        "condition": {
+          "type": "obstacle_detected",
+          "inputs": {
+            "pin": 3
+          }
+        }
+      },
+      "then": [
+        {
+          "type": "beep",
+          "inputs": {
+            "pin": 8,
+            "frequency": 900,
+            "duration": 100
+          }
+        }
+      ],
+      "else": [
+        {
+          "type": "buzzer_off",
+          "inputs": {
+            "pin": 8
+          }
+        }
+      ]
+    },
+    {
+      "type": "wait",
+      "inputs": {
+        "milliseconds": 100
+      }
+    }
+  ]
+}

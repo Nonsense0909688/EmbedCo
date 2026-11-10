@@ -1,0 +1,32 @@
+{
+  "name": "Blink a Light",
+  "description": "Turns a light on and off every half second.",
+  "board": "uno",
+  "setup": [],
+  "loop": [
+    {
+      "type": "light_on",
+      "inputs": {
+        "pin": 13
+      }
+    },
+    {
+      "type": "wait",
+      "inputs": {
+        "milliseconds": 500
+      }
+    },
+    {
+      "type": "light_off",
+      "inputs": {
+        "pin": 13
+      }
+    },
+    {
+      "type": "wait",
+      "inputs": {
+        "milliseconds": 500
+      }
+    }
+  ]
+}

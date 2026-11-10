@@ -1,0 +1,30 @@
+{
+  "name": "Repeat Beeps",
+  "description": "Beeps three times, then waits two seconds.",
+  "board": "uno",
+  "setup": [],
+  "loop": [
+    {
+      "type": "repeat",
+      "inputs": {
+        "count": 3
+      },
+      "body": [
+        {
+          "type": "beep",
+          "inputs": {
+            "pin": 8,
+            "frequency": 1000,
+            "duration": 150
+          }
+        }
+      ]
+    },
+    {
+      "type": "wait_seconds",
+      "inputs": {
+        "seconds": 2
+      }
+    }
+  ]
+}

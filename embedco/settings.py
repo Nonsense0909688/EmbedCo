@@ -72,6 +72,10 @@ class Settings:
         return self.home / "ui" / "index.html"
 
     @property
+    def examples_dir(self):
+        return self.home / "examples"
+
+    @property
     def is_loopback(self):
         return self.host in LOOPBACK_HOSTS
 

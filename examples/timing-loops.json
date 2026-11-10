@@ -1,0 +1,95 @@
+{
+  "name": "Timing and Loops",
+  "description": "Shows wait until, repeat while, run every, and millis.",
+  "board": "uno",
+  "setup": [
+    {
+      "type": "variable",
+      "inputs": {
+        "name": "ticks",
+        "value": 0
+      }
+    },
+    {
+      "type": "serial_begin",
+      "inputs": {
+        "baud_rate": 9600
+      }
+    }
+  ],
+  "loop": [
+    {
+      "type": "wait_until",
+      "inputs": {
+        "condition": {
+          "type": "not_equal",
+          "inputs": {
+            "a": 0,
+            "b": 0
+          }
+        }
+      }
+    },
+    {
+      "type": "repeat_while",
+      "inputs": {
+        "condition": {
+          "type": "less",
+          "inputs": {
+            "a": {
+              "type": "get_variable",
+              "inputs": {
+                "name": "ticks"
+              }
+            },
+            "b": 3
+          }
+        }
+      },
+      "body": [
+        {
+          "type": "change_variable",
+          "inputs": {
+            "name": "ticks",
+            "value": 1
+          }
+        },
+        {
+          "type": "wait",
+          "inputs": {
+            "milliseconds": 200
+          }
+        }
+      ]
+    },
+    {
+      "type": "run_every",
+      "inputs": {
+        "milliseconds": 1000
+      },
+      "body": [
+        {
+          "type": "serial_print",
+          "inputs": {
+            "value": {
+              "type": "millis_now",
+              "inputs": {}
+            }
+          }
+        }
+      ]
+    },
+    {
+      "type": "repeat",
+      "inputs": {
+        "count": 1
+      },
+      "body": [
+        {
+          "type": "exit_loop",
+          "inputs": {}
+        }
+      ]
+    }
+  ]
+}

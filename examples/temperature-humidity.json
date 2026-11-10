@@ -1,0 +1,43 @@
+{
+  "name": "Temperature and Humidity",
+  "description": "Reads DHT sensor values and prints them.",
+  "board": "uno",
+  "setup": [
+    {
+      "type": "serial_begin",
+      "inputs": {
+        "baud_rate": 9600
+      }
+    }
+  ],
+  "loop": [
+    {
+      "type": "serial_print",
+      "inputs": {
+        "value": {
+          "type": "temperature",
+          "inputs": {
+            "pin": 2
+          }
+        }
+      }
+    },
+    {
+      "type": "serial_print",
+      "inputs": {
+        "value": {
+          "type": "humidity",
+          "inputs": {
+            "pin": 2
+          }
+        }
+      }
+    },
+    {
+      "type": "wait_seconds",
+      "inputs": {
+        "seconds": 2
+      }
+    }
+  ]
+}

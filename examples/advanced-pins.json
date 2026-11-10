@@ -1,0 +1,109 @@
+{
+  "name": "Advanced Pin I/O",
+  "description": "Uses raw pin read/write, toggle, shift, and pulse input.",
+  "board": "uno",
+  "setup": [
+    {
+      "type": "pin_mode",
+      "inputs": {
+        "pin": 13,
+        "mode": "OUTPUT"
+      }
+    }
+  ],
+  "loop": [
+    {
+      "type": "write_digital_pin_raw",
+      "inputs": {
+        "pin": 13,
+        "value": {
+          "type": "boolean",
+          "inputs": {
+            "value": true
+          }
+        }
+      }
+    },
+    {
+      "type": "toggle_digital_pin",
+      "inputs": {
+        "pin": 12
+      }
+    },
+    {
+      "type": "write_analog_pin_raw",
+      "inputs": {
+        "pin": 9,
+        "value": 128
+      }
+    },
+    {
+      "type": "serial_begin",
+      "inputs": {
+        "baud_rate": 9600
+      }
+    },
+    {
+      "type": "serial_print",
+      "inputs": {
+        "value": {
+          "type": "read_digital_pin_raw",
+          "inputs": {
+            "pin": 2
+          }
+        }
+      }
+    },
+    {
+      "type": "serial_print",
+      "inputs": {
+        "value": {
+          "type": "read_analog_pin_raw",
+          "inputs": {
+            "pin": "A0"
+          }
+        }
+      }
+    },
+    {
+      "type": "serial_print",
+      "inputs": {
+        "value": {
+          "type": "pulse_in",
+          "inputs": {
+            "pin": 7,
+            "state": "HIGH"
+          }
+        }
+      }
+    },
+    {
+      "type": "shift_out",
+      "inputs": {
+        "data_pin": 11,
+        "clock_pin": 12,
+        "latch_pin": 8,
+        "value": 170
+      }
+    },
+    {
+      "type": "serial_print",
+      "inputs": {
+        "value": {
+          "type": "shift_in",
+          "inputs": {
+            "data_pin": 11,
+            "clock_pin": 12,
+            "latch_pin": 8
+          }
+        }
+      }
+    },
+    {
+      "type": "wait",
+      "inputs": {
+        "milliseconds": 500
+      }
+    }
+  ]
+}

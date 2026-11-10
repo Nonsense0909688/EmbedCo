@@ -1,0 +1,45 @@
+{
+  "name": "Automatic Door",
+  "description": "Opens a servo when something is closer than 20 cm.",
+  "board": "uno",
+  "setup": [],
+  "loop": [
+    {
+      "type": "if",
+      "inputs": {
+        "condition": {
+          "type": "between",
+          "inputs": {
+            "value": {
+              "type": "read_distance",
+              "inputs": {
+                "trigger_pin": 9,
+                "echo_pin": 10
+              }
+            },
+            "low": 1,
+            "high": 20
+          }
+        }
+      },
+      "then": [
+        {
+          "type": "servo_move",
+          "inputs": {
+            "pin": 6,
+            "angle": 90
+          }
+        }
+      ],
+      "else": [
+        {
+          "type": "servo_move",
+          "inputs": {
+            "pin": 6,
+            "angle": 0
+          }
+        }
+      ]
+    }
+  ]
+}

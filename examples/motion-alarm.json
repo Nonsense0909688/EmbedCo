@@ -1,0 +1,54 @@
+{
+  "name": "Motion Alarm",
+  "description": "Triggers buzzer and relay when motion is detected.",
+  "board": "uno",
+  "setup": [],
+  "loop": [
+    {
+      "type": "if",
+      "inputs": {
+        "condition": {
+          "type": "motion_detected",
+          "inputs": {
+            "pin": 7
+          }
+        }
+      },
+      "then": [
+        {
+          "type": "buzzer_tone",
+          "inputs": {
+            "pin": 8,
+            "frequency": 1200
+          }
+        },
+        {
+          "type": "relay_on",
+          "inputs": {
+            "pin": 4
+          }
+        }
+      ],
+      "else": [
+        {
+          "type": "buzzer_stop",
+          "inputs": {
+            "pin": 8
+          }
+        },
+        {
+          "type": "relay_off",
+          "inputs": {
+            "pin": 4
+          }
+        }
+      ]
+    },
+    {
+      "type": "wait",
+      "inputs": {
+        "milliseconds": 100
+      }
+    }
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "name": "Distance Monitor",
+  "description": "Prints distance readings to the Serial Monitor.",
+  "board": "uno",
+  "setup": [
+    {
+      "type": "serial_begin",
+      "inputs": {
+        "baud_rate": 9600
+      }
+    }
+  ],
+  "loop": [
+    {
+      "type": "serial_print",
+      "inputs": {
+        "value": {
+          "type": "read_distance",
+          "inputs": {
+            "trigger_pin": 9,
+            "echo_pin": 10
+          }
+        }
+      }
+    },
+    {
+      "type": "wait",
+      "inputs": {
+        "milliseconds": 200
+      }
+    }
+  ]
+}

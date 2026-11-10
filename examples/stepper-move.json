@@ -1,0 +1,25 @@
+{
+  "name": "Stepper Move",
+  "description": "Moves a stepper motor a set number of steps.",
+  "board": "uno",
+  "setup": [],
+  "loop": [
+    {
+      "type": "stepper_move",
+      "inputs": {
+        "steps": 200,
+        "pin1": 8,
+        "pin2": 9,
+        "pin3": 10,
+        "pin4": 11,
+        "speed": 60
+      }
+    },
+    {
+      "type": "wait_seconds",
+      "inputs": {
+        "seconds": 1
+      }
+    }
+  ]
+}

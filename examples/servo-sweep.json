@@ -1,0 +1,18 @@
+{
+  "name": "Servo Sweep",
+  "description": "Sweeps a servo back and forth.",
+  "board": "uno",
+  "setup": [],
+  "loop": [
+    {
+      "type": "servo_sweep",
+      "inputs": {
+        "pin": 6,
+        "from_angle": 0,
+        "to_angle": 180,
+        "step": 5,
+        "delay_ms": 15
+      }
+    }
+  ]
+}

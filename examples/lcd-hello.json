@@ -1,0 +1,35 @@
+{
+  "name": "LCD Hello",
+  "description": "Displays text on an I2C LCD.",
+  "board": "uno",
+  "setup": [
+    {
+      "type": "lcd_begin",
+      "inputs": {
+        "address": "0x27",
+        "cols": 16,
+        "rows": 2
+      }
+    }
+  ],
+  "loop": [
+    {
+      "type": "lcd_clear",
+      "inputs": {}
+    },
+    {
+      "type": "lcd_print",
+      "inputs": {
+        "text": "Hello EmbedCo",
+        "col": 0,
+        "row": 0
+      }
+    },
+    {
+      "type": "wait_seconds",
+      "inputs": {
+        "seconds": 2
+      }
+    }
+  ]
+}

@@ -1,0 +1,97 @@
+{
+  "name": "Variables and Math",
+  "description": "Uses variables, math, comparisons, and mapping.",
+  "board": "uno",
+  "setup": [
+    {
+      "type": "variable",
+      "inputs": {
+        "name": "counter",
+        "value": 0
+      }
+    },
+    {
+      "type": "serial_begin",
+      "inputs": {
+        "baud_rate": 9600
+      }
+    }
+  ],
+  "loop": [
+    {
+      "type": "change_variable",
+      "inputs": {
+        "name": "counter",
+        "value": 1
+      }
+    },
+    {
+      "type": "set_variable",
+      "inputs": {
+        "name": "counter",
+        "value": {
+          "type": "constrain_value",
+          "inputs": {
+            "value": {
+              "type": "get_variable",
+              "inputs": {
+                "name": "counter"
+              }
+            },
+            "low": 0,
+            "high": 10
+          }
+        }
+      }
+    },
+    {
+      "type": "serial_print",
+      "inputs": {
+        "value": {
+          "type": "map_range",
+          "inputs": {
+            "value": {
+              "type": "get_variable",
+              "inputs": {
+                "name": "counter"
+              }
+            },
+            "in_min": 0,
+            "in_max": 10,
+            "out_min": 0,
+            "out_max": 255
+          }
+        }
+      }
+    },
+    {
+      "type": "serial_print",
+      "inputs": {
+        "value": {
+          "type": "add",
+          "inputs": {
+            "a": {
+              "type": "absolute",
+              "inputs": {
+                "value": -5
+              }
+            },
+            "b": {
+              "type": "random",
+              "inputs": {
+                "min": 1,
+                "max": 10
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "type": "wait",
+      "inputs": {
+        "milliseconds": 500
+      }
+    }
+  ]
+}

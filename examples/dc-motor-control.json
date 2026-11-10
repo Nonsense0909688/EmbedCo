@@ -1,0 +1,55 @@
+{
+  "name": "DC Motor Control",
+  "description": "Runs a motor forward, stops, then runs backward.",
+  "board": "uno",
+  "setup": [],
+  "loop": [
+    {
+      "type": "motor_forward",
+      "inputs": {
+        "in1": 8,
+        "in2": 9,
+        "speed": 200
+      }
+    },
+    {
+      "type": "wait",
+      "inputs": {
+        "milliseconds": 1000
+      }
+    },
+    {
+      "type": "motor_stop",
+      "inputs": {
+        "in1": 8,
+        "in2": 9
+      }
+    },
+    {
+      "type": "wait",
+      "inputs": {
+        "milliseconds": 500
+      }
+    },
+    {
+      "type": "motor_backward",
+      "inputs": {
+        "in1": 8,
+        "in2": 9,
+        "speed": 180
+      }
+    },
+    {
+      "type": "wait",
+      "inputs": {
+        "milliseconds": 1000
+      }
+    },
+    {
+      "type": "motor_off",
+      "inputs": {
+        "enable": 5
+      }
+    }
+  ]
+}

@@ -1,0 +1,98 @@
+{
+  "name": "Logic Conditions",
+  "description": "Demonstrates comparisons and boolean logic blocks.",
+  "board": "uno",
+  "setup": [],
+  "loop": [
+    {
+      "type": "if",
+      "inputs": {
+        "condition": {
+          "type": "and",
+          "inputs": {
+            "a": {
+              "type": "greater",
+              "inputs": {
+                "a": {
+                  "type": "analog_read",
+                  "inputs": {
+                    "pin": "A0"
+                  }
+                },
+                "b": 500
+              }
+            },
+            "b": {
+              "type": "not",
+              "inputs": {
+                "value": {
+                  "type": "button",
+                  "inputs": {
+                    "pin": 2
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "then": [
+        {
+          "type": "light_on",
+          "inputs": {
+            "pin": 13
+          }
+        }
+      ],
+      "else": [
+        {
+          "type": "if",
+          "inputs": {
+            "condition": {
+              "type": "or",
+              "inputs": {
+                "a": {
+                  "type": "less_equal",
+                  "inputs": {
+                    "a": {
+                      "type": "analog_read",
+                      "inputs": {
+                        "pin": "A0"
+                      }
+                    },
+                    "b": 100
+                  }
+                },
+                "b": {
+                  "type": "equal",
+                  "inputs": {
+                    "a": 1,
+                    "b": 1
+                  }
+                }
+              }
+            }
+          },
+          "then": [
+            {
+              "type": "blink",
+              "inputs": {
+                "pin": 13,
+                "on_ms": 200,
+                "off_ms": 200
+              }
+            }
+          ],
+          "else": [
+            {
+              "type": "light_off",
+              "inputs": {
+                "pin": 13
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
