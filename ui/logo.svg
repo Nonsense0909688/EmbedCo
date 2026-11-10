@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title">
+  <title id="title">EmbedCo</title>
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#4aa3ff"/>
+      <stop offset="100%" stop-color="#0e639c"/>
+    </linearGradient>
+  </defs>
+  <rect x="4" y="4" width="56" height="56" rx="14" fill="url(#g)"/>
+  <g fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M22 20h20M22 32h14M22 44h20"/>
+    <circle cx="42" cy="32" r="4" fill="#fff" stroke="none"/>
+  </g>
+  <circle cx="46" cy="18" r="3" fill="#7fd08a"/>
+</svg>
