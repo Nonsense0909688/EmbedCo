@@ -38,6 +38,16 @@ Your browser opens at http://127.0.0.1:8000. Build with blocks, watch the sketch
 update live, then copy it or download the .ino file. Export JSON saves your
 project; Import JSON loads it again.
 
+## Build a standalone executable (PyInstaller)
+
+    pip install -r requirements.txt pyinstaller
+    pyinstaller embedco.spec
+
+The executable is written to `dist/EmbedCo` (`dist/EmbedCo.exe` on Windows).
+When running the frozen executable, bundled resources (`ui/`, `blocks/`,
+`boards.yaml`, `examples/`) are read from the app bundle, while writable data
+(`projects/`, `plugins/`, `logs/`) is stored next to the executable by default.
+
 ## Upload to a board
 
 Click **Upload** in the editor: it compiles the current sketch with
@@ -123,7 +133,7 @@ environment variables, which override defaults.
 
 | Variable | Default | Meaning |
 |---|---|---|
-| `EMBEDCO_HOME` | repo root | where `blocks/`, `boards.yaml`, `plugins/`, `projects/`, `ui/` live |
+| `EMBEDCO_HOME` | repo root (dev) / exe dir (frozen) | writable data root for `plugins/`, `projects/`, and logs; bundled resources are read from the app bundle when frozen |
 | `EMBEDCO_HOST` / `_PORT` | `127.0.0.1` / `8000` | bind address / port |
 | `EMBEDCO_LOG_LEVEL` | `INFO` | `DEBUG`, `INFO`, `WARNING`, `ERROR` |
 | `EMBEDCO_LOG_FORMAT` | `text` | `text` or `json` (one object per line) |

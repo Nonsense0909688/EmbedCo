@@ -1,0 +1,2 @@
+2026-11-24 09:02:29,981 WARNING  [-] embedco.web.handler: HTTP protocol error from 127.0.0.1: Request timed out: TimeoutError('timed out')
+2026-11-24 09:02:29,981 WARNING  [-] embedco.web.handler: HTTP protocol error from 127.0.0.1: Request timed out: TimeoutError('timed out')

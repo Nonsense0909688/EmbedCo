@@ -1,0 +1,705 @@
+('C:\\Users\\Anish Nandi\\Downloads\\EmbedCo\\build\\embedco\\PYZ-00.pyz',
+ [('__future__',
+   'C:\\Users\\Anish '
+   'Nandi\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\__future__.py',
+   'PYMODULE'),
+  ('_compat_pickle',
+   'C:\\Users\\Anish '
+   'Nandi\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\_compat_pickle.py',
+   'PYMODULE'),
+  ('_compression',
+   'C:\\Users\\Anish '
+   'Nandi\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\_compression.py',
+   'PYMODULE'),
+  ('_py_abc',
+   'C:\\Users\\Anish '
+   'Nandi\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\_py_abc.py',
+   'PYMODULE'),
+  ('_pydecimal',
+   'C:\\Users\\Anish '
+   'Nandi\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\_pydecimal.py',
+   'PYMODULE'),
+  ('_strptime',
+   'C:\\Users\\Anish '
+   'Nandi\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\_strptime.py',
+   'PYMODULE'),
+  ('_threading_local',
+   'C:\\Users\\Anish '
+   'Nandi\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\_threading_local.py',
+   'PYMODULE'),
+  ('argparse',
+   'C:\\Users\\Anish '
+   'Nandi\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\argparse.py',
+   'PYMODULE'),
+  ('ast',
+   'C:\\Users\\Anish '
+   'Nandi\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\ast.py',
+   'PYMODULE'),
+  ('base64',
+   'C:\\Users\\Anish '
+   'Nandi\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\base64.py',
+   'PYMODULE'),
+  ('bisect',
+   'C:\\Users\\Anish '
+   'Nandi\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\bisect.py',
+   'PYMODULE'),
+  ('bz2',
+   'C:\\Users\\Anish '
+   'Nandi\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\bz2.py',
+   'PYMODULE'),
+  ('calendar',
+   'C:\\Users\\Anish '
+   'Nandi\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\calendar.py',
+   'PYMODULE'),
+  ('contextlib',
+   'C:\\Users\\Anish '
+   'Nandi\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\contextlib.py',
+   'PYMODULE'),
+  ('contextvars',
+   'C:\\Users\\Anish '
+   'Nandi\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\contextvars.py',
+   'PYMODULE'),
+  ('copy',
+   'C:\\Users\\Anish '
+   'Nandi\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\copy.py',
+   'PYMODULE'),
+  ('csv',
+   'C:\\Users\\Anish '
+   'Nandi\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\csv.py',
+   'PYMODULE'),
+  ('ctypes',
+   'C:\\Users\\Anish '
+   'Nandi\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\ctypes\\__init__.py',
+   'PYMODULE'),
+  ('ctypes._endian',
+   'C:\\Users\\Anish '
+   'Nandi\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\ctypes\\_endian.py',
+   'PYMODULE'),
+  ('ctypes.wintypes',
+   'C:\\Users\\Anish '
+   'Nandi\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\ctypes\\wintypes.py',
+   'PYMODULE'),
+  ('dataclasses',
+   'C:\\Users\\Anish '
+   'Nandi\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\dataclasses.py',
+   'PYMODULE'),
+  ('datetime',
+   'C:\\Users\\Anish '
+   'Nandi\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\datetime.py',
+   'PYMODULE'),
+  ('decimal',
+   'C:\\Users\\Anish '
+   'Nandi\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\decimal.py',
+   'PYMODULE'),
+  ('difflib',
+   'C:\\Users\\Anish '
+   'Nandi\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\difflib.py',
+   'PYMODULE'),
+  ('dis',
+   'C:\\Users\\Anish '
+   'Nandi\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\dis.py',
+   'PYMODULE'),
+  ('email',
+   'C:\\Users\\Anish '
+   'Nandi\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\email\\__init__.py',
+   'PYMODULE'),
+  ('email._encoded_words',
+   'C:\\Users\\Anish '
+   'Nandi\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\email\\_encoded_words.py',
+   'PYMODULE'),
+  ('email._header_value_parser',
+   'C:\\Users\\Anish '
+   'Nandi\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\email\\_header_value_parser.py',
+   'PYMODULE'),
+  ('email._parseaddr',
+   'C:\\Users\\Anish '
+   'Nandi\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\email\\_parseaddr.py',
+   'PYMODULE'),
+  ('email._policybase',
+   'C:\\Users\\Anish '
+   'Nandi\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\email\\_policybase.py',
+   'PYMODULE'),
+  ('email.base64mime',
+   'C:\\Users\\Anish '
+   'Nandi\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\email\\base64mime.py',
+   'PYMODULE'),
+  ('email.charset',
+   'C:\\Users\\Anish '
+   'Nandi\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\email\\charset.py',
+   'PYMODULE'),
+  ('email.contentmanager',
+   'C:\\Users\\Anish '
+   'Nandi\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\email\\contentmanager.py',
+   'PYMODULE'),
+  ('email.encoders',
+   'C:\\Users\\Anish '
+   'Nandi\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\email\\encoders.py',
+   'PYMODULE'),
+  ('email.errors',
+   'C:\\Users\\Anish '
+   'Nandi\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\email\\errors.py',
+   'PYMODULE'),
+  ('email.feedparser',
+   'C:\\Users\\Anish '
+   'Nandi\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\email\\feedparser.py',
+   'PYMODULE'),
+  ('email.generator',
+   'C:\\Users\\Anish '
+   'Nandi\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\email\\generator.py',
+   'PYMODULE'),
+  ('email.header',
+   'C:\\Users\\Anish '
+   'Nandi\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\email\\header.py',
+   'PYMODULE'),
+  ('email.headerregistry',
+   'C:\\Users\\Anish '
+   'Nandi\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\email\\headerregistry.py',
+   'PYMODULE'),
+  ('email.iterators',
+   'C:\\Users\\Anish '
+   'Nandi\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\email\\iterators.py',
+   'PYMODULE'),
+  ('email.message',
+   'C:\\Users\\Anish '
+   'Nandi\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\email\\message.py',
+   'PYMODULE'),
+  ('email.parser',
+   'C:\\Users\\Anish '
+   'Nandi\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\email\\parser.py',
+   'PYMODULE'),
+  ('email.policy',
+   'C:\\Users\\Anish '
+   'Nandi\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\email\\policy.py',
+   'PYMODULE'),
+  ('email.quoprimime',
+   'C:\\Users\\Anish '
+   'Nandi\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\email\\quoprimime.py',
+   'PYMODULE'),
+  ('email.utils',
+   'C:\\Users\\Anish '
+   'Nandi\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\email\\utils.py',
+   'PYMODULE'),
+  ('embedco',
+   'C:\\Users\\Anish Nandi\\Downloads\\EmbedCo\\embedco\\__init__.py',
+   'PYMODULE'),
+  ('embedco.cli',
+   'C:\\Users\\Anish Nandi\\Downloads\\EmbedCo\\embedco\\cli.py',
+   'PYMODULE'),
+  ('embedco.errors',
+   'C:\\Users\\Anish Nandi\\Downloads\\EmbedCo\\embedco\\errors.py',
+   'PYMODULE'),
+  ('embedco.generator',
+   'C:\\Users\\Anish '
+   'Nandi\\Downloads\\EmbedCo\\embedco\\generator\\__init__.py',
+   'PYMODULE'),
+  ('embedco.generator.boards',
+   'C:\\Users\\Anish Nandi\\Downloads\\EmbedCo\\embedco\\generator\\boards.py',
+   'PYMODULE'),
+  ('embedco.generator.catalog',
+   'C:\\Users\\Anish Nandi\\Downloads\\EmbedCo\\embedco\\generator\\catalog.py',
+   'PYMODULE'),
+  ('embedco.generator.control',
+   'C:\\Users\\Anish Nandi\\Downloads\\EmbedCo\\embedco\\generator\\control.py',
+   'PYMODULE'),
+  ('embedco.generator.core',
+   'C:\\Users\\Anish Nandi\\Downloads\\EmbedCo\\embedco\\generator\\core.py',
+   'PYMODULE'),
+  ('embedco.generator.inputs',
+   'C:\\Users\\Anish Nandi\\Downloads\\EmbedCo\\embedco\\generator\\inputs.py',
+   'PYMODULE'),
+  ('embedco.generator.plugins',
+   'C:\\Users\\Anish Nandi\\Downloads\\EmbedCo\\embedco\\generator\\plugins.py',
+   'PYMODULE'),
+  ('embedco.generator.state',
+   'C:\\Users\\Anish Nandi\\Downloads\\EmbedCo\\embedco\\generator\\state.py',
+   'PYMODULE'),
+  ('embedco.generator.text',
+   'C:\\Users\\Anish Nandi\\Downloads\\EmbedCo\\embedco\\generator\\text.py',
+   'PYMODULE'),
+  ('embedco.logging_config',
+   'C:\\Users\\Anish Nandi\\Downloads\\EmbedCo\\embedco\\logging_config.py',
+   'PYMODULE'),
+  ('embedco.services',
+   'C:\\Users\\Anish Nandi\\Downloads\\EmbedCo\\embedco\\services\\__init__.py',
+   'PYMODULE'),
+  ('embedco.services.arduino',
+   'C:\\Users\\Anish Nandi\\Downloads\\EmbedCo\\embedco\\services\\arduino.py',
+   'PYMODULE'),
+  ('embedco.services.codegen',
+   'C:\\Users\\Anish Nandi\\Downloads\\EmbedCo\\embedco\\services\\codegen.py',
+   'PYMODULE'),
+  ('embedco.services.projects',
+   'C:\\Users\\Anish Nandi\\Downloads\\EmbedCo\\embedco\\services\\projects.py',
+   'PYMODULE'),
+  ('embedco.services.terminal',
+   'C:\\Users\\Anish Nandi\\Downloads\\EmbedCo\\embedco\\services\\terminal.py',
+   'PYMODULE'),
+  ('embedco.settings',
+   'C:\\Users\\Anish Nandi\\Downloads\\EmbedCo\\embedco\\settings.py',
+   'PYMODULE'),
+  ('embedco.util',
+   'C:\\Users\\Anish Nandi\\Downloads\\EmbedCo\\embedco\\util.py',
+   'PYMODULE'),
+  ('embedco.web',
+   'C:\\Users\\Anish Nandi\\Downloads\\EmbedCo\\embedco\\web\\__init__.py',
+   'PYMODULE'),
+  ('embedco.web.app',
+   'C:\\Users\\Anish Nandi\\Downloads\\EmbedCo\\embedco\\web\\app.py',
+   'PYMODULE'),
+  ('embedco.web.handler',
+   'C:\\Users\\Anish Nandi\\Downloads\\EmbedCo\\embedco\\web\\handler.py',
+   'PYMODULE'),
+  ('embedco.web.router',
+   'C:\\Users\\Anish Nandi\\Downloads\\EmbedCo\\embedco\\web\\router.py',
+   'PYMODULE'),
+  ('embedco.web.routes',
+   'C:\\Users\\Anish Nandi\\Downloads\\EmbedCo\\embedco\\web\\routes.py',
+   'PYMODULE'),
+  ('fnmatch',
+   'C:\\Users\\Anish '
+   'Nandi\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\fnmatch.py',
+   'PYMODULE'),
+  ('fractions',
+   'C:\\Users\\Anish '
+   'Nandi\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\fractions.py',
+   'PYMODULE'),
+  ('getopt',
+   'C:\\Users\\Anish '
+   'Nandi\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\getopt.py',
+   'PYMODULE'),
+  ('gettext',
+   'C:\\Users\\Anish '
+   'Nandi\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\gettext.py',
+   'PYMODULE'),
+  ('glob',
+   'C:\\Users\\Anish '
+   'Nandi\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\glob.py',
+   'PYMODULE'),
+  ('gzip',
+   'C:\\Users\\Anish '
+   'Nandi\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\gzip.py',
+   'PYMODULE'),
+  ('hashlib',
+   'C:\\Users\\Anish '
+   'Nandi\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\hashlib.py',
+   'PYMODULE'),
+  ('hmac',
+   'C:\\Users\\Anish '
+   'Nandi\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\hmac.py',
+   'PYMODULE'),
+  ('html',
+   'C:\\Users\\Anish '
+   'Nandi\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\html\\__init__.py',
+   'PYMODULE'),
+  ('html.entities',
+   'C:\\Users\\Anish '
+   'Nandi\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\html\\entities.py',
+   'PYMODULE'),
+  ('http',
+   'C:\\Users\\Anish '
+   'Nandi\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\http\\__init__.py',
+   'PYMODULE'),
+  ('http.client',
+   'C:\\Users\\Anish '
+   'Nandi\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\http\\client.py',
+   'PYMODULE'),
+  ('http.server',
+   'C:\\Users\\Anish '
+   'Nandi\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\http\\server.py',
+   'PYMODULE'),
+  ('importlib',
+   'C:\\Users\\Anish '
+   'Nandi\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\importlib\\__init__.py',
+   'PYMODULE'),
+  ('importlib._abc',
+   'C:\\Users\\Anish '
+   'Nandi\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\importlib\\_abc.py',
+   'PYMODULE'),
+  ('importlib._bootstrap',
+   'C:\\Users\\Anish '
+   'Nandi\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\importlib\\_bootstrap.py',
+   'PYMODULE'),
+  ('importlib._bootstrap_external',
+   'C:\\Users\\Anish '
+   'Nandi\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\importlib\\_bootstrap_external.py',
+   'PYMODULE'),
+  ('importlib.abc',
+   'C:\\Users\\Anish '
+   'Nandi\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\importlib\\abc.py',
+   'PYMODULE'),
+  ('importlib.machinery',
+   'C:\\Users\\Anish '
+   'Nandi\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\importlib\\machinery.py',
+   'PYMODULE'),
+  ('importlib.metadata',
+   'C:\\Users\\Anish '
+   'Nandi\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\importlib\\metadata\\__init__.py',
+   'PYMODULE'),
+  ('importlib.metadata._adapters',
+   'C:\\Users\\Anish '
+   'Nandi\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\importlib\\metadata\\_adapters.py',
+   'PYMODULE'),
+  ('importlib.metadata._collections',
+   'C:\\Users\\Anish '
+   'Nandi\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\importlib\\metadata\\_collections.py',
+   'PYMODULE'),
+  ('importlib.metadata._functools',
+   'C:\\Users\\Anish '
+   'Nandi\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\importlib\\metadata\\_functools.py',
+   'PYMODULE'),
+  ('importlib.metadata._itertools',
+   'C:\\Users\\Anish '
+   'Nandi\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\importlib\\metadata\\_itertools.py',
+   'PYMODULE'),
+  ('importlib.metadata._meta',
+   'C:\\Users\\Anish '
+   'Nandi\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\importlib\\metadata\\_meta.py',
+   'PYMODULE'),
+  ('importlib.metadata._text',
+   'C:\\Users\\Anish '
+   'Nandi\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\importlib\\metadata\\_text.py',
+   'PYMODULE'),
+  ('importlib.readers',
+   'C:\\Users\\Anish '
+   'Nandi\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\importlib\\readers.py',
+   'PYMODULE'),
+  ('importlib.resources',
+   'C:\\Users\\Anish '
+   'Nandi\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\importlib\\resources\\__init__.py',
+   'PYMODULE'),
+  ('importlib.resources._adapters',
+   'C:\\Users\\Anish '
+   'Nandi\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\importlib\\resources\\_adapters.py',
+   'PYMODULE'),
+  ('importlib.resources._common',
+   'C:\\Users\\Anish '
+   'Nandi\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\importlib\\resources\\_common.py',
+   'PYMODULE'),
+  ('importlib.resources._itertools',
+   'C:\\Users\\Anish '
+   'Nandi\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\importlib\\resources\\_itertools.py',
+   'PYMODULE'),
+  ('importlib.resources._legacy',
+   'C:\\Users\\Anish '
+   'Nandi\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\importlib\\resources\\_legacy.py',
+   'PYMODULE'),
+  ('importlib.resources.abc',
+   'C:\\Users\\Anish '
+   'Nandi\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\importlib\\resources\\abc.py',
+   'PYMODULE'),
+  ('importlib.resources.readers',
+   'C:\\Users\\Anish '
+   'Nandi\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\importlib\\resources\\readers.py',
+   'PYMODULE'),
+  ('importlib.util',
+   'C:\\Users\\Anish '
+   'Nandi\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\importlib\\util.py',
+   'PYMODULE'),
+  ('inspect',
+   'C:\\Users\\Anish '
+   'Nandi\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\inspect.py',
+   'PYMODULE'),
+  ('json',
+   'C:\\Users\\Anish '
+   'Nandi\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\json\\__init__.py',
+   'PYMODULE'),
+  ('json.decoder',
+   'C:\\Users\\Anish '
+   'Nandi\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\json\\decoder.py',
+   'PYMODULE'),
+  ('json.encoder',
+   'C:\\Users\\Anish '
+   'Nandi\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\json\\encoder.py',
+   'PYMODULE'),
+  ('json.scanner',
+   'C:\\Users\\Anish '
+   'Nandi\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\json\\scanner.py',
+   'PYMODULE'),
+  ('logging',
+   'C:\\Users\\Anish '
+   'Nandi\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\logging\\__init__.py',
+   'PYMODULE'),
+  ('logging.handlers',
+   'C:\\Users\\Anish '
+   'Nandi\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\logging\\handlers.py',
+   'PYMODULE'),
+  ('lzma',
+   'C:\\Users\\Anish '
+   'Nandi\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\lzma.py',
+   'PYMODULE'),
+  ('mimetypes',
+   'C:\\Users\\Anish '
+   'Nandi\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\mimetypes.py',
+   'PYMODULE'),
+  ('numbers',
+   'C:\\Users\\Anish '
+   'Nandi\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\numbers.py',
+   'PYMODULE'),
+  ('opcode',
+   'C:\\Users\\Anish '
+   'Nandi\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\opcode.py',
+   'PYMODULE'),
+  ('pathlib',
+   'C:\\Users\\Anish '
+   'Nandi\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\pathlib.py',
+   'PYMODULE'),
+  ('pickle',
+   'C:\\Users\\Anish '
+   'Nandi\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\pickle.py',
+   'PYMODULE'),
+  ('pprint',
+   'C:\\Users\\Anish '
+   'Nandi\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\pprint.py',
+   'PYMODULE'),
+  ('py_compile',
+   'C:\\Users\\Anish '
+   'Nandi\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\py_compile.py',
+   'PYMODULE'),
+  ('queue',
+   'C:\\Users\\Anish '
+   'Nandi\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\queue.py',
+   'PYMODULE'),
+  ('quopri',
+   'C:\\Users\\Anish '
+   'Nandi\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\quopri.py',
+   'PYMODULE'),
+  ('random',
+   'C:\\Users\\Anish '
+   'Nandi\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\random.py',
+   'PYMODULE'),
+  ('secrets',
+   'C:\\Users\\Anish '
+   'Nandi\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\secrets.py',
+   'PYMODULE'),
+  ('selectors',
+   'C:\\Users\\Anish '
+   'Nandi\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\selectors.py',
+   'PYMODULE'),
+  ('serial',
+   'C:\\Users\\Anish '
+   'Nandi\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\serial\\__init__.py',
+   'PYMODULE'),
+  ('serial.serialcli',
+   'C:\\Users\\Anish '
+   'Nandi\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\serial\\serialcli.py',
+   'PYMODULE'),
+  ('serial.serialjava',
+   'C:\\Users\\Anish '
+   'Nandi\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\serial\\serialjava.py',
+   'PYMODULE'),
+  ('serial.serialposix',
+   'C:\\Users\\Anish '
+   'Nandi\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\serial\\serialposix.py',
+   'PYMODULE'),
+  ('serial.serialutil',
+   'C:\\Users\\Anish '
+   'Nandi\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\serial\\serialutil.py',
+   'PYMODULE'),
+  ('serial.serialwin32',
+   'C:\\Users\\Anish '
+   'Nandi\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\serial\\serialwin32.py',
+   'PYMODULE'),
+  ('serial.tools',
+   'C:\\Users\\Anish '
+   'Nandi\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\serial\\tools\\__init__.py',
+   'PYMODULE'),
+  ('serial.tools.list_ports',
+   'C:\\Users\\Anish '
+   'Nandi\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\serial\\tools\\list_ports.py',
+   'PYMODULE'),
+  ('serial.tools.list_ports_common',
+   'C:\\Users\\Anish '
+   'Nandi\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\serial\\tools\\list_ports_common.py',
+   'PYMODULE'),
+  ('serial.tools.list_ports_linux',
+   'C:\\Users\\Anish '
+   'Nandi\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\serial\\tools\\list_ports_linux.py',
+   'PYMODULE'),
+  ('serial.tools.list_ports_osx',
+   'C:\\Users\\Anish '
+   'Nandi\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\serial\\tools\\list_ports_osx.py',
+   'PYMODULE'),
+  ('serial.tools.list_ports_posix',
+   'C:\\Users\\Anish '
+   'Nandi\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\serial\\tools\\list_ports_posix.py',
+   'PYMODULE'),
+  ('serial.tools.list_ports_windows',
+   'C:\\Users\\Anish '
+   'Nandi\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\serial\\tools\\list_ports_windows.py',
+   'PYMODULE'),
+  ('serial.win32',
+   'C:\\Users\\Anish '
+   'Nandi\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\serial\\win32.py',
+   'PYMODULE'),
+  ('shlex',
+   'C:\\Users\\Anish '
+   'Nandi\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\shlex.py',
+   'PYMODULE'),
+  ('shutil',
+   'C:\\Users\\Anish '
+   'Nandi\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\shutil.py',
+   'PYMODULE'),
+  ('signal',
+   'C:\\Users\\Anish '
+   'Nandi\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\signal.py',
+   'PYMODULE'),
+  ('smtplib',
+   'C:\\Users\\Anish '
+   'Nandi\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\smtplib.py',
+   'PYMODULE'),
+  ('socket',
+   'C:\\Users\\Anish '
+   'Nandi\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\socket.py',
+   'PYMODULE'),
+  ('socketserver',
+   'C:\\Users\\Anish '
+   'Nandi\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\socketserver.py',
+   'PYMODULE'),
+  ('ssl',
+   'C:\\Users\\Anish '
+   'Nandi\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\ssl.py',
+   'PYMODULE'),
+  ('statistics',
+   'C:\\Users\\Anish '
+   'Nandi\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\statistics.py',
+   'PYMODULE'),
+  ('string',
+   'C:\\Users\\Anish '
+   'Nandi\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\string.py',
+   'PYMODULE'),
+  ('stringprep',
+   'C:\\Users\\Anish '
+   'Nandi\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\stringprep.py',
+   'PYMODULE'),
+  ('subprocess',
+   'C:\\Users\\Anish '
+   'Nandi\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\subprocess.py',
+   'PYMODULE'),
+  ('tarfile',
+   'C:\\Users\\Anish '
+   'Nandi\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\tarfile.py',
+   'PYMODULE'),
+  ('tempfile',
+   'C:\\Users\\Anish '
+   'Nandi\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\tempfile.py',
+   'PYMODULE'),
+  ('textwrap',
+   'C:\\Users\\Anish '
+   'Nandi\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\textwrap.py',
+   'PYMODULE'),
+  ('threading',
+   'C:\\Users\\Anish '
+   'Nandi\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\threading.py',
+   'PYMODULE'),
+  ('token',
+   'C:\\Users\\Anish '
+   'Nandi\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\token.py',
+   'PYMODULE'),
+  ('tokenize',
+   'C:\\Users\\Anish '
+   'Nandi\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\tokenize.py',
+   'PYMODULE'),
+  ('tracemalloc',
+   'C:\\Users\\Anish '
+   'Nandi\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\tracemalloc.py',
+   'PYMODULE'),
+  ('typing',
+   'C:\\Users\\Anish '
+   'Nandi\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\typing.py',
+   'PYMODULE'),
+  ('urllib',
+   'C:\\Users\\Anish '
+   'Nandi\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\urllib\\__init__.py',
+   'PYMODULE'),
+  ('urllib.parse',
+   'C:\\Users\\Anish '
+   'Nandi\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\urllib\\parse.py',
+   'PYMODULE'),
+  ('webbrowser',
+   'C:\\Users\\Anish '
+   'Nandi\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\webbrowser.py',
+   'PYMODULE'),
+  ('win32con',
+   'C:\\Users\\Anish '
+   'Nandi\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\win32\\lib\\win32con.py',
+   'PYMODULE'),
+  ('win32evtlogutil',
+   'C:\\Users\\Anish '
+   'Nandi\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\win32\\lib\\win32evtlogutil.py',
+   'PYMODULE'),
+  ('winerror',
+   'C:\\Users\\Anish '
+   'Nandi\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\win32\\lib\\winerror.py',
+   'PYMODULE'),
+  ('yaml',
+   'C:\\Users\\Anish '
+   'Nandi\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\yaml\\__init__.py',
+   'PYMODULE'),
+  ('yaml.composer',
+   'C:\\Users\\Anish '
+   'Nandi\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\yaml\\composer.py',
+   'PYMODULE'),
+  ('yaml.constructor',
+   'C:\\Users\\Anish '
+   'Nandi\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\yaml\\constructor.py',
+   'PYMODULE'),
+  ('yaml.cyaml',
+   'C:\\Users\\Anish '
+   'Nandi\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\yaml\\cyaml.py',
+   'PYMODULE'),
+  ('yaml.dumper',
+   'C:\\Users\\Anish '
+   'Nandi\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\yaml\\dumper.py',
+   'PYMODULE'),
+  ('yaml.emitter',
+   'C:\\Users\\Anish '
+   'Nandi\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\yaml\\emitter.py',
+   'PYMODULE'),
+  ('yaml.error',
+   'C:\\Users\\Anish '
+   'Nandi\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\yaml\\error.py',
+   'PYMODULE'),
+  ('yaml.events',
+   'C:\\Users\\Anish '
+   'Nandi\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\yaml\\events.py',
+   'PYMODULE'),
+  ('yaml.loader',
+   'C:\\Users\\Anish '
+   'Nandi\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\yaml\\loader.py',
+   'PYMODULE'),
+  ('yaml.nodes',
+   'C:\\Users\\Anish '
+   'Nandi\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\yaml\\nodes.py',
+   'PYMODULE'),
+  ('yaml.parser',
+   'C:\\Users\\Anish '
+   'Nandi\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\yaml\\parser.py',
+   'PYMODULE'),
+  ('yaml.reader',
+   'C:\\Users\\Anish '
+   'Nandi\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\yaml\\reader.py',
+   'PYMODULE'),
+  ('yaml.representer',
+   'C:\\Users\\Anish '
+   'Nandi\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\yaml\\representer.py',
+   'PYMODULE'),
+  ('yaml.resolver',
+   'C:\\Users\\Anish '
+   'Nandi\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\yaml\\resolver.py',
+   'PYMODULE'),
+  ('yaml.scanner',
+   'C:\\Users\\Anish '
+   'Nandi\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\yaml\\scanner.py',
+   'PYMODULE'),
+  ('yaml.serializer',
+   'C:\\Users\\Anish '
+   'Nandi\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\yaml\\serializer.py',
+   'PYMODULE'),
+  ('yaml.tokens',
+   'C:\\Users\\Anish '
+   'Nandi\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\yaml\\tokens.py',
+   'PYMODULE'),
+  ('zipfile',
+   'C:\\Users\\Anish '
+   'Nandi\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\zipfile.py',
+   'PYMODULE')])

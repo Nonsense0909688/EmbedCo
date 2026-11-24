@@ -2,7 +2,7 @@
 
 Environment variables (all optional):
 
-    EMBEDCO_HOME            project root (default: directory containing this package)
+    EMBEDCO_HOME            writable data root (default: project root, or exe dir when frozen)
     EMBEDCO_HOST            bind address            (default 127.0.0.1)
     EMBEDCO_PORT            bind port               (default 8000)
     EMBEDCO_LOG_LEVEL       DEBUG|INFO|WARNING|ERROR (default INFO)
@@ -14,10 +14,32 @@ Environment variables (all optional):
 """
 
 import os
+import sys
 from dataclasses import dataclass, replace
 from pathlib import Path
 
 LOOPBACK_HOSTS = ("127.0.0.1", "localhost", "::1")
+
+
+def is_frozen():
+    return bool(getattr(sys, "frozen", False))
+
+
+def bundle_dir():
+    """Read-only directory containing bundled application resources."""
+    if is_frozen():
+        return Path(getattr(sys, "_MEIPASS", Path(sys.executable).resolve().parent))
+    return Path(__file__).resolve().parent.parent
+
+
+def default_home():
+    """Writable directory for projects, plugins, and logs."""
+    env = os.environ.get("EMBEDCO_HOME")
+    if env:
+        return Path(env).resolve()
+    if is_frozen():
+        return Path(sys.executable).resolve().parent
+    return Path(__file__).resolve().parent.parent
 
 
 def _env_bool(name, default):
@@ -40,6 +62,7 @@ def _env_int(name, default):
 @dataclass(frozen=True)
 class Settings:
     home: Path
+    resources: Path = None
     host: str = "127.0.0.1"
     port: int = 8000
     log_level: str = "INFO"
@@ -50,15 +73,28 @@ class Settings:
     max_body_bytes: int = 5 * 1024 * 1024
     request_timeout: float = 30.0
 
-    # ---- derived paths ----
+    def __post_init__(self):
+        if self.resources is None:
+            object.__setattr__(self, "resources", self.home)
+
+    # ---- read-only bundled resources ----
     @property
     def blocks_dir(self):
-        return self.home / "blocks"
+        return self.resources / "blocks"
 
     @property
     def boards_file(self):
-        return self.home / "boards.yaml"
+        return self.resources / "boards.yaml"
 
+    @property
+    def ui_file(self):
+        return self.resources / "ui" / "index.html"
+
+    @property
+    def examples_dir(self):
+        return self.resources / "examples"
+
+    # ---- writable user data ----
     @property
     def plugins_dir(self):
         return self.home / "plugins"
@@ -66,14 +102,6 @@ class Settings:
     @property
     def projects_dir(self):
         return self.home / "projects"
-
-    @property
-    def ui_file(self):
-        return self.home / "ui" / "index.html"
-
-    @property
-    def examples_dir(self):
-        return self.home / "examples"
 
     @property
     def is_loopback(self):
@@ -88,10 +116,12 @@ class Settings:
 
     @classmethod
     def from_env(cls, **overrides):
-        home = Path(os.environ.get("EMBEDCO_HOME") or Path(__file__).resolve().parent.parent).resolve()
+        home = default_home()
+        resources = bundle_dir() if is_frozen() else home
         log_dir = Path(os.environ.get("EMBEDCO_LOG_DIR") or home / "logs")
         settings = cls(
             home=home,
+            resources=resources,
             host=os.environ.get("EMBEDCO_HOST", "127.0.0.1"),
             port=_env_int("EMBEDCO_PORT", 8000),
             log_level=os.environ.get("EMBEDCO_LOG_LEVEL", "INFO").upper(),

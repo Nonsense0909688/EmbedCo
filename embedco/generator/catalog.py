@@ -32,30 +32,27 @@ class BlockCatalog:
 
     @classmethod
     def from_definitions(cls, path):
-        """Load blocks/categories/*.yaml (or a legacy single blocks.yaml)."""
+        """Load block definitions from ``path/categories/*.yaml``."""
         path = Path(path)
+        if not path.is_dir():
+            raise DefinitionError(f"Block definitions directory not found: {path}")
+
         catalog = cls()
-        if path.is_dir():
-            seen = set()
-            for category_file in sorted(path.glob("categories/*.yaml")):
-                try:
-                    data = yaml.safe_load(category_file.read_text(encoding="utf-8")) or {}
-                except yaml.YAMLError as error:
-                    raise DefinitionError(f"{category_file}: invalid YAML: {error}") from error
-                category = data.get("category") or category_file.stem
-                blocks = data.get("blocks", [])
-                if not isinstance(blocks, list):
-                    raise DefinitionError(f"{category_file}: 'blocks' must be a list")
-                if category in seen:
-                    raise DefinitionError(f"Duplicate block category: {category}")
-                seen.add(category)
-                for block in blocks:
-                    catalog.add(block, category)
-        else:
-            data = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
-            for category, blocks in data["categories"].items():
-                for block in blocks:
-                    catalog.add(block, category)
+        seen = set()
+        for category_file in sorted(path.glob("categories/*.yaml")):
+            try:
+                data = yaml.safe_load(category_file.read_text(encoding="utf-8")) or {}
+            except yaml.YAMLError as error:
+                raise DefinitionError(f"{category_file}: invalid YAML: {error}") from error
+            category = data.get("category") or category_file.stem
+            blocks = data.get("blocks", [])
+            if not isinstance(blocks, list):
+                raise DefinitionError(f"{category_file}: 'blocks' must be a list")
+            if category in seen:
+                raise DefinitionError(f"Duplicate block category: {category}")
+            seen.add(category)
+            for block in blocks:
+                catalog.add(block, category)
         logger.info("Loaded %d built-in block(s) from %s", len(catalog.blocks), path)
         return catalog
 

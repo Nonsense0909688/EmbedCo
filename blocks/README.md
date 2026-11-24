@@ -24,6 +24,3 @@ blocks:
     inputs: []
     code: "// generated code"
 ```
-
-The legacy root-level `blocks.yaml` remains in the project as a reference snapshot;
-the generator now reads the split category files from this directory.
